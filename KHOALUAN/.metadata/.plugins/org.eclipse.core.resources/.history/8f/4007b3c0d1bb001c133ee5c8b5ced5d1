@@ -1,0 +1,67 @@
+package cntt.trang.dao;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+public class DocJSON {
+
+	public static void main(String[] args) {
+		JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("C:\\Users\\Admin\\Desktop\\KHOALUAN\\TuyenDungSV\\src\\main\\webapp\\json\\tinh_tp.json")) {
+            // Read JSON file
+            Object obj = jsonParser.parse(reader);
+
+            JSONObject userList = (JSONObject) obj;
+            Set<String> keys=userList.keySet();
+            Iterator<String> keyIt=keys.iterator();
+            while(keyIt.hasNext()) {
+            	JSONObject hi= (JSONObject)userList.get(keyIt.next());
+                String h=(String) hi.get("name");
+                System.out.println(h);
+            }
+            
+  
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+	}
+	private static void parseUserObject(JSONObject user) {
+
+//        // Get user first name
+//        Long id = (Long) user.get("id");
+//        System.out.println(id);
+//
+//        // Get user first name
+//        String firstName = (String) user.get("firstName");
+//        System.out.println(firstName);
+//
+//        // Get user last name
+//        String lastName = (String) user.get("lastName");
+//        System.out.println(lastName);
+//
+//        // Get user website name
+//        String userName = (String) user.get("userName");
+//        System.out.println(userName);
+//
+//        // Get user email name
+//        String email = (String) user.get("email");
+//        System.out.println(email);
+		String hi=(String) user.get("37");
+		System.out.println(hi);
+    }
+
+}

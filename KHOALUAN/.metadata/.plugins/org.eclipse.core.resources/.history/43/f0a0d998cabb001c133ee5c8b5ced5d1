@@ -1,0 +1,10 @@
+package cntt.trang.dao;
+
+public class DocJSON {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

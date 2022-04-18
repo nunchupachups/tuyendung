@@ -1,0 +1,10 @@
+package cntt.trang.bean;
+
+public class CV {
+	private int maCV;
+	private String anhDaiDien;
+	private String viTriUngTuyen;
+	private int maKyNang;
+	private int maSoThich;
+	private int maMucTieu
+}

@@ -1,0 +1,54 @@
+package cntt.trang.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import cntt.trang.bean.DoanhNghiep;
+
+public class DoanhNghiepDAO {
+	static Connection conn =null;
+	static PreparedStatement ps = null;
+	static ResultSet rs= null;
+	
+	public ArrayList<DoanhNghiep> getAllDoanhNghiep() throws SQLException {
+		ArrayList<DoanhNghiep> ds=new ArrayList<DoanhNghiep>();
+		String query = "select * from DoanhNghiep";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				long masach = rs.getLong("masach");
+				String tensach = rs.getNString("tensach");
+				String tacgia= rs.getNString("tacgia");
+				String gioithieusach= rs.getNString("gioithieusach");
+				int sotrang = rs.getInt("sotrang");
+				String tinhtrang= rs.getNString("tinhtrang");
+				float giachothue = rs.getFloat("giachothue");
+				float giadenbu = rs.getFloat("giadenbu");
+				boolean dachothue = rs.getBoolean("dachothue");
+				boolean matsach = rs.getBoolean("matsach");
+				String anh = rs.getNString("anh");
+				String maloai = rs.getNString("maloai");
+				ds.add(new sachbean(masach, tensach, tacgia, gioithieusach, sotrang, tinhtrang, giachothue, giadenbu, dachothue, matsach, anh, maloai));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return ds;
+	}
+}

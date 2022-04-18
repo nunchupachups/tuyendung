@@ -1,0 +1,10 @@
+.navbar-container{
+	width: 1390px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 80px;
+}
+.img-brand{
+	width: 50px;
+	height: 50px;
+}

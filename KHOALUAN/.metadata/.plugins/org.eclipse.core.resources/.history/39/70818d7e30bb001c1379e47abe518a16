@@ -1,0 +1,84 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Create new student</title>
+	<link rel="stylesheet" href="/resources/css/index.css">
+	<jsp:include page="/WEB-INF/pages/layout/header.jsp" />
+</head>
+<body>
+    <jsp:include page="/WEB-INF/pages/layout/navbar.jsp" />
+    <jsp:include page="/WEB-INF/views/layout/sidebar.jsp" />
+    
+    <div class="page-content container">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-4 col-md-offset-4-custom">
+                <div class="login-wrapper">
+                	<div class="box">
+                		<h2>Create new Student</h2>
+                	</div>
+                	<div class="content-wrap">
+                		<form:form class="form-horizontal" action="${contextPath}/student/create" method="post" modelAttribute="student">
+							<table border="1">
+								<tr>
+									<td>ID</td>
+									<td>
+										<form:input path="id"/>
+										<form:errors path="id" cssClass="error"></form:errors>
+									</td>
+								</tr>
+								<tr>
+									<td>Name</td>
+									<td>
+										<form:input path="name" />
+										<form:errors path="name" cssClass="error"></form:errors>
+									</td>
+								</tr>
+								<tr>
+									<td>Age</td>
+									<td>
+										<form:input path="age" />
+										<form:errors path="age" cssClass="error"></form:errors>
+									</td>
+								</tr>
+								<tr>
+									<td>Address</td>
+									<td><form:input path="address" /></td>
+								</tr>
+								<tr>
+									<td>Birthday</td>
+									<td>
+										<form:input path="birthday" />
+										<form:errors path="birthday" cssClass="error"></form:errors>
+									</td>
+								</tr>
+								<tr>
+									<td>Lớp học</td>
+									<td>
+										<form:select path="lopHoc">
+											<form:options  items="${lopHocs}" itemLabel="tenLop" itemValue="maLop"/>
+										</form:select>
+										<form:errors path="lopHoc" cssClass="error"></form:errors>
+									</td>
+								</tr>
+								<tr>
+									<td><input type="reset" value="Reset"></td>
+									<td><form:button>Register</form:button></td>
+								</tr>
+							</table>
+						</form:form>
+                	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<jsp:include page="/WEB-INF/views/layout/script.jsp" />
+	<jsp:include page="/WEB-INF/views/layout/footer.jsp" />
+</body>
+</html>

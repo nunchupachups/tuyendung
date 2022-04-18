@@ -1,0 +1,114 @@
+package cntt.trang.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import cntt.trang.bean.DoanhNghiep;
+
+public class DoanhNghiepDAO {
+	static Connection conn =null;
+	static PreparedStatement ps = null;
+	static ResultSet rs= null;
+	
+	public ArrayList<DoanhNghiep> getAllDoanhNghiepDaDuyet() throws SQLException {
+		ArrayList<DoanhNghiep> ds=new ArrayList<DoanhNghiep>();
+		String query = "select * from DoanhNghiep where DaDuyet=1";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				long maDoanhNghiep = rs.getLong("MaDoanhNghiep");
+				String emailDangNhap = rs.getNString("EmailDangNhap"); 
+				String matKhau = rs.getNString("MatKhau");  
+				String tenLienHe = rs.getNString("TenLienHe"); 
+				String emailLienHe = rs.getNString("EmailLienHe"); 
+				String soDienThoai = rs.getString("SoDienThoai"); 
+				String tenDoanhNghiep = rs.getNString("TenDoanhNghiep"); 
+				String maSoThue = rs.getString("MaSoThue"); 
+				String maXaPhuong = rs.getString("MaXaPhuong"); 
+				String diaChiDuong = rs.getNString("DiaChiDuong"); 
+				String maLinhVucHoatDong = rs.getString("MaLinhVucHoatDong"); 
+				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
+				String giayChungNhan = rs.getNString("GiayChungNhan"); 
+				boolean daDuyet = rs.getBoolean("DaDuyet");
+				
+				ds.add(new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return ds;
+	}
+	
+	public ArrayList<DoanhNghiep> timKiemDoanhNghiepDaDuyet(String tenDN, String maTT, String maLVHD, String maLHDN) throws SQLException {
+		ArrayList<DoanhNghiep> ds=new ArrayList<DoanhNghiep>();
+		String query = "select * from DoanhNghiep where DaDuyet=1";
+		if(!tenDN.equals("")) query+=" and TenDoanhNghiep like ?";
+		if(!maTT.equals("-1")) query+=" and MaXaPhuong in (\r\n" + 
+				"select MaXaPhuong\r\n" + 
+				"from XaPhuong as xp join QuanHuyen as qh on xp.MaQuanHuyen=qh.MaQuanHuyen\r\n" + 
+				"where qh.MaTinhThanh = ?)";
+		if(!maLVHD.equals("-1")) query+=" and MaLinhVucHoatDong =?";
+		if(!maLHDN.equals("-1")) query+=" and MaLoaiHinhDoanhNghiep =?";
+		System.out.println(query);
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			int i=0;
+			if(!tenDN.equals("")) ps.setNString(++i, "%"+tenDN+"%");
+			if(!maTT.equals("-1")) ps.setString(++i, maTT);
+			if(!maLVHD.equals("-1")) ps.setString(++i, maLVHD);
+			if(!maLHDN.equals("-1")) ps.setString(++i, maLHDN);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				long maDoanhNghiep = rs.getLong("MaDoanhNghiep");
+				String emailDangNhap = rs.getNString("EmailDangNhap"); 
+				String matKhau = rs.getNString("MatKhau");  
+				String tenLienHe = rs.getNString("TenLienHe"); 
+				String emailLienHe = rs.getNString("EmailLienHe"); 
+				String soDienThoai = rs.getString("SoDienThoai"); 
+				String tenDoanhNghiep = rs.getNString("TenDoanhNghiep"); 
+				String maSoThue = rs.getString("MaSoThue"); 
+				String maXaPhuong = rs.getString("MaXaPhuong"); 
+				String diaChiDuong = rs.getNString("DiaChiDuong"); 
+				String maLinhVucHoatDong = rs.getString("MaLinhVucHoatDong"); 
+				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
+				String giayChungNhan = rs.getNString("GiayChungNhan"); 
+				boolean daDuyet = rs.getBoolean("DaDuyet");
+				
+				ds.add(new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return ds;
+	}
+}

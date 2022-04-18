@@ -1,0 +1,28 @@
+package cntt.trang.bean;
+
+public class LinhVucHoatDong {
+	private String maLinhVuc;
+	private String tenLinhVuc;
+	public String getMaLinhVuc() {
+		return maLinhVuc;
+	}
+	public void setMaLinhVuc(String maLinhVuc) {
+		this.maLinhVuc = maLinhVuc;
+	}
+	public String getTenLinhVuc() {
+		return tenLinhVuc;
+	}
+	public void setTenLinhVuc(String tenLinhVuc) {
+		this.tenLinhVuc = tenLinhVuc;
+	}
+	public LinhVucHoatDong(String maLinhVuc, String tenLinhVuc) {
+		super();
+		this.maLinhVuc = maLinhVuc;
+		this.tenLinhVuc = tenLinhVuc;
+	}
+	public LinhVucHoatDong() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+}

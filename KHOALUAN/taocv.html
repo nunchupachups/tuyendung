@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/62eb188ef6.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <form class="row">
+                    <h3 style="color: rgb(6, 109, 70)" class="mb-5">Tạo CV</h3>
+                    <div onclick="showHuongdan('taocv-huongdan-thongtincanhan')">
+                        <h5 class="mb-3">Thông tin cá nhân</h5>
+                        <div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-4 col-form-label">Ảnh đại diện<span class="required">
+                                        *</span></label>
+                                <div class="col-8">
+                                    <input type="file" class=" form-control" id="title" required="required" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-4 col-form-label">Họ tên<span class="required">
+                                        *</span></label>
+                                <div class="col-8">
+                                    <input type="text" class=" form-control" id="title" required="required" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-4 col-form-label">Vị trí muốn ứng tuyển<span
+                                        class="required"> *</span></label>
+                                <div class="col-8">
+                                    <input type="text" class=" form-control" id="title" required="required" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-4 col-form-label">Ngày sinh<span class="required">
+                                        *</span></label>
+                                <div class="col-8">
+                                    <input type="date" class=" form-control" id="title" required="required" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-4 col-form-label">Giới tính<span class="required">
+                                        *</span></label>
+                                <div class="col-8">
+                                    <select class="form-select" aria-label="Default select example" id="city"
+                                        required="required">
+                                        <option value="0">Nam</option>
+                                        <option value="1">Nữ</option>
+                                        <option value="-1">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-4 col-form-label">Số điện thoại<span class="required">
+                                        *</span></label>
+                                <div class="col-8">
+                                    <input type="tel" class=" form-control" id="title" required="required"
+                                        pattern="0[3578][0-9]{1}-[0-9]{3}-[0-9]{4}" placeholder="037-655-1445" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-4 col-form-label">Email<span class="required">
+                                        *</span></label>
+                                <div class="col-8">
+                                    <input type="email" class=" form-control" id="title" required="required" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="title" class="col-sm-4 col-form-label">Địa chỉ<span class="required">
+                                        *</span></label>
+                                <div class="col-8">
+                                    <input type="text" class=" form-control" id="title" required="required" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <h5 class="mb-3">Các mục thông tin khác</h5>
+                    <div class="taocv-item" onclick="showHuongdan('taocv-huongdan-kynang')">
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-11 col-form-label">
+                                <h6>KỸ NĂNG</h6>
+                            </label>
+                            <div class="col-1">
+                                <input type="checkbox" />
+                            </div>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div class="row mb-1">
+                                <div class="col-6">
+                                    HTML
+                                </div>
+                                <div class="col-5">
+                                    <input type="number" class=" form-control" min="1" max="10" required="required" />
+                                </div>
+
+                                <div class="col-1">
+                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-6">
+                                    CSS
+                                </div>
+                                <div class="col-5">
+                                    <input type="number" class=" form-control" min="1" max="10" required="required" />
+                                </div>
+
+                                <div class="col-1">
+                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#myModalKynang"><i
+                                    class="fas fa-plus-square"></i></a>
+
+                        </div>
+
+                    </div>
+                    <div class="taocv-item" onclick="showHuongdan('taocv-huongdan-sothich')">
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-11 col-form-label">
+                                <h6>SỞ THÍCH</h6>
+                            </label>
+                            <div class="col-1">
+                                <input type="checkbox" />
+                            </div>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div class="row mb-3">
+                                <div class="col-10">
+                                    <input type="text" class=" form-control" required="required" />
+                                </div>
+                                <div class="col-2">
+                                    <Button class="btn btn-primary">Thêm</Button>
+                                </div>
+
+                            </div>
+                            <ul>
+                                <li>
+                                    <div class="row mb-1">
+                                        <div class="col-11">
+                                            Đánh đàn
+                                        </div>
+                                        <div class="col-1">
+                                            <a href=""><i class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row mb-1">
+                                        <div class="col-11">
+                                            Đá bóng
+                                        </div>
+                                        <div class="col-1">
+                                            <a href=""><i class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="taocv-item" onclick="showHuongdan('taocv-huongdan-muctieunghenghiep')">
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-11 col-form-label">
+                                <h6>MỤC TIÊU NGHỀ NGHIỆP</h6>
+                            </label>
+                            <div class="col-1">
+                                <input type="checkbox" />
+                            </div>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div class="row mb-3">
+                                <div class="col-10">
+                                    <input type="text" class=" form-control" required="required" />
+                                </div>
+                                <div class="col-2">
+                                    <Button class="btn btn-primary">Thêm</Button>
+                                </div>
+
+                            </div>
+                            <ul>
+                                <li>
+                                    <div class="row mb-1">
+                                        <div class="col-11">
+                                            Ngắn hạn: Được tham gia đào tạo tại công ty, tích lũy thêm nhiều kinh
+                                            nghiệm, rèn luyện thêm nhiều kỹ năng xử lí công việc. Có công việc ổn định.
+                                        </div>
+                                        <div class="col-1">
+                                            <a href=""><i class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row mb-1">
+                                        <div class="col-11">
+                                            Dài hạn: Trở thành nhân viên ưu tú, có cơ hội làm việc tại nước ngoài, đạt
+                                            được mức lương cao.
+                                        </div>
+                                        <div class="col-1">
+                                            <a href=""><i class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="taocv-item" onclick="showHuongdan('taocv-huongdan-hocvan')">
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-11 col-form-label">
+                                <h6>HỌC VẤN</h6>
+                            </label>
+                            <div class="col-1">
+                                <input type="checkbox" />
+                            </div>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div class="row mb-3">
+                                <div class="col-11">
+                                    <input type="text" class=" form-control" required="required" value="Tên đơn vị" />
+                                </div>
+                                <div class="col-1">
+                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                            <div style="margin-left: 25px; ">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class=" form-control" required="required" value="Vi tri" />
+
+                                    </div>
+                                    <div class="col-5">
+                                        <input type="text" class=" form-control" required="required"
+                                            value="Khoang thoi gian" />
+
+                                    </div>
+                                    <div class="col-1">
+                                        <a href=""><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </div>
+                                <div style="margin-left: 25px;margin-top: 10px;">
+                                    <div class="row mb-3">
+                                        <div class="col-9">
+                                            <input type="text" class=" form-control" required="required" />
+                                        </div>
+                                        <div class="col-3">
+                                            <Button class="btn btn-primary">Thêm mô tả</Button>
+                                        </div>
+
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="row mb-1">
+                                                <div class="col-11">
+                                                    Ngắn hạn: hiều kỹ năng xử lí công việc. Có công việc ổn định.
+                                                </div>
+                                                <div class="col-1">
+                                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row mb-1">
+                                                <div class="col-11">
+                                                    hội làm việc tại nước ngoài, đạt được mức lương cao.
+                                                </div>
+                                                <div class="col-1">
+                                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a href="" data-bs-toggle="modal" data-bs-target="#myModalViTriHocVan"><i
+                                        class="fas fa-plus-square"></i> Thêm vị trí</a>
+                            </div>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#myModalTruongHoc"><i
+                                    class="fas fa-plus-square"></i> Thêm trường học</a>
+                        </div>
+
+                    </div>
+                    <div class="taocv-item" onclick="showHuongdan('taocv-huongdan-kinhnghiemlamviec')">
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-11 col-form-label">
+                                <h6>KINH NGHIỆM LÀM VIỆC</h6>
+                            </label>
+                            <div class="col-1">
+                                <input type="checkbox" />
+                            </div>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div class="row mb-3">
+                                <div class="col-11">
+                                    <input type="text" class=" form-control" required="required" value="Tên đơn vị" />
+                                </div>
+                                <div class="col-1">
+                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                            <div style="margin-left: 25px; ">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class=" form-control" required="required" value="Vi tri" />
+
+                                    </div>
+                                    <div class="col-5">
+                                        <input type="text" class=" form-control" required="required"
+                                            value="Khoang thoi gian" />
+
+                                    </div>
+                                    <div class="col-1">
+                                        <a href=""><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </div>
+                                <div style="margin-left: 25px;margin-top: 10px;">
+                                    <div class="row mb-3">
+                                        <div class="col-9">
+                                            <input type="text" class=" form-control" required="required" />
+                                        </div>
+                                        <div class="col-3">
+                                            <Button class="btn btn-primary">Thêm mô tả</Button>
+                                        </div>
+
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="row mb-1">
+                                                <div class="col-11">
+                                                    Ngắn hạn: hiều kỹ năng xử lí công việc. Có công việc ổn định.
+                                                </div>
+                                                <div class="col-1">
+                                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row mb-1">
+                                                <div class="col-11">
+                                                    hội làm việc tại nước ngoài, đạt được mức lương cao.
+                                                </div>
+                                                <div class="col-1">
+                                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a href="" data-bs-toggle="modal" data-bs-target="#myModalViTriLamViec"><i
+                                        class="fas fa-plus-square"></i> Thêm vị trí</a>
+                            </div>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#myModalCongTy"><i
+                                    class="fas fa-plus-square"></i> Thêm công ty</a>
+                        </div>
+
+                    </div>
+                    <div class="taocv-item" onclick="showHuongdan('taocv-huongdan-hoatdong')">
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-11 col-form-label">
+                                <h6>HOẠT ĐỘNG</h6>
+                            </label>
+                            <div class="col-1">
+                                <input type="checkbox" />
+                            </div>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div class="row mb-3">
+                                <div class="col-11">
+                                    <input type="text" class=" form-control" required="required" value="Tên đơn vị" />
+                                </div>
+                                <div class="col-1">
+                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                            <div style="margin-left: 25px; ">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class=" form-control" required="required" value="Vi tri" />
+
+                                    </div>
+                                    <div class="col-5">
+                                        <input type="text" class=" form-control" required="required"
+                                            value="Khoang thoi gian" />
+
+                                    </div>
+                                    <div class="col-1">
+                                        <a href=""><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </div>
+                                <div style="margin-left: 25px;margin-top: 10px;">
+                                    <div class="row mb-3">
+                                        <div class="col-9">
+                                            <input type="text" class=" form-control" required="required" />
+                                        </div>
+                                        <div class="col-3">
+                                            <Button class="btn btn-primary">Thêm mô tả</Button>
+                                        </div>
+
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="row mb-1">
+                                                <div class="col-11">
+                                                    Ngắn hạn: hiều kỹ năng xử lí công việc. Có công việc ổn định.
+                                                </div>
+                                                <div class="col-1">
+                                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row mb-1">
+                                                <div class="col-11">
+                                                    hội làm việc tại nước ngoài, đạt được mức lương cao.
+                                                </div>
+                                                <div class="col-1">
+                                                    <a href=""><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a href="" data-bs-toggle="modal" data-bs-target="#myModalViTriHoatDong"><i
+                                        class="fas fa-plus-square"></i> Thêm vị trí</a>
+                            </div>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#myModalHoatDong"><i
+                                    class="fas fa-plus-square"></i> Thêm hoạt động</a>
+                        </div>
+
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Lưu CV</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- The Modal Ky nang-->
+                <div class="modal" id="myModalKynang">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Kỹ năng</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label">Tên kỹ năng:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Độ thành thạo:</label>
+                                        <input type="number" min="1" max="10" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- The Modal So thich-->
+                <div class="modal" id="myModalSothich">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Kỹ năng</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label">Tên kỹ năng:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Độ thành thạo:</label>
+                                        <input type="number" min="1" max="10" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- The Modal vi tri Hoc Van-->
+                <div class="modal" id="myModalViTriHocVan">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Vị Trí Học Vấn</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label">Vị trí:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Khoảng thời gian:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- The Modal Truong Hoc -->
+                <div class="modal" id="myModalTruongHoc">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Trường học</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label">Tên trường học:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Modal vi tri Lam Viec-->
+                <div class="modal" id="myModalViTriLamViec">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Vị Trí Làm Việc</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label">Vị trí:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Khoảng thời gian:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- The Modal Cong Ty -->
+                <div class="modal" id="myModalCongTy">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Công Ty</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label">Tên công ty:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- The Modal vi tri Haot Dong-->
+                <div class="modal" id="myModalViTriHoatDong">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Vị Trí Hoạt Động</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label">Vị trí:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Khoảng thời gian:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- The Modal Hoat Dong -->
+                <div class="modal" id="myModalHoatDong">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Hoạt Động</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="">
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label">Tên đơn vị:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 taocv-right">
+                <div class="taocv-huongdan">
+                    <div class="taocv-huongdan-chung taocv-huongdan-item">
+                        <h4>Hướng dẫn</h4>
+                        <hr>
+                        <ol>
+                            <li>Điền đầy đủ các thông tin hiển thị trong CV</li>
+                            <li>Bấm nút <b>Lưu CV</b></li>
+                            <li>Xem & Tải CV về máy</li>
+
+                        </ol>
+                        Một số lưu ý:
+                        <ul>
+                            <li>Sắp xếp thời gian theo thứ tự mới -> cũ.</li>
+                            <li>Ưu tiên những gì quan trọng, có liên quan đến vị trí ứng tuyển lên đầu.</li>
+                            <li>Ngày tháng nên dùng: 01/2016, 01-2016 hoặc Jan 2016</li>
+                        </ul>
+                    </div>
+                    <div class="taocv-huongdan-kynang taocv-huongdan-item">
+                        <h4>Kỹ năng</h4>
+                        <hr>
+                        <b>Nên:</b>
+                        <ul>
+                            <li>Nêu ra các kỹ năng giúp ích cho vị trí ứng tuyển (tùy thuộc vào vị trí ứng tuyển và
+                                những kỹ năng bạn có để đưa vào CV những kỹ năng phù hợp).</li>
+                            <li>Có thể đưa minh chứng ngắn gọn những kỹ năng đạt được qua công việc gì, hoạt động gì…
+                            </li>
+                        </ul>
+                        <b>Không nên:</b>
+                        <ul>
+                            <li>Đưa định nghĩa, quan điểm cá nhân.</li>
+                        </ul>
+                    </div>
+                    <div class="taocv-huongdan-kinhnghiemlamviec taocv-huongdan-item">
+                        <h4>Kinh nghiệm làm việc</h4>
+                        <hr>
+                        <b>Nên:</b>
+                        <ul>
+                            <li>Liệt kê theo thứ tự thời gian, công việc làm gần đây nhất nêu trước các công việc trước
+                                đó.</li>
+                            <li>Công việc đã làm (làm full-time hoặc part-time), khóa thực tập có liên quan đến vị trí
+                                ứng tuyển.</li>
+                            <li>Mô tả trách nhiệm công việc chính, súc tích nhưng đầy đủ. Đưa minh chứng (ví dụ sản phẩm
+                                bạn thiết kế, link bài báo bạn viết…).</li>
+                            <li>Đưa ra những thành tựu và kỹ năng bạn đạt được (cá nhân bạn học hỏi được cũng như sự
+                                cống hiến cho công ty/tổ chức).</li>
+                            <li>Nếu bạn chưa có kinh nghiệm, bạn chỉ tham gia công việc như tình nguyện, các việc làm
+                                thêm như phát tờ rơi, bồi bàn…thì bạn có thể đề cập đến nhưng chú ý chỉ ra những điều
+                                bạn học hỏi được cần có cho vị trí ứng tuyển ví dụ như khả năng làm việc nhóm, sự năng
+                                động, sáng tạo và linh hoạt, sự kiên trì, đóng góp cho cộng đồng…).</li>
+                            <li>Phân chia ý rõ ràng.</li>
+                        </ul>
+                        <b>Không nên:</b>
+                        <ul>
+                            <li>Các công việc làm ngắn hạn ( nhỏ hơn 6 tháng) ngoại trừ khóa thực tập.</li>
+                            <li>Đưa quá chi tiết những phần công việc nhỏ nhặt (ví dụ như in giấy tờ, đến công ty sớm
+                                dọn dẹp…).</li>
+                            <li>Mô tả dài dòng, không phân chia ý rõ ràng.</li>
+                        </ul>
+                    </div>
+                    <div class="taocv-huongdan-muctieunghenghiep taocv-huongdan-item">
+                        <h4>Mục tiêu nghê nghiệp</h4>
+                        <hr>
+                        <b>Nên:</b>
+                        <ul>
+                            <li>Vị trí mong muốn ứng tuyển,có thể đề cập đến công ty ứng tuyển.</li>
+                            <li>Thể hiện kỹ năng, kiến thức chuyên môn bạn có thể áp dụng vào vị trí công việc.</li>
+                            <li>Có thể phân ra thành mục tiêu ngắn hạn như thành thạo công việc trong vòng…tháng và mục
+                                tiêu dài hạn như cơ hội thăng tiến đến một vị trí nào đó.</li>
+                            <li>Mục tiêu hướng đến lợi ích công ty như tăng doanh số, đẩy mạnh brand, mở rộng tập khách
+                                hàng…</li>
+
+                        </ul>
+                        <b>Không nên:</b>
+                        <ul>
+                            <li>Viết mục tiêu chung chung như làm việc trong một môi trường năng động, có thể học hỏi
+                                được nhiều… hoặc tìm kiếm vị trí phù hợp với bản thân để phát huy hết tất cả những kinh
+                                nghiệm, kĩ năng của bản thân…</li>
+                        </ul>
+                    </div>
+                    <div class="taocv-huongdan-thongtincanhan taocv-huongdan-item">
+                        <h4>Thông tin cá nhân</h4>
+                        <hr>
+                        <ul>
+                            <li>Viết đầy đủ họ tên của bạn.</li>
+                            <li>Email cần nghiêm túc nên chứa họ tên bạn.</li>
+                            <li>
+                                Chèn ảnh đại diện: <br>
+                                <b>Nên: </b>chèn ảnh phù hợp với vị trí ứng tuyển,nhìn thấy khuôn mặt trực diện.
+                                <br><b>Không nên: </b>ảnh chỉ nhìn thấy một phần khuôn mặt hoặc quay lưng về phía trước.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="taocv-huongdan-hocvan taocv-huongdan-item">
+                        <h4>Học vấn</h4>
+                        <hr>
+                        <b>Nên:</b>
+                        <ul>
+                            <li>Ngành học, trường học.</li>
+                            <li>Một số môn chuyên ngành có tính ứng dụng cao ở công việc mà bạn đạt kết quả tốt thì bạn
+                                có thể đề cập đến.</li>
+                            <li>Đề án, nghiên cứu khoa học nếu có…(có liên quan đến vị trí ứng tuyển).</li>
+                            <li>Đưa vào thành tích giải thưởng như học bổng, chứng chỉ</li>
+                        </ul>
+                        <b>Không nên:</b>
+                        <ul>
+                            <li>Đưa quá trình học tập từ cấp 1, cấp 2.</li>
+                        </ul>
+                    </div>
+                    <div class="taocv-huongdan-sothich taocv-huongdan-item">
+                        <h4>Sở thích</h4>
+                        <hr>
+                        Liệt kê một số sở thích cá nhân để giúp nhà tuyển dụng hiểu hơn về con người bạn.
+                    </div>
+                    <div class="taocv-huongdan-chungchi taocv-huongdan-item">
+                        <h4>Chứng chỉ</h4>
+                        <hr>
+                        <ul>
+                            <li>Các khóa đào tạo kỹ năng mềm hay chuyên môn (đề cập thời gian, tổ chức, có thể chỉ ra
+                                một vài những vấn đề về chuyên môn khi bạn được học ở khóa học mà có liên quan đến công
+                                việc).</li>
+                            <li>Chứng chỉ Tin học, Ngoại ngữ…(nếu có).</li>
+
+                        </ul>
+
+                    </div>
+                    <div class="taocv-huongdan-hoatdong taocv-huongdan-item">
+                        <h4>Hoạt động</h4>
+                        <hr>
+                        <ul>
+                            <li>Liệt kê các hoạt động cộng đồng, tình nguyện,...</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

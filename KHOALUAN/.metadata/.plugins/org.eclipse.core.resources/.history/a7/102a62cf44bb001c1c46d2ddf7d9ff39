@@ -1,0 +1,4 @@
+<!-- Footer  -->
+<footer class="footer" style="height: 50px; background-color: F9F9F9;">
+        <span class="text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Tuyen Dung </span>
+</footer>

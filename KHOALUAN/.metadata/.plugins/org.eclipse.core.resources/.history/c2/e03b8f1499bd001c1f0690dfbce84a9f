@@ -1,0 +1,102 @@
+package cntt.trang.bean;
+
+public class CV {
+	private long maCV;
+	private String anhDaiDien;
+	private String viTriUngTuyen;
+	private long maKyNang;
+	private String soThich;
+	private String mucTieuNgheNghiep;
+	private long maHocVan;
+	private long maKinhNghiem;
+	private long maHoatDong;
+	private String maSinhVien;
+	private long maChungChi;
+	public long getMaCV() {
+		return maCV;
+	}
+	public void setMaCV(long maCV) {
+		this.maCV = maCV;
+	}
+	public String getAnhDaiDien() {
+		return anhDaiDien;
+	}
+	public void setAnhDaiDien(String anhDaiDien) {
+		this.anhDaiDien = anhDaiDien;
+	}
+	public String getViTriUngTuyen() {
+		return viTriUngTuyen;
+	}
+	public void setViTriUngTuyen(String viTriUngTuyen) {
+		this.viTriUngTuyen = viTriUngTuyen;
+	}
+	public long getMaKyNang() {
+		return maKyNang;
+	}
+	public void setMaKyNang(long maKyNang) {
+		this.maKyNang = maKyNang;
+	}
+	public String getSoThich() {
+		return soThich;
+	}
+	public void setSoThich(String soThich) {
+		this.soThich = soThich;
+	}
+	public String getMucTieuNgheNghiep() {
+		return mucTieuNgheNghiep;
+	}
+	public void setMucTieuNgheNghiep(String mucTieuNgheNghiep) {
+		this.mucTieuNgheNghiep = mucTieuNgheNghiep;
+	}
+	public long getMaHocVan() {
+		return maHocVan;
+	}
+	public void setMaHocVan(long maHocVan) {
+		this.maHocVan = maHocVan;
+	}
+	public long getMaKinhNghiem() {
+		return maKinhNghiem;
+	}
+	public void setMaKinhNghiem(long maKinhNghiem) {
+		this.maKinhNghiem = maKinhNghiem;
+	}
+	public long getMaHoatDong() {
+		return maHoatDong;
+	}
+	public void setMaHoatDong(long maHoatDong) {
+		this.maHoatDong = maHoatDong;
+	}
+	public String getMaSinhVien() {
+		return maSinhVien;
+	}
+	public void setMaSinhVien(String maSinhVien) {
+		this.maSinhVien = maSinhVien;
+	}
+	public long getMaChungChi() {
+		return maChungChi;
+	}
+	public void setMaChungChi(long maChungChi) {
+		this.maChungChi = maChungChi;
+	}
+	public CV(long maCV, String anhDaiDien, String viTriUngTuyen, long maKyNang, String soThich,
+			String mucTieuNgheNghiep, long maHocVan, long maKinhNghiem, long maHoatDong, String maSinhVien,
+			long maChungChi) {
+		super();
+		this.maCV = maCV;
+		this.anhDaiDien = anhDaiDien;
+		this.viTriUngTuyen = viTriUngTuyen;
+		this.maKyNang = maKyNang;
+		this.soThich = soThich;
+		this.mucTieuNgheNghiep = mucTieuNgheNghiep;
+		this.maHocVan = maHocVan;
+		this.maKinhNghiem = maKinhNghiem;
+		this.maHoatDong = maHoatDong;
+		this.maSinhVien = maSinhVien;
+		this.maChungChi = maChungChi;
+	}
+	public CV() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+}
