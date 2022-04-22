@@ -4,6 +4,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,29 +18,31 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cntt.trang.bean.DoanhNghiep;
 import cntt.trang.bean.QuanHuyen;
 import cntt.trang.bean.QuangBa;
-import cntt.trang.bean.TinhThanh;
+import cntt.trang.bean.TuyenDung;
 import cntt.trang.bean.XaPhuong;
 import cntt.trang.dao.DoanhNghiepDAO;
+import cntt.trang.dao.HinhThucLamViecDAO;
 import cntt.trang.dao.LinhVucHoatDongCap1DAO;
 import cntt.trang.dao.LinhVucHoatDongCap2DAO;
 import cntt.trang.dao.LoaiHinhDoanhNghiepDAO;
+import cntt.trang.dao.NganhNgheDAO;
 import cntt.trang.dao.QuanHuyenDAO;
 import cntt.trang.dao.QuangBaDAO;
 import cntt.trang.dao.TinhThanhDAO;
+import cntt.trang.dao.TuyenDungDAO;
 import cntt.trang.dao.XaPhuongDAO;
 
 @Controller
 @RequestMapping(value = "/doanhnghiep")
 public class DoanhNghiepController {
 	@RequestMapping(value= {"","/timkiem"}, method=RequestMethod.GET)
-    public String tuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+    public String doanhNghiep(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
 	 	try {
 	 		response.setContentType("text/html;charset=UTF-8");
 	 		request.setCharacterEncoding("UTF-8");
@@ -253,7 +257,7 @@ public class DoanhNghiepController {
 	 		DoanhNghiep doanhnghiep=(DoanhNghiep) session.getAttribute("doanhnghiep");
 	 		
 	 		model.addAttribute("title", "Quảng Bá");
-	 		model.addAttribute("dsQuangBa", quangBaDAO.getAllQuangBaDaDuyetByMaDoanhNghiep(doanhnghiep.getMaDoanhNghiep()));
+	 		model.addAttribute("dsQuangBa", quangBaDAO.getAllQuangBaByMaDoanhNghiep(doanhnghiep.getMaDoanhNghiep()));
 	 		
 	 		return "doanhnghiep/quangba/list";
 		} catch (Exception e) {
@@ -264,7 +268,7 @@ public class DoanhNghiepController {
     }
 	@RequestMapping(value= {"/quangba"}, method=RequestMethod.POST)
     public String themQuangBa(@RequestParam("txtTieuDe") String tieuDe,@RequestParam("txtNoiDung") String noiDungDaiDien,
-    		@RequestParam("imgAnhDaiDien") String hinhAnhDaiDien, @RequestParam("txtBaiViet") String baiViet, 
+    		@RequestParam("imgAnhDaiDien") CommonsMultipartFile hinhAnhDaiDien, @RequestParam("txtBaiViet") String baiViet, 
     		Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
 	 	try {
 	 		response.setContentType("text/html;charset=UTF-8");
@@ -278,20 +282,289 @@ public class DoanhNghiepController {
 			
 	 		byte[] bytes=hinhAnhDaiDien.getBytes();
 			Date date=new Date();
-//			String name="anh"+date.getTime()+hinhAnhDaiDien.getOriginalFilename().substring(hinhAnhDaiDien.getOriginalFilename().indexOf("."));
-//			File uploadfile=new File(dir.getAbsolutePath()+"\\"+name);
-//			BufferedOutputStream outputStream=new BufferedOutputStream(new FileOutputStream(uploadfile));
-//			outputStream.write(bytes);
-//			outputStream.close();
-//			String anh ="image/"+name;
-//				
-//			DoanhNghiep doanhnghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
-//			QuangBaDAO quangBaDAO=new QuangBaDAO();
-//			quangBaDAO.insertQuangBa(tieuDe, noiDungDaiDien, anh, baiViet, false, doanhnghiep.getMaDoanhNghiep());
+			String name="anh"+date.getTime()+hinhAnhDaiDien.getOriginalFilename().substring(hinhAnhDaiDien.getOriginalFilename().indexOf("."));
+			File uploadfile=new File(dir.getAbsolutePath()+"\\"+name);
+			BufferedOutputStream outputStream=new BufferedOutputStream(new FileOutputStream(uploadfile));
+			outputStream.write(bytes);
+			outputStream.close();
+			String anh ="image/"+name;
+				
+			DoanhNghiep doanhnghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+			QuangBaDAO quangBaDAO=new QuangBaDAO();
+			int kq=quangBaDAO.insertQuangBa(tieuDe, noiDungDaiDien, anh, baiViet, false, doanhnghiep.getMaDoanhNghiep());
 			
+			if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Thêm bài quảng bá thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Thêm bài quảng bá thất bại!");
 			return "redirect:/doanhnghiep/quangba";
 		} catch (Exception e) {
 			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	
+	@RequestMapping(value= {"/quangba/chitiet"}, method=RequestMethod.GET)
+    public String chiTietQuangBa(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		String id = (String) model.asMap().get("id1");
+	 		long maQuangBa;
+	 		if(request.getParameter("id")!=null) maQuangBa= Long.parseLong(request.getParameter("id")) ;
+	 		else maQuangBa=Long.parseLong(id);
+	 		QuangBaDAO quangBaDAO= new QuangBaDAO();
+	 		QuangBa quangBa= quangBaDAO.getQuangBaByID(maQuangBa);
+	 		
+
+	 		model.addAttribute("title", "Chi Tiết Quảng Bá");
+	 		model.addAttribute("quangBa", quangBa);
+	 		
+	 		return "doanhnghiep/quangba/chitiet";
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/quangba/xoa"}, method=RequestMethod.GET)
+    public String xoaQuangBa(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		long maQuangBa = Long.parseLong(request.getParameter("id")) ;
+	 		QuangBaDAO quangBaDAO= new QuangBaDAO();
+	 		int kq= quangBaDAO.deleteQuangBa(maQuangBa);
+	 		
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Xoá bài quảng bá thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Xoá bài quảng bá thất bại!");
+	 		return "redirect:/doanhnghiep/quangba";
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/quangba/sua"}, method=RequestMethod.GET)
+    public String displaySuaQuangBa(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		long maQuangBa = Long.parseLong(request.getParameter("id")) ;
+	 		QuangBaDAO quangBaDAO= new QuangBaDAO();
+	 		QuangBa quangBa= quangBaDAO.getQuangBaByID(maQuangBa);
+	 		model.addAttribute("quangBa", quangBa);
+	 		model.addAttribute("title", "Sửa Quảng Bá");
+	 		return "doanhnghiep/quangba/sua";
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/quangba/sua"}, method=RequestMethod.POST)
+    public String suaQuangBa(@RequestParam("txtTieuDe") String tieuDe,@RequestParam("txtNoiDung") String noiDungDaiDien,
+    		@RequestParam("imgAnhDaiDien") CommonsMultipartFile hinhAnhDaiDien, @RequestParam("txtBaiViet") String baiViet,
+    		@RequestParam("txtMaQuangBa") String maQuangBa, 
+    		Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		QuangBaDAO quangBaDAO=new QuangBaDAO();
+	 		String anh;
+	 		if(hinhAnhDaiDien!= null) anh=quangBaDAO.getQuangBaByID(Long.parseLong(maQuangBa)).getHinhAnhDaiDien();
+	 		else {
+	 			String absolutefilePath=request.getServletContext().getRealPath("/image");
+				File dir = new File(absolutefilePath);
+				if(!dir.exists()) {
+					dir.mkdirs();
+				}
+				
+		 		byte[] bytes=hinhAnhDaiDien.getBytes();
+				Date date=new Date();
+				String name="anh"+date.getTime()+hinhAnhDaiDien.getOriginalFilename().substring(hinhAnhDaiDien.getOriginalFilename().indexOf("."));
+				File uploadfile=new File(dir.getAbsolutePath()+"\\"+name);
+				BufferedOutputStream outputStream=new BufferedOutputStream(new FileOutputStream(uploadfile));
+				outputStream.write(bytes);
+				outputStream.close();
+				anh ="image/"+name;
+	 		}
+
+			int kq=quangBaDAO.updateQuangBa(Long.parseLong(maQuangBa), tieuDe, noiDungDaiDien, anh, baiViet);
+			
+			redirectAttributes.addFlashAttribute("id1", maQuangBa);
+			if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Sửa bài quảng bá thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Sửa bài quảng bá thất bại!");
+			return "redirect:/doanhnghiep/quangba/chitiet";
+
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/tuyendung"}, method=RequestMethod.GET)
+    public String timKiemTuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		TuyenDungDAO tuyenDungDAO= new TuyenDungDAO();
+	 		NganhNgheDAO nganhNgheDAO= new NganhNgheDAO();
+	 		HinhThucLamViecDAO hinhThucLamViecDAO = new HinhThucLamViecDAO();
+	 	
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep) session.getAttribute("doanhnghiep");
+	 		model.addAttribute("dsTuyenDung", tuyenDungDAO.getAllTuyenDungByMaDoanhNghiep(doanhNghiep.getMaDoanhNghiep()));
+	 		System.out.println(tuyenDungDAO.getAllTuyenDungByMaDoanhNghiep(doanhNghiep.getMaDoanhNghiep()).size());
+	 		model.addAttribute("nganhNgheDAO",nganhNgheDAO);
+	 		model.addAttribute("hinhThucLamViecDAO",hinhThucLamViecDAO);
+	 		model.addAttribute("title", "Tuyển Dụng");
+	 		
+	    	return "doanhnghiep/tuyendung/list";
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/tuyendung/taotuyendung"}, method=RequestMethod.GET)
+    public String displayTaoTuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		NganhNgheDAO nganhNgheDAO= new NganhNgheDAO();
+	 		HinhThucLamViecDAO hinhThucLamViecDAO=new HinhThucLamViecDAO();
+	 		TinhThanhDAO tinhThanhDAO= new TinhThanhDAO();
+	 		
+	 		model.addAttribute("dsNganhNghe", nganhNgheDAO.getAllNganhNghe());
+	 		model.addAttribute("dsHinhThuc",hinhThucLamViecDAO.getAllHinhThucLamViec());
+	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
+	 		model.addAttribute("title", "Tạo Tuyển Dụng");
+	 		
+	    	return "doanhnghiep/tuyendung/tao";
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/tuyendung/taotuyendung"}, method=RequestMethod.POST)
+    public String taoTuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		long maNganhNghe=Long.parseLong(request.getParameter("cmbNganhNghe")) ;
+	 		String tenCongViec=request.getParameter("txtTenCongViec");
+	 		long maHinhThuc=Long.parseLong(request.getParameter("cmbHinhThuc")) ;
+	 		String thoiGianThuViec=null;
+	 		if(!request.getParameter("cmbThoiGianThuViec").equals("0")) thoiGianThuViec=request.getParameter("cmbThoiGianThuViec");
+	 		Integer sinhVienNam=Integer.parseInt(request.getParameter("cmbSinhVienNam"));
+	 		String gioiTinh=null;
+	 		if(!request.getParameter("cmbGioiTinh").equals("0")) gioiTinh=request.getParameter("cmbGioiTinh");
+	 		String khuVucTuyenDung=request.getParameter("cmbKhuVucTuyen");
+	 		int soLuong=Integer.parseInt(request.getParameter("numSoLuong")) ;
+	 		String mucLuong=request.getParameter("txtMucLuong");
+	 		System.out.println(request.getParameter("dHanDangKy"));
+			SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+			Date hanDangKy= sdf.parse(request.getParameter("dHanDangKy"));
+	 		String tieuDe=request.getParameter("txtTieuDe");
+	 		String moTaCongViec=request.getParameter("txtMoTaCongViec");
+	 		String yeuCauCongViec=request.getParameter("txtYeuCauCongViec");
+	 		String quyenLoi=request.getParameter("txtQuyenLoi");
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+	 		TuyenDungDAO tuyenDungDAO= new TuyenDungDAO();
+	 		int kq=tuyenDungDAO.insertTuyenDung(maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, false, doanhNghiep.getMaDoanhNghiep());
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Thêm bài tuyển dụng thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Thêm bài tuyển dụng thất bại!");
+	 		
+	    	return "redirect:/doanhnghiep/tuyendung";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/tuyendung/xoa"}, method=RequestMethod.GET)
+    public String xoaTuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		long maTuyenDung = Long.parseLong(request.getParameter("id")) ;
+	 		TuyenDungDAO tuyenDungDAO= new TuyenDungDAO();
+	 		int kq= tuyenDungDAO.deleteTuyenDung(maTuyenDung);
+	 		
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Xoá bài tuyển dụng thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Xoá bài tuyển dụng thất bại!");
+	 		return "redirect:/doanhnghiep/tuyendung";
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/tuyendung/sua"}, method=RequestMethod.GET)
+    public String displaySuaTuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		long maTuyenDung = Long.parseLong(request.getParameter("id")) ;
+	 		TuyenDungDAO tuyenDungDAO= new TuyenDungDAO();
+	 		TuyenDung tuyenDung= tuyenDungDAO.getTuyenDungByID(maTuyenDung);
+	 		NganhNgheDAO nganhNgheDAO= new NganhNgheDAO();
+	 		HinhThucLamViecDAO hinhThucLamViecDAO=new HinhThucLamViecDAO();
+	 		TinhThanhDAO tinhThanhDAO= new TinhThanhDAO();
+	 		
+	 		model.addAttribute("dsNganhNghe", nganhNgheDAO.getAllNganhNghe());
+	 		model.addAttribute("dsHinhThuc",hinhThucLamViecDAO.getAllHinhThucLamViec());
+	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
+	 		model.addAttribute("tuyenDung", tuyenDung);
+	 		model.addAttribute("title", "Sửa Tuyển Dụng");
+	 		return "doanhnghiep/tuyendung/sua";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/tuyendung/sua"}, method=RequestMethod.POST)
+    public String suaTuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		long maNganhNghe=Long.parseLong(request.getParameter("cmbNganhNghe")) ;
+	 		String tenCongViec=request.getParameter("txtTenCongViec");
+	 		long maHinhThuc=Long.parseLong(request.getParameter("cmbHinhThuc")) ;
+	 		String thoiGianThuViec=request.getParameter("cmbThoiGianThuViec");
+	 		if(thoiGianThuViec.equals("0")) thoiGianThuViec=null;
+	 		Integer sinhVienNam=Integer.parseInt(request.getParameter("cmbSinhVienNam"));
+	 		String gioiTinh=request.getParameter("cmbGioiTinh");
+	 		if(gioiTinh.equals("0")) gioiTinh=null;
+	 		String khuVucTuyenDung=request.getParameter("cmbKhuVucTuyen");
+	 		int soLuong=Integer.parseInt(request.getParameter("numSoLuong")) ;
+	 		String mucLuong=request.getParameter("txtMucLuong");
+			SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+			Date hanDangKy= sdf.parse(request.getParameter("dHanDangKy"));
+	 		String tieuDe=request.getParameter("txtTieuDe");
+	 		String moTaCongViec=request.getParameter("txtMoTaCongViec");
+	 		String yeuCauCongViec=request.getParameter("txtYeuCauCongViec");
+	 		String quyenLoi=request.getParameter("txtQuyenLoi");
+	 		long maTuyenDung= Long.parseLong(request.getParameter("txtMaTuyenDung")) ;
+	 		
+	 		TuyenDungDAO tuyenDungDAO= new TuyenDungDAO();
+	 		int kq=tuyenDungDAO.updateTuyenDung(maTuyenDung, maNganhNghe, maHinhThuc,sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi);
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Sửa bài tuyển dụng thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Sửa bài tuyển dụng thất bại!");
+	 		return "redirect:/doanhnghiep/tuyendung";
+
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
        

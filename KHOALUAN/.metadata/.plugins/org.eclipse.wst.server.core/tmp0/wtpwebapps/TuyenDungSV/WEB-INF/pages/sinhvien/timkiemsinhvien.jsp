@@ -14,7 +14,12 @@
     </div>
     <div class="container">
     <div style="height: 15px;"></div>
-    
+    <c:if test="${dktc!=null }">
+      			<div class="alert alert-success alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				${dktc } 
+      			</div>
+    </c:if>
     <form action="/sinhvien/timkiem" class="row">
     	<div class="col-5">
         	<input type="text" class="form-control" name="txtKyNang" placeholder="Nhập kỹ năng cần thiết" >

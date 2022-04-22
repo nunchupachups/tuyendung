@@ -6,11 +6,9 @@ body{
     width: 1146px;
     background-color: white;
     min-height: calc(100vh - 120px);
+    padding: 15px;
 }
 .tuyendung-container{
-    background-color: rgb(121, 214, 178);
-    border-radius: 20px;
-    padding: 30px;
     padding-bottom: 50px;
 }
 .tuyendung-dropdown{
@@ -117,7 +115,7 @@ body{
 .taocv-huongdan-chung{
     display: block;
 }
-.doanhnghiep, .sinhvien{
+.doanhnghiep, .sinhvien, .tuyendung{
     border: #548CA8 2px solid;
     border-radius: 10px;
     padding: 10px;
@@ -149,7 +147,7 @@ height: calc(100% - 73px);
     width: 1146px;
     height: 500px;
     margin: auto;
-    
+    transform: translateX(-3px);
   }
   .mySlide{
     width: 100%;

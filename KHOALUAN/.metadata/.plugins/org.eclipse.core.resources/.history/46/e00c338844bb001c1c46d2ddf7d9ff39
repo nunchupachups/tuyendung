@@ -1,6 +1,0 @@
-<!-- Footer  -->
-<footer class="footer">
-    <div >
-        <span class="text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Tuyen Dung </span>
-    </div>
-</footer>

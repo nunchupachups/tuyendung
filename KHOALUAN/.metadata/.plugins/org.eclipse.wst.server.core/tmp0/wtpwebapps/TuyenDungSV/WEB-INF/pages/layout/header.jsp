@@ -18,4 +18,5 @@
 <link rel="stylesheet" href="${contextPath }/css/navbar.css">
 <script src="${contextPath }/js/main.js"></script>
 <script src="${contextPath }/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="${contextPath }/ckfinder/ckfinder.js"></script>
     

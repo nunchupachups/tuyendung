@@ -17,67 +17,44 @@
     <div class="container">
     	
         <div class="slideshow-container" >
-        
-        <div class="mySlide row" >
-            <div class="col-6 slide-left ">
-                <h1>Tiêu đề của slide đầu tiên!</h1>
-                <p>Nội dung của slide đầu tiên</p>
-                <button class="btn btn-primary btn-lg">
-                    Xem thêm
-                </button>
-            </div>
-            <div class="col-6 slide-right ">
-                <img src="https://www.elleman.vn/wp-content/uploads/2019/03/06/cho-cung-ELLE-Man-1-475x661.jpg" >
-    
-            </div>
-        
-            <div class=" col-6 slide-left ">
-                <h1>Tiêu đề của slide đầu 2!</h1>
-                <div class="slide-content">
-                    <p>Nội dung của slide đầu tiênNội dung của slide đầu tiênNội dung 
-                        của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung 
-                        của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu
-                         tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung
-                          của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu 
-                          tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung
-                           của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide 
-                           đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội
-                            dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của 
-                            slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu 
-                            tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung 
-                            của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide
-                             đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội 
-                             dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của 
-                             slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu 
-                             tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội 
-                             dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của 
-                             slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu 
-                             tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội
-                              dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung 
-                              của slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của 
-                              slide đầu tiênNội dung của slide đầu tiênNội dung của slide đầu tiênNội dung của slide 
-                              đầu tiênNội dung của slide đầu tiên</p>
-                </div>
-                
-                <button class="btn btn-primary btn-lg" style="margin-top: 10px;">
-                    Xem thêm
-                </button>
-            </div>
-            <div class="col-6 slide-right ">
-                <img src="https://cdn.tgdd.vn/Files/2021/04/18/1344307/top-7-giong-cho-dep-nhat-the-gioi-ma-ban-khong-the-bo-qua-202104181556208411.png" >
-            </div>
-        
-            <div style="text-align:center" class="dots">
-                <span class="dot" onclick="currentSlide(0)"></span> 
-                <span class="dot" onclick="currentSlide(1)"></span> 
-                <span class="dot" onclick="currentSlide(2)"></span> 
-              </div>
-        </div>
-        
+        <c:if test="${!dsQuangBa.isEmpty() }">
+	        <div class="mySlide row" >
+	        
+	        	<c:forEach items="${dsQuangBa}" var="qb">
+	        		<div class="col-6 slide-left ">
+		                <h1>${qb.getTieuDe() }</h1>
+		                <p>${qb.getNoiDungDaiDien() }</p>
+		                <button class="btn btn-primary btn-lg">
+		                    <a href="/doanhnghiep/quangba/chitiet?id=${qb.getMaQuangBa() }" style="color: white; text-decoration: none;">Xem thêm</a>
+		                </button>
+		            </div>
+		            <div class="col-6 slide-right ">
+		                <img src="${contextPath }/${qb.getHinhAnhDaiDien() }" >
+		    
+		            </div>
+	        	</c:forEach>
+	        	<div style="text-align:center" class="dots">
+	            <c:forEach items="${dsQuangBa}" varStatus="theCount">
+		            <span class="dot" onclick="currentSlide(${theCount.index})"></span> 
+	        	</c:forEach>
+	        	</div>
+	        </div>
+        </c:if>
       </div>
-      
-      <form class="row" method="post" action="/doanhnghiep/quangba">
-            <h3 style="color: rgb(6, 109, 70)" class="mb-5 mt-5">Thêm bài quảng bá mới</h3>
+       <c:if test="${msg1!=null }">
+      			<div class="alert alert-success alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				${msg1 } 
+      			</div>
+    	</c:if> 
+    	<c:if test="${msg2!=null }">
+      			<div class="alert alert-danger alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				${msg2 } 
+      			</div>
+    	</c:if> 
+      <form class="row" method="post" action="/doanhnghiep/quangba" enctype="multipart/form-data">
+            <h3 style="color: rgb(6, 109, 70)" class="mb-5 mt-4">Thêm bài quảng bá mới</h3>
 
             <div class="row mb-3">
                 <label for="title" class="col-sm-2 col-form-label">Tiêu đề<span class="required"> *</span></label>
