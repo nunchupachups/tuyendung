@@ -8,26 +8,27 @@
 	<a class="navbar-brand " href="#" >
       <img src="${contextPath }/image/brand.png" class="img-brand" > 
     </a>
-    <div style="display: inline-block;">
+    
     <c:choose>
     	<c:when test="${sessionScope.sinhvien != null||sessionScope.doanhnghiep != null||sessionScope.admin != null}">
     		<c:choose>
-    				<c:when test="${sessionScope.sinhvien != null}">
+    		<c:when test="${sessionScope.sinhvien != null}">
+    		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
 			      <li class="nav-item">
-			        <a class="nav-link " href="#">Doanh Nghiệp</a>
+			        <a class="nav-link " href="/doanhnghiep">Doanh Nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="#">Tuyển dụng</a>
+			        <a class="nav-link" href="/sinhvien/tuyendung">Tuyển dụng</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="#">CV</a>
+			        <a class="nav-link" href="/sinhvien/CV">CV</a>
 			      </li>
 			    </ul>
 			    </div>
 			    <div style="display: inline-block;float:right;">
 			    <ul class="navbar-nav " >
-			    	<span style="margin-top: 10px;">${sessionScope.sinhvien.hoTen }</span> 
+			    	<span style="margin-top: 10px;">${sessionScope.sinhvien.getTenSinhVien() }</span> 
 				   <div class="dropdown">
 			          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
 			            
@@ -35,7 +36,7 @@
 			          </button>
 			          <ul class="dropdown-menu dropdown-account">
 			            <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
-			            <li><a class="dropdown-item" href="#">Đăng xuất <i class="fas fa-sign-out-alt"></i></a></li>
+			            <li><a class="dropdown-item" href="/sinhvien/dangxuat">Đăng xuất <i class="fas fa-sign-out-alt"></i></a></li>
 			          </ul>
 			        </div>
 				      
@@ -43,6 +44,7 @@
 			    </div>
     		</c:when>
     		<c:when test="${sessionScope.doanhnghiep != null}">
+    		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
 			      <li class="nav-item">
 			        <a class="nav-link " href="/sinhvien/timkiem">Sinh viên</a>
@@ -54,7 +56,7 @@
 			        <a class="nav-link" href="/doanhnghiep/tuyendung">Tuyển dụng</a>
 			      </li>
 			    </ul>
-			    </div>
+			</div>
 			    <div style="display: inline-block;float:right;">
 			    <ul class="navbar-nav " >
 			    	<span style="margin-top: 10px;">${sessionScope.doanhnghiep.tenDoanhNghiep }</span> 
@@ -73,6 +75,7 @@
 			    </div>
     		</c:when>
     		<c:otherwise>
+    		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
 			      <li class="nav-item">
 			        <a class="nav-link " href="#">Doanh nghiệp</a>
@@ -93,6 +96,7 @@
     	
     	</c:when>
     	<c:otherwise>
+    	<div style="display: inline-block;">
     		<ul class="navbar-nav " >
 			      <li class="nav-item">
 			        <a class="nav-link " href="/doanhnghiep">Doanh nghiệp</a>

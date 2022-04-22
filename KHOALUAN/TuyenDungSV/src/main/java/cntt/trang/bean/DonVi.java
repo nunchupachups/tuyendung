@@ -3,7 +3,7 @@ package cntt.trang.bean;
 public class DonVi {
 	private long maDonVi;
 	private String tenDonVi;
-	private long maCV;
+	private String maCV;
 	private String mucCV;
 	public long getMaDonVi() {
 		return maDonVi;
@@ -17,10 +17,10 @@ public class DonVi {
 	public void setTenDonVi(String tenDonVi) {
 		this.tenDonVi = tenDonVi;
 	}
-	public long getMaCV() {
+	public String getMaCV() {
 		return maCV;
 	}
-	public void setMaCV(long maCV) {
+	public void setMaCV(String maCV) {
 		this.maCV = maCV;
 	}
 	public String getMucCV() {
@@ -29,7 +29,7 @@ public class DonVi {
 	public void setMucCV(String mucCV) {
 		this.mucCV = mucCV;
 	}
-	public DonVi(long maDonVi, String tenDonVi, long maCV, String mucCV) {
+	public DonVi(long maDonVi, String tenDonVi, String maCV, String mucCV) {
 		super();
 		this.maDonVi = maDonVi;
 		this.tenDonVi = tenDonVi;

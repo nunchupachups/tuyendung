@@ -4,7 +4,7 @@ public class KyNang {
 	private long maKyNang;
 	private String tenKyNang;
 	private int doThanhThao;
-	private long maCV;
+	private String maCV;
 	public long getMaKyNang() {
 		return maKyNang;
 	}
@@ -23,13 +23,13 @@ public class KyNang {
 	public void setDoThanhThao(int doThanhThao) {
 		this.doThanhThao = doThanhThao;
 	}
-	public long getMaCV() {
+	public String getMaCV() {
 		return maCV;
 	}
-	public void setMaCV(long maCV) {
+	public void setMaCV(String maCV) {
 		this.maCV = maCV;
 	}
-	public KyNang(long maKyNang, String tenKyNang, int doThanhThao, long maCV) {
+	public KyNang(long maKyNang, String tenKyNang, int doThanhThao, String maCV) {
 		super();
 		this.maKyNang = maKyNang;
 		this.tenKyNang = tenKyNang;
