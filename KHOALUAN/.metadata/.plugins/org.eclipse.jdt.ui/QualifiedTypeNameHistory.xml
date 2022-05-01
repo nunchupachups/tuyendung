@@ -56,8 +56,8 @@
 <fullyQualifiedTypeName name="cntt.trang.dao.KyNangDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.ChungChiDAO"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.DonVi"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.KyNang"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.ChungChi"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.ViTri"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.DonVi"/>
 </qualifiedTypeNameHistroy>

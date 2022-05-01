@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="dangnhap"/>
+		<item key="selection" value="session"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="dangnhap"/>
-			<item value="dang"/>
-			<item value="da"/>
-			<item value="ky"/>
-			<item value="check"/>
-			<item value="req"/>
-			<item value="Lư"/>
-			<item value="lư"/>
+			<item value="session"/>
+			<item value="cv"/>
+			<item value="session.setAttribute(&quot;cv&quot;"/>
+			<item value="session.setAttribute(&quot;cv&quot;)"/>
+			<item value="session.addAttribute(&quot;cv&quot;)"/>
+			<item value="CV"/>
+			<item value="HocVan"/>
+			<item value="hoc"/>
+			<item value="batbuoc"/>
+			<item value="&lt;/form"/>
 			<item value="&lt;form"/>
-			<item value="&lt;form&gt;"/>
 			<item value="form"/>
-			<item value="err"/>
-			<item value="errorViTriLamViec"/>
-			<item value="huỷ"/>
-			<item value="myModalChungChi"/>
+			<item value="name="/>
+			<item value="name=&apos;&apos;"/>
+			<item value="required"/>
 		</list>
 		<list key="replacehistory">
+			<item value="batbuoc"/>
+			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="734"/>
+		<item key="DIALOG_X_ORIGIN" value="268"/>
 		<item key="DIALOG_Y_ORIGIN" value="222"/>
-		<item key="DIALOG_WIDTH" value="235"/>
+		<item key="DIALOG_WIDTH" value="381"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 	</section>
