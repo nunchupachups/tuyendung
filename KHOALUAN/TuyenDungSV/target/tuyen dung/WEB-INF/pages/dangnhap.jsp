@@ -25,9 +25,9 @@
               <h3 style="color: rgb(6, 109, 70);margin-left: 90px;" class="mb-5 ">Đăng nhập</h3>
               <p class="lead mb-0 ">Đăng nhập bằng</p>
                 <div class="text-lg-start mt-1 pt-2">
-                  <button type="button" class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" ><a style="color: white; text-decoration: none;" href="/doanhnghiep/dangnhap">Tài khoản doanh nghiệp</a></button>
-                  <button type="button" class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" >Tài khoản sinh viên</button>
-                  <button type="button" class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" >Tài khoản quản trị</button>
+                  <a class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" href="/doanhnghiep/dangnhap">Tài khoản doanh nghiệp</a>
+                  <a class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" href="/sinhvien/dangnhap">Tài khoản sinh viên</a>
+                  <a class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" href="/admin/dangnhap">Tài khoản quản trị</a>
                   <p class="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản? <a href="#!" class="link-danger">Đăng ký tài khoản doanh nghiệp</a></p>
                 </div>
       

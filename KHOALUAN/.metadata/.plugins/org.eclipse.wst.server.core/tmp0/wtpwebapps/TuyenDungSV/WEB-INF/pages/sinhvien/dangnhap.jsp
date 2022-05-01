@@ -22,7 +22,7 @@
                 class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-              <form method="post" action="/sinhvien/dangnhap">
+              <form method="post" action="/sinhvien/dangnhap" >
                 <!-- Email input -->
                 <h3 style="color: rgb(6, 109, 70);margin-left: 150px;" class="mb-5 ">Đăng nhập tài khoản sinh vien	</h3>
                 <div class="form-outline mb-4">
@@ -54,7 +54,7 @@
       			</div>
       		</c:if>
                 <div class="text-center text-lg-start mt-4 pt-2">
-                  <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Đăng nhập</button>
+                  <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" >Đăng nhập</button>
                 </div>
       
               </form>

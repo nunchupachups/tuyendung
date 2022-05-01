@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Sli"/>
+		<item key="selection" value="dangnhap"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="sli"/>
-			<item value="sil"/>
-			<item value="tuye"/>
-			<item value="drop"/>
-			<item value="dktc"/>
-			<item value="fixed"/>
-			<item value="nav"/>
-			<item value="doanhnghiep"/>
-			<item value="javax.servlet.jsp"/>
-			<item value="org.springframework"/>
-			<item value="commons"/>
-			<item value="&lt;groupId&gt;commons-io&lt;/groupId&gt;"/>
-			<item value="myModalThemsach"/>
-			<item value="#myModalThemsach"/>
-			<item value="contextPath"/>
+			<item value="dangnhap"/>
+			<item value="dang"/>
+			<item value="da"/>
+			<item value="ky"/>
+			<item value="check"/>
+			<item value="req"/>
+			<item value="Lư"/>
+			<item value="lư"/>
+			<item value="&lt;form"/>
+			<item value="&lt;form&gt;"/>
+			<item value="form"/>
+			<item value="err"/>
+			<item value="errorViTriLamViec"/>
+			<item value="huỷ"/>
+			<item value="myModalChungChi"/>
 		</list>
 		<list key="replacehistory">
 		</list>

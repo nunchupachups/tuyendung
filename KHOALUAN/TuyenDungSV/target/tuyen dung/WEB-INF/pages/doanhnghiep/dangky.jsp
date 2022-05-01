@@ -39,7 +39,7 @@
             <div class="row mb-3">
               <label for="rePassword" class="col-sm-2 col-form-label">Xác nhận lại mật khẩu<span class="required"> *</span></label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="rePassword" name="txtNhapLaiMatKhau" required="required">
+                <input type="password" class="form-control" id="rePassword" required="required">
               </div>
             </div>
             <div class="row mb-3">
@@ -98,33 +98,28 @@
             <div class="row mb-3">
               <label for="city" class="col-sm-3 col-form-label">Chọn Tỉnh/Thành phố<span class="required"> *</span></label>
               <div class="col-sm-9">
-                <select class="form-select" aria-label="Default select example" id="city" name="cmbTinhThanh" required="required">
-                  <option selected disabled>----------</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select class="form-select" aria-label="Default select example" id="city" name="cmbTinhThanh" required="required"  onchange="setQuanHuyen()">
+	        		<option disabled selected>----------</option>
+	        		<c:forEach items="${dsTinhThanh }" var="tt">
+
+	        			<option value="${tt.getMaTinhThanh()}">${tt.getTenTinhThanh() }</option> 
+	        		</c:forEach>
                 </select>
               </div>
             </div>
             <div class="row mb-3">
               <label for="district" class="col-sm-3 col-form-label">Chọn Quận/Huyện<span class="required"> *</span></label>
               <div class="col-sm-9">
-                <select class="form-select" aria-label="Default select example" id="district" name="cmbQuanHuyen" required="required">
-                  <option selected disabled>----------</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select class="form-select" aria-label="Default select example" id="district" name="cmbQuanHuyen" required="required" onchange="setXaPhuong()">              
+                	<option disabled selected>----------</option>
                 </select>
               </div>
             </div>
             <div class="row mb-3">
               <label for="ward" class="col-sm-3 col-form-label">Chọn Xã/Phường/Thị trấn<span class="required"> *</span></label>
               <div class="col-sm-9">
-                <select class="form-select" aria-label="Default select example" id="ward" name="cmbXaPhuong" required="required">
-                  <option selected disabled>----------</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select class="form-select" aria-label="Default select example" id="ward" name="cmbXaPhuong" required="required" > 
+                	
                 </select>
               </div>
             </div>
@@ -138,10 +133,14 @@
               <label for="field" class="col-sm-3 col-form-label">Chọn lĩnh vực hoạt động<span class="required"> *</span></label>
               <div class="col-sm-9">
                 <select class="form-select" aria-label="Default select example" id="field" name="cmbLinhVucHoatDong" required="required">
-                  <option selected disabled>----------</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  <c:forEach items="${dsLinhVuc }" var="lv">
+                	<optgroup title="${lv.getTenLinhVuc() }" label="${lv.getTenLinhVuc() }">
+                		<c:forEach items="${linhVucHoatDongCap2DAO.getAllLinhVucHoatDongByIdCap1(lv.getMaLinhVuc()) }" var="lvc1">
+                			<option title="${lvc1.getTenLinhVuc() }" value="${lvc1.getMaLinhVuc() }">${lvc1.getTenLinhVuc() }</option>
+                		</c:forEach>
+                	</optgroup>
+        			
+        			</c:forEach>
                 </select>
               </div>
             </div>
@@ -149,10 +148,9 @@
               <label for="enterpriseType" class="col-sm-3 col-form-label">Chọn loại hình doanh nghiệp<span class="required"> *</span></label>
               <div class="col-sm-9">
                 <select class="form-select" aria-label="Default select example" id="enterpriseType" name="cmbLoaiHinhDoanhNghiep" required="required">
-                  <option selected disabled>----------</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  <c:forEach items="${dsLoaiHinhDoanhNghiep }" var="lhdn">
+        			<option value="${lhdn.getMaLoaiHinhDoanhNghiep() }">${lhdn.getTenLoaiHinhDoanhNghiep() }</option>
+        			</c:forEach>
                 </select>
               </div>
             </div>
@@ -196,5 +194,42 @@
     </div>
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    
+<script>
+
+function setQuanHuyen(){
+	var maTinhThanh = document.getElementById("city").value;
+	document.getElementById("ward").innerHTML="<option disabled selected>----------</option>";
+	$.ajax({ 
+	    type:"post", 
+	    url: "/doanhnghiep/dangky/quanhuyen", 
+	    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	    data: {
+	    	maTinhThanh: maTinhThanh,
+	    }, 
+	    success: function(data) { 
+	    	var row = document.getElementById("district");
+	    	row.innerHTML += data;
+	    	
+	    },
+	    })
+};
+
+function setXaPhuong(){
+	var maQuanHuyen = document.getElementById("district").value;
+	$.ajax({ 
+	    type:"post", 
+	    url: "/doanhnghiep/dangky/xaphuong", 
+	    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	    data: {
+	    	maQuanHuyen: maQuanHuyen,
+	    }, 
+	    success: function(data) { 
+	    	var row = document.getElementById("ward");
+	    	row.innerHTML = data;
+	    },
+	    })
+};
+</script>
 </body>
 </html>

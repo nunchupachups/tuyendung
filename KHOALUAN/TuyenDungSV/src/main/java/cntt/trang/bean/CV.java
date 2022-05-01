@@ -2,35 +2,27 @@ package cntt.trang.bean;
 
 public class CV {
 	private String maSinhVien;
-	private String anhDaiDien;
 	private String viTriUngTuyen;
-	private long maKyNang;
 	private String soThich;
 	private String mucTieuNgheNghiep;
-	private long maChungChi;
+	private boolean ShowKyNang;
+	private boolean ShowChungChi;
+	private boolean ShowSoThich;
+	private boolean ShowMucTieuNgheNghiep;
+	private boolean ShowHocVan;
+	private boolean ShowKinhNghiemLamViec;
+	private boolean ShowHoatDong;
 	public String getMaSinhVien() {
 		return maSinhVien;
 	}
 	public void setMaSinhVien(String maSinhVien) {
 		this.maSinhVien = maSinhVien;
 	}
-	public String getAnhDaiDien() {
-		return anhDaiDien;
-	}
-	public void setAnhDaiDien(String anhDaiDien) {
-		this.anhDaiDien = anhDaiDien;
-	}
 	public String getViTriUngTuyen() {
 		return viTriUngTuyen;
 	}
 	public void setViTriUngTuyen(String viTriUngTuyen) {
 		this.viTriUngTuyen = viTriUngTuyen;
-	}
-	public long getMaKyNang() {
-		return maKyNang;
-	}
-	public void setMaKyNang(long maKyNang) {
-		this.maKyNang = maKyNang;
 	}
 	public String getSoThich() {
 		return soThich;
@@ -44,26 +36,71 @@ public class CV {
 	public void setMucTieuNgheNghiep(String mucTieuNgheNghiep) {
 		this.mucTieuNgheNghiep = mucTieuNgheNghiep;
 	}
-	public long getMaChungChi() {
-		return maChungChi;
+	
+	
+	public boolean isShowKyNang() {
+		return ShowKyNang;
 	}
-	public void setMaChungChi(long maChungChi) {
-		this.maChungChi = maChungChi;
+	public void setShowKyNang(boolean showKyNang) {
+		ShowKyNang = showKyNang;
 	}
-	public CV(String maSinhVien, String anhDaiDien, String viTriUngTuyen, long maKyNang, String soThich,
-			String mucTieuNgheNghiep, long maChungChi) {
+	public boolean isShowChungChi() {
+		return ShowChungChi;
+	}
+	public void setShowChungChi(boolean showChungChi) {
+		ShowChungChi = showChungChi;
+	}
+	public boolean isShowSoThich() {
+		return ShowSoThich;
+	}
+	public void setShowSoThich(boolean showSoThich) {
+		ShowSoThich = showSoThich;
+	}
+	public boolean isShowMucTieuNgheNghiep() {
+		return ShowMucTieuNgheNghiep;
+	}
+	public void setShowMucTieuNgheNghiep(boolean showMucTieuNgheNghiep) {
+		ShowMucTieuNgheNghiep = showMucTieuNgheNghiep;
+	}
+	public boolean isShowHocVan() {
+		return ShowHocVan;
+	}
+	public void setShowHocVan(boolean showHocVan) {
+		ShowHocVan = showHocVan;
+	}
+	public boolean isShowKinhNghiemLamViec() {
+		return ShowKinhNghiemLamViec;
+	}
+	public void setShowKinhNghiemLamViec(boolean showKinhNghiemLamViec) {
+		ShowKinhNghiemLamViec = showKinhNghiemLamViec;
+	}
+	public boolean isShowHoatDong() {
+		return ShowHoatDong;
+	}
+	public void setShowHoatDong(boolean showHoatDong) {
+		ShowHoatDong = showHoatDong;
+	}
+	
+	public CV(String maSinhVien, String viTriUngTuyen, String soThich, String mucTieuNgheNghiep,
+			boolean showKyNang, boolean showChungChi, boolean showSoThich, boolean showMucTieuNgheNghiep,
+			boolean showHocVan, boolean showKinhNghiemLamViec, boolean showHoatDong) {
 		super();
 		this.maSinhVien = maSinhVien;
-		this.anhDaiDien = anhDaiDien;
 		this.viTriUngTuyen = viTriUngTuyen;
-		this.maKyNang = maKyNang;
 		this.soThich = soThich;
 		this.mucTieuNgheNghiep = mucTieuNgheNghiep;
-		this.maChungChi = maChungChi;
+		ShowKyNang = showKyNang;
+		ShowChungChi = showChungChi;
+		ShowSoThich = showSoThich;
+		ShowMucTieuNgheNghiep = showMucTieuNgheNghiep;
+		ShowHocVan = showHocVan;
+		ShowKinhNghiemLamViec = showKinhNghiemLamViec;
+		ShowHoatDong = showHoatDong;
 	}
 	public CV() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 }

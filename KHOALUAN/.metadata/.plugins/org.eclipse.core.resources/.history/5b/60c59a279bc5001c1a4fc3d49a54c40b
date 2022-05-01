@@ -1,0 +1,262 @@
+[
+        {
+            "MaHocPhan": "CTR1012",
+            "TenHocPhan": "Những nguyên lý cơ bản của chủ nghĩa Mác-Lênin 1",
+            "SoTinChi": 2,
+            "HocKy": "1",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 7.50,
+            "DiemHe4": 3.00,
+            "DiemChu": "B"
+        },
+        {
+            "MaHocPhan": "TIN1013",
+            "TenHocPhan": "Tin học đại cương",
+            "SoTinChi": 3,
+            "HocKy": "1",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 1.90,
+            "DiemHe4": 0.00,
+            "DiemChu": "F"
+        },
+        {
+            "MaHocPhan": "TIN1042",
+            "TenHocPhan": "Kỹ thuật lập trình 1",
+            "SoTinChi": 2,
+            "HocKy": "1",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 3.80,
+            "DiemHe4": 0.00,
+            "DiemChu": "F"
+        },
+        {
+            "MaHocPhan": "TOA1012",
+            "TenHocPhan": "Cơ sở toán",
+            "SoTinChi": 2,
+            "HocKy": "1",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 3.90,
+            "DiemHe4": 0.00,
+            "DiemChu": "F"
+        },
+        {
+            "MaHocPhan": "TOA1023",
+            "TenHocPhan": "Đại số tuyến tính",
+            "SoTinChi": 3,
+            "HocKy": "1",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 4.10,
+            "DiemHe4": 1.00,
+            "DiemChu": "D"
+        },
+        {
+            "MaHocPhan": "TOA1034",
+            "TenHocPhan": "Phép tính vi tích phân hàm một biến",
+            "SoTinChi": 4,
+            "HocKy": "1",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 6.00,
+            "DiemHe4": 2.00,
+            "DiemChu": "C"
+        },
+        {
+            "MaHocPhan": "MTR1022",
+            "TenHocPhan": "Giáo dục môi trường đại cương",
+            "SoTinChi": 2,
+            "HocKy": "2",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 8.40,
+            "DiemHe4": 3.00,
+            "DiemChu": "B"
+        },
+        {
+            "MaHocPhan": "TIN1053",
+            "TenHocPhan": "Kỹ thuật lập trình 2",
+            "SoTinChi": 3,
+            "HocKy": "2",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 6.00,
+            "DiemHe4": 2.00,
+            "DiemChu": "C"
+        },
+        {
+            "MaHocPhan": "TIN2013",
+            "TenHocPhan": "Kiến trúc máy tính",
+            "SoTinChi": 3,
+            "HocKy": "2",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 5.20,
+            "DiemHe4": 1.00,
+            "DiemChu": "D"
+        },
+        {
+            "MaHocPhan": "TIN3013",
+            "TenHocPhan": "Ngôn ngữ lập trình bậc cao",
+            "SoTinChi": 3,
+            "HocKy": "2",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 0.00,
+            "DiemHe4": 0.00,
+            "DiemChu": "F"
+        },
+        {
+            "MaHocPhan": "KNM5012",
+            "TenHocPhan": "Kỹ năng mềm",
+            "SoTinChi": 2,
+            "HocKy": "2",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 9.00,
+            "DiemHe4": 4.00,
+            "DiemChu": "A"
+        },
+        {
+            "MaHocPhan": "CTR1013",
+            "TenHocPhan": "Những nguyên lý cơ bản của chủ nghĩa Mác-Lênin 2",
+            "SoTinChi": 3,
+            "HocKy": "2",
+            "NamHoc": "2018-2019",
+            "DiemHe10": 5.30,
+            "DiemHe4": 1.00,
+            "DiemChu": "D"
+        },
+        {
+            "MaHocPhan": "CTR1022",
+            "TenHocPhan": "Tư tưởng Hồ Chí Minh",
+            "SoTinChi": 2,
+            "HocKy": "1",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 5.50,
+            "DiemHe4": 2.00,
+            "DiemChu": "C"
+        },
+        {
+            "MaHocPhan": "LIS1022",
+            "TenHocPhan": "Văn hoá Việt Nam đại cương",
+            "SoTinChi": 2,
+            "HocKy": "1",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 8.20,
+            "DiemHe4": 3.00,
+            "DiemChu": "B"
+        },
+        {
+            "MaHocPhan": "TIN3023",
+            "TenHocPhan": "Toán học rời rạc",
+            "SoTinChi": 3,
+            "HocKy": "1",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 5.00,
+            "DiemHe4": 1.00,
+            "DiemChu": "D"
+        },
+        {
+            "MaHocPhan": "TIN3073",
+            "TenHocPhan": "Lập trình hướng đối tượng",
+            "SoTinChi": 3,
+            "HocKy": "1",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 2.90,
+            "DiemHe4": 0.00,
+            "DiemChu": "F"
+        },
+        {
+            "MaHocPhan": "TIN2033",
+            "TenHocPhan": "Anh văn chuyên ngành",
+            "SoTinChi": 3,
+            "HocKy": "2",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 8.30,
+            "DiemHe4": 3.00,
+            "DiemChu": "B"
+        },
+        {
+            "MaHocPhan": "TIN1033",
+            "TenHocPhan": "Java cơ bản",
+            "SoTinChi": 3,
+            "HocKy": "2",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 6.30,
+            "DiemHe4": 2.00,
+            "DiemChu": "C"
+        },
+        {
+            "MaHocPhan": "CTR1033",
+            "TenHocPhan": "Đường lối cách mạng của Đảng Cộng sản Việt Nam",
+            "SoTinChi": 3,
+            "HocKy": "2",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 7.00,
+            "DiemHe4": 3.00,
+            "DiemChu": "B"
+        },
+        {
+            "MaHocPhan": "TIN4012",
+            "TenHocPhan": "Thiết kế cơ sở dữ liệu",
+            "SoTinChi": 2,
+            "HocKy": "2",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 7.90,
+            "DiemHe4": 3.00,
+            "DiemChu": "B"
+        },
+        {
+            "MaHocPhan": "TOA2023",
+            "TenHocPhan": "Xác suất thống kê",
+            "SoTinChi": 3,
+            "HocKy": "2",
+            "NamHoc": "2019-2020",
+            "DiemHe10": 5.10,
+            "DiemHe4": 1.00,
+            "DiemChu": "D"
+        },
+        {
+            "MaHocPhan": "TOA2033",
+            "TenHocPhan": "Phương pháp tính",
+            "SoTinChi": 3,
+            "HocKy": "1",
+            "NamHoc": "2020-2021",
+            "DiemHe10": 7.90,
+            "DiemHe4": 3.00,
+            "DiemChu": "B"
+        },
+        {
+            "MaHocPhan": "TIN4122",
+            "TenHocPhan": "Ngôn ngữ mô hình hoá UML",
+            "SoTinChi": 2,
+            "HocKy": "1",
+            "NamHoc": "2020-2021",
+            "DiemHe10": 6.80,
+            "DiemHe4": 2.00,
+            "DiemChu": "C"
+        },
+        {
+            "MaHocPhan": "TIN3084",
+            "TenHocPhan": "Cấu trúc dữ liệu và thuật toán",
+            "SoTinChi": 4,
+            "HocKy": "1",
+            "NamHoc": "2020-2021",
+            "DiemHe10": 3.90,
+            "DiemHe4": 0.00,
+            "DiemChu": "F"
+        },
+        {
+            "MaHocPhan": "TIN3133",
+            "TenHocPhan": "Đồ họa máy tính",
+            "SoTinChi": 3,
+            "HocKy": "1",
+            "NamHoc": "2020-2021",
+            "DiemHe10": 4.00,
+            "DiemHe4": 1.00,
+            "DiemChu": "D"
+        },
+        {
+            "MaHocPhan": "TIN3053",
+            "TenHocPhan": "Các hệ quản trị cơ sở dữ liệu",
+            "SoTinChi": 3,
+            "HocKy": "1",
+            "NamHoc": "2020-2021",
+            "DiemHe10": 6.20,
+            "DiemHe4": 2.00,
+            "DiemChu": "C"
+        }
+    ]

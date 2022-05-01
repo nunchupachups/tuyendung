@@ -68,7 +68,7 @@ public class TuyenDungDAO {
 				ps = conn.prepareStatement(query);
 				ps.setLong(1, maTuyenDung);
 				rs= ps.executeQuery();	
-				while(rs.next()) {
+				if(rs.next()) {
 					long maNganhNghe = rs.getLong("MaNganhNghe"); 
 					long maHinhThuc = rs.getLong("MaHinhThuc");
 					int sinhVienNam = rs.getInt("SinhVienNam");

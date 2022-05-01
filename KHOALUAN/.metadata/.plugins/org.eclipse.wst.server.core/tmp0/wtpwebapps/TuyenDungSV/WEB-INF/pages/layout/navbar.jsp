@@ -28,7 +28,7 @@
 			    </div>
 			    <div style="display: inline-block;float:right;">
 			    <ul class="navbar-nav " >
-			    	<span style="margin-top: 10px;">${sessionScope.sinhvien.getTenSinhVien() }</span> 
+			    	<span style="margin-top: 10px;">${sessionScope.sinhvien.getHoVaTen() }</span> 
 				   <div class="dropdown">
 			          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
 			            

@@ -27,6 +27,20 @@ body{
     background-color: rgb(121, 214, 178);
     padding: 10px 20px;
 }
+.btn-suacv{
+	position: fixed;
+	top:150px;
+	left:20px;
+	text-align: center; 
+	background-color: white; 
+	border-radius: 20px;
+	padding: 10px 15px; 
+	border: 5px #012E45 dotted;
+}
+.btn-suacv:hover{
+	cursor: pointer;
+	background-color: orange;
+}
 .cv-left{
     background-color: #012E45;
     padding: 20px;
@@ -57,13 +71,9 @@ body{
 .cv-right{
     background-color: white;
     padding: 20px;
+
 }
-.cv-right-item-mota{
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 10px;
-}
-.cv-right-item-mota li::before, .chungchi-name::before{
+.chungchi-name::before{
     content: "-";
 }
 .info{
@@ -89,12 +99,13 @@ body{
     margin-bottom: 20px;
 }
 .taocv-huongdan{
+	overflow:auto;
     border: #548CA8 2px solid;
     border-radius: 10px;
     position: fixed;
-    height: 95vh;
+    height: calc(100% - 170px);
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 14px;
 }
 
@@ -131,6 +142,13 @@ body{
 	display: flex;
   	justify-content: center;
   	align-items: center;
+}
+.trash{
+	color: red;
+}
+.trash:hover{
+	color: #a60000;
+	cursor: pointer;
 }
 .divider:after,
 .divider:before {

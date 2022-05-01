@@ -1,0 +1,79 @@
+[
+	{
+        "MaSinhVien": "18T1021326",
+        "HoVaTen": "Nguyễn Thị Huyền Trang",
+        "GioiTinh": false,
+        "NgaySinh": "12/05/2000",
+        "TTru_ThongTin": "Xã Phú Thuận, Huyện Phú Vang, Thừa Thiên Huế, Việt Nam",
+        "DienThoai": "02343867317",
+        "DiDong": "0932414680",
+        "Email": "nguyentrang0512000@gmail.com",
+        "MaNganhDaoTao": "7580101"
+    },
+	{
+        "MaSinhVien": "18T1021325",
+        "HoVaTen": "Dương Thị Kiều Trang",
+        "GioiTinh": false,
+        "NgaySinh": "13/06/2000",
+        "TTru_ThongTin": "Thôn Trung An, Xã Hải Thái, Huyện Gio Linh, Quảng Trị, Việt Nam",
+        "DienThoai": "01676551445",
+        "DiDong": "",
+        "Email": "trangsmoothies@gmail.com",
+        "MaNganhDaoTao": "7480201"
+    },
+    {
+        "MaSinhVien": "18T1021324",
+        "HoVaTen": "Lý Hoàng Đức Tịnh",
+        "GioiTinh": true,
+        "NgaySinh": "02/11/2000",
+        "TTru_ThongTin": "Xã Cam Thanh, Huyện Cam Lộ, Quảng Trị, Việt Nam",  
+        "DienThoai": "",
+        "DiDong": "0386663649",
+        "Email": "lhdtinh2k@gmail.com",
+        "MaNganhDaoTao": "7580101"
+    },
+    {
+        "MaSinhVien": "18T1021321",
+        "HoVaTen": "Nguyễn Tin",
+        "GioiTinh": true,
+        "NgaySinh": "08/03/2000",  
+        "TTru_ThongTin": "Xã Phú An, Huyện Phú Vang, Thừa Thiên Huế, Việt Nam", 
+        "DienThoai": "",
+        "DiDong": "0835080394",
+        "Email": "tinnguyen1614@gmail.com",
+        "MaNganhDaoTao": "7510302"
+    },
+    {
+        "MaSinhVien": "18T1021322",
+        "HoVaTen": "Đào Hữu Tín",
+        "GioiTinh": true,
+        "NgaySinh": "09/05/2000",
+        "TTru_ThongTin": "",  
+        "DienThoai": "",
+        "DiDong": "",
+        "Email": "",
+        "MaNganhDaoTao": "7420201" 
+    },
+    {
+        "MaSinhVien": "18T1021197",
+        "HoVaTen": "Hà Xuân Nghĩa",
+        "GioiTinh": true,
+        "NgaySinh": "25/05/2000",
+        "TTru_ThongTin": "",
+        "DienThoai": "",
+        "DiDong": "",
+        "Email": "",
+        "MaNganhDaoTao": "7480201" 
+    },
+    {
+        "MaSinhVien": "18T1021198",
+        "HoVaTen": "Nguyễn Văn Thành Nghĩa",
+        "GioiTinh": true,
+        "NgaySinh": "05/03/2000",
+        "TTru_ThongTin": "Xã Thủy Bằng, Huyện Hương Thủy, Thừa Thiên Huế, Việt Nam",
+        "DienThoai": "",
+        "DiDong": "0327280417",
+        "Email": "18t1021198@husc.edu.vn",
+        "MaNganhDaoTao": "7229001"   
+    }
+]

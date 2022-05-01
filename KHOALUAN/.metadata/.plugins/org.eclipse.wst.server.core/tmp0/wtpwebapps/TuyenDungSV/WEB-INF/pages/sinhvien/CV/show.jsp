@@ -27,195 +27,358 @@
       			</div>
     	</c:if> 
     
-    <div class="row">
+    <div class="row" style="transform: translateX(-3px)">
+    		<c:set var="sv" value="${sessionScope.sinhvien }"></c:set>
             <div class="col-4 cv-left" >
                 <div class="d-flex">
-                    <img class="avatar" src="${contextPath }/image/2227baef989555cb0c84.jpg" style="display: block;">
+                
+                <c:choose>
+                	<c:when test="${sv.getAnhDaiDien()!=null }">
+                		<img class="avatar" src="${contextPath }/${sv.getAnhDaiDien()}" style="display: block;">
+                	</c:when>
+                	<c:otherwise>
+                		<img class="avatar" src="${contextPath }/image/user.png" style="display: block;">
+                	</c:otherwise>
+                </c:choose>
                     
                 </div>
                 <div style="text-align: center;">
-                     <p style="font-size: 17px;font-weight: bold; margin: 15px 0 5px 0; margin-top: 15px; margin-bottom: 5px;">DƯƠNG THỊ KIỀU TRANG</p>
-                     <p style="font-size: 14px;">WEB DEVELOPER</p> 
+                     <p style="font-size: 17px;font-weight: bold; margin: 15px 0 5px 0; margin-top: 15px; margin-bottom: 5px;">${sv.getHoVaTen().toUpperCase() }</p>
+                     <p style="font-size: 14px;">
+                     	<c:choose>
+                     		<c:when test="${cv.getViTriUngTuyen()!=null }">
+	                     		${cv.getViTriUngTuyen() }
+	                     	</c:when>
+	                     	<c:otherwise>
+	                     		 VỊ TRÍ ỨNG TUYỂN
+	                     	</c:otherwise>
+                     	</c:choose>
+                     	
+                    </p> 
                      <hr>
                 </div>  
                 <div class="info">
                     <div class="row">
                         <div class="contact-icon col-2"><i class="fas fa-calendar-alt"></i></div>
-                        <div class="contact-info col-10">13/06/2000</div>
+                        <div class="contact-info col-10">${sv.getNgaySinh() }</div>
                     </div>
                     <div class="row">
                         <div class="contact-icon col-2"><i class="fas fa-user"></i></div>
-                        <div class="contact-info col-10">Nữ</div>
+                        <div class="contact-info col-10">
+                        	<c:if test="${sv.isGioiTinh() }">Nam</c:if>
+                        	<c:if test="${!sv.isGioiTinh() }">Nữ</c:if>
+						</div>
                     </div>
                     <div class="row">
                         <div class="contact-icon col-2"><i class="fas fa-phone-alt"></i></div>
-                        <div class="contact-info col-10">0944510246</div>
+                        <div class="contact-info col-10">
+	                        <c:choose>
+	                        	<c:when test="${sv.getDienThoai()!=null }">${sv.getDienThoai() }</c:when>
+	                        	<c:otherwise>${sv.getDiDong() }</c:otherwise>
+	                        </c:choose>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="contact-icon col-2"><i class="fas fa-envelope"></i></div>
-                        <div class="contact-info col-10">trang@gmail.com</div>
+                        <div class="contact-info col-10">${sv.getEmail() }</div>
                     </div>
                     <div class="row">
                         <div class="contact-icon col-2"><i class="fas fa-map-marker-alt"></i></div>
-                        <div class="contact-info col-10">An Cựu, Huế</div>
+                        <div class="contact-info col-10">${sv.getDiaChi() }</div>
                     </div>
                     
                 </div>
                 <div class="cv-left-item">
-                    <h5 style="margin-bottom: 20px;">MỤC TIÊU NGHỀ NGHIỆP</h5>
-                    <ul class="cv-right-item-mota">
-                        <li>
-                            Ngắn hạn: Được tham gia đào tạo tại công ty, tích lũy thêm nhiều kinh nghiệm, 
-                            rèn luyện thêm nhiều kỹ năng xử lí công việc. Có công việc ổn định.
-                        </li>
-                        <li>
-                            Dài hạn: Trở thành nhân viên ưu tú, có cơ hội làm việc tại nước ngoài, đạt được mức lương cao.
-                        </li>
-                    </ul> 
+                	<c:if test="${cv.isShowMucTieuNgheNghiep() }">
+                		<h5 style="margin-bottom: 20px;">MỤC TIÊU NGHỀ NGHIỆP</h5>
+	                    <div style="text-align: justify;">
+	                    	<c:choose>
+	                     		<c:when test="${cv.getMucTieuNgheNghiep()!=null }">
+		                     		${cv.getMucTieuNgheNghiep() }
+		                     	</c:when>
+		                     	<c:otherwise>
+		                     		 - Ngắn hạn: Mục tiêu ngắn hạn.<br>
+	                        		- Dài hạn: Mục tiêu dài hạn.
+		                     	</c:otherwise>
+	                     	</c:choose>
+	                        
+	                    </div>
+                	</c:if>
+                	
+                     
                 </div>
                 <div class="cv-left-item">
+                	<c:if test="${cv.isShowKyNang() }">
                     <h5 style="margin-bottom: 20px;">KỸ NĂNG</h5>
                     <div>
-                        <div>HTML</div>
-                        <div>
-                            <div style="height: 10px; background-color: white;">
-                                <div style="height: 10px;width: 50%;background-color: #548CA8;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-2">
-                        <div>HTML</div>
-                        <div>
-                            <div style="height: 10px; background-color: white;">
-                                <div style="height: 10px;width: 40%;background-color: #548CA8;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-2">
-                        <div>HTML</div>
-                        <div>
-                            <div style="height: 10px; background-color: white;">
-                                <div style="height: 10px;width: 80%;background-color: #548CA8;"></div>
-                            </div>
-                        </div>
-                    </div>
+                    	<c:choose>
+                     		<c:when test="${!kynangs.isEmpty() }">
+	                     		<c:forEach items="${kynangs }" var="kn">
+	                     			<div class="mt-2">
+		                     		<div>${kn.getTenKyNang() }</div>
+				                        <div>
+				                            <div style="height: 10px; background-color: white;">
+				                                <div style="height: 10px;width: ${kn.getDoThanhThao()}0%;background-color: #548CA8;"></div>
+				                            </div>
+				                        </div>
+				                    </div>
+	                     		</c:forEach>
+	                     	</c:when>
+	                     	<c:otherwise>
+	                     		<div class="mt-2">
+	                     		<div>Kỹ năng 1</div>
+		                        <div>
+		                            <div style="height: 10px; background-color: white;">
+		                                <div style="height: 10px;width: 50%;background-color: #548CA8;"></div>
+		                            </div>
+		                        </div>
+			                    </div>
+			                    <div class="mt-2">
+			                        <div>Kỹ năng 2</div>
+			                        <div>
+			                            <div style="height: 10px; background-color: white;">
+			                                <div style="height: 10px;width: 40%;background-color: #548CA8;"></div>
+			                            </div>
+			                        </div>
+			                    </div>
+			                    <div class="mt-2">
+			                        <div>Kỹ năng 3</div>
+			                        <div>
+			                            <div style="height: 10px; background-color: white;">
+			                                <div style="height: 10px;width: 80%;background-color: #548CA8;"></div>
+			                            </div>
+			                        </div>
+			                    </div>
+	                     	</c:otherwise>
+                     	</c:choose>
+                     </div> 
+                     </c:if>  
                 </div>
                 <div class="cv-left-item">
+                	<c:if test="${cv.isShowSoThich() }">
                     <h5 style="margin-bottom: 20px;">SỞ THÍCH</h5>
-                    <ul>
-                        <li>Đọc sách</li>
-                        <li>Nghe nhạc</li>
-                    </ul>
+                    <c:choose>
+                     		<c:when test="${cv.getSoThich()!=null }">
+	                     		${cv.getSoThich() }
+	                     	</c:when>
+	                     	<c:otherwise>
+	                     		- Sở thích 1<br>
+                        		- Sở thích 2
+	                     	</c:otherwise>
+                     </c:choose>
+                     </c:if>
                 </div>
             </div>
             <div class="col-8 cv-right">
-                
+                <c:if test="${cv.isShowHocVan() }">
                 <div class="cv-right-item">
                     <div class="cv-right-item-name"><h5 >HỌC VẤN</h5></div>
-                        <ul>
-                            <li>
-                                <div><b> Trường Đại học Khoa học Huế</b></div>
-                                <div>
-                                    <div class="row mb-2"    >
-                                        <div class="col-8">
-                                            Sinh viên khoa Công nghệ thông tin
-                                        </div>
-                                        <div class="col-4">
-                                            08/2018 - Hiện tại
-                                        </div>
-                                        
-                                    </div>
-                                    <ul class="cv-right-item-mota">
-                                        <li>
-                                            Mô tả một chút nha hihiMô tả một chút nha hihiMô tả một 
-                                            chút nha hihiMô tả một chút nha hihiMô tả một chút nha hihiMô tả 
-                                            một chút nha hihiMô tả một chút nha hihi
-                                        </li>
-                                        <li>
-                                            Mô tả một chút nha hihi
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul> 
+	                    <c:choose>
+	                     		<c:when test="${!hocVans.isEmpty() }">
+		                     		<c:forEach items="${hocVans}" var="hv">
+		                     			<ul>
+				                            <li>
+				                                <div><b>${hv.getTenDonVi() }</b></div>
+				                                <c:forEach items="${viTriDAO.getAllViTriByMaDonVi(hv.getMaDonVi()) }" var="vt">
+				                             		<div>
+					                                    <div class="row mb-2"    >
+					                                        <div class="col-9">
+					                                            ${vt.getTenViTri() }
+					                                        </div>
+					                                        <div class="col-3">
+					                                            ${vt.getKhoangThoiGian() }
+					                                        </div>
+					                                        
+					                                    </div>
+					                                    <div>
+					                                    	${vt.getMoTa() }
+					                                    </div>
+					                                </div>
+				                                </c:forEach>
+				                                
+				                            </li>
+				                        </ul> 
+		                     		</c:forEach>
+		                     	</c:when>
+		                     	<c:otherwise>
+		                     		<ul>
+			                            <li>
+			                                <div><b> Tên trường đại học</b></div>
+			                                <div>
+			                                    <div class="row mb-2"    >
+			                                        <div class="col-9">
+			                                            Ngành học
+			                                        </div>
+			                                        <div class="col-3">
+			                                            Bắt đầu - Kết thúc
+			                                        </div>
+			                                        
+			                                    </div>
+			                                    <ul class="cv-right-item-mota">
+			                                        <li>
+			                                            Mô tả 
+			                                    </ul>
+			                                </div>
+			                            </li>
+			                        </ul> 
+		                     	</c:otherwise>
+	                     </c:choose>
                 </div>
+                </c:if>
+                <c:if test="${cv.isShowKinhNghiemLamViec() }">
                 <div class="cv-right-item">
                     <div class="cv-right-item-name"><h5 >KINH NGHIỆM LÀM VIỆC</h5></div>
-                    <ul>
-                        <li>
-                            <div><b> Trường Đại học Khoa học Huế</b></div>
-                            <div>
-                                <div class="row mb-2"    >
-                                    <div class="col-8">
-                                        Sinh viên khoa Công nghệ thông tin
-                                    </div>
-                                    <div class="col-4">
-                                        08/2018 - Hiện tại
-                                    </div>
-                                    
-                                </div>
-                                <ul class="cv-right-item-mota">
-                                    <li>
-                                        Mô tả một chút nha hihiMô tả một chút nha hihiMô tả một 
-                                        chút nha hihiMô tả một chút nha hihiMô tả một chút nha hihiMô tả 
-                                        một chút nha hihiMô tả một chút nha hihi
-                                    </li>
-                                    <li>
-                                        Mô tả một chút nha hihi
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul> 
+                    <c:choose>
+	                     		<c:when test="${!kinhNghiems.isEmpty() }">
+		                     		<c:forEach items="${kinhNghiems}" var="kn">
+		                     			<ul>
+				                            <li>
+				                                <div><b>${kn.getTenDonVi() }</b></div>
+				                                <c:forEach items="${viTriDAO.getAllViTriByMaDonVi(kn.getMaDonVi()) }" var="vt">
+				                             		<div>
+					                                    <div class="row mb-2"    >
+					                                        <div class="col-9">
+					                                            ${vt.getTenViTri() }
+					                                        </div>
+					                                        <div class="col-3">
+					                                            ${vt.getKhoangThoiGian() }
+					                                        </div>
+					                                        
+					                                    </div>
+					                                    <div>
+					                                    	${vt.getMoTa() }
+					                                    </div>
+					                                </div>
+				                                </c:forEach>
+				                                
+				                            </li>
+				                        </ul> 
+		                     		</c:forEach>
+		                     	</c:when>
+		                     	<c:otherwise>
+		                     		<ul>
+			                            <li>
+			                                <div><b> Tên công ty</b></div>
+			                                <div>
+			                                    <div class="row mb-2"    >
+			                                        <div class="col-9">
+			                                            Đơn vị làm việc và vị trí
+			                                        </div>
+			                                        <div class="col-3">
+			                                            Bắt đầu - Kết thúc
+			                                        </div>
+			                                        
+			                                    </div>
+			                                    <ul class="cv-right-item-mota">
+			                                        <li>
+			                                            Mô tả 
+			                                    </ul>
+			                                </div>
+			                            </li>
+			                        </ul> 
+		                     	</c:otherwise>
+	                     </c:choose>
                     
                 </div>
+                </c:if>
+                <c:if test="${cv.isShowHoatDong() }">
                 <div class="cv-right-item">
                     <div class="cv-right-item-name"><h5 >HOẠT ĐỘNG</h5></div>
-                    <ul>
-                        <li>
-                            <div><b> Trường Đại học Khoa học Huế</b></div>
-                            <div>
-                                <div class="row mb-2"    >
-                                    <div class="col-8">
-                                        Sinh viên khoa Công nghệ thông tin
-                                    </div>
-                                    <div class="col-4">
-                                        08/2018 - Hiện tại
-                                    </div>
-                                    
-                                </div>
-                                <ul class="cv-right-item-mota">
-                                    <li>
-                                        Mô tả một chút nha hihiMô tả một chút nha hihiMô tả một 
-                                        chút nha hihiMô tả một chút nha hihiMô tả một chút nha hihiMô tả 
-                                        một chút nha hihiMô tả một chút nha hihi
-                                    </li>
-                                    <li>
-                                        Mô tả một chút nha hihi
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul> 
-                    
+                    <c:choose>
+	                     		<c:when test="${!hoatDongs.isEmpty() }">
+		                     		<c:forEach items="${hoatDongs}" var="hd">
+		                     			<ul>
+				                            <li>
+				                                <div><b>${hd.getTenDonVi() }</b></div>
+				                                <c:forEach items="${viTriDAO.getAllViTriByMaDonVi(hd.getMaDonVi()) }" var="vt">
+				                             		<div>
+					                                    <div class="row mb-2"    >
+					                                        <div class="col-9">
+					                                            ${vt.getTenViTri() }
+					                                        </div>
+					                                        <div class="col-3">
+					                                            ${vt.getKhoangThoiGian() }
+					                                        </div>
+					                                        
+					                                    </div>
+					                                    <div>
+					                                    	${vt.getMoTa() }
+					                                    </div>
+					                                </div>
+				                                </c:forEach>
+				                                
+				                            </li>
+				                        </ul> 
+		                     		</c:forEach>
+		                     	</c:when>
+		                     	<c:otherwise>
+		                     		<ul>
+			                            <li>
+			                                <div><b> Tên câu lạc bộ, đơn vị</b></div>
+			                                <div>
+			                                    <div class="row mb-2"    >
+			                                        <div class="col-9">
+			                                            Vị trí hoạt động 
+			                                        </div>
+			                                        <div class="col-3">
+			                                            Bắt đầu - Kết thúc
+			                                        </div>
+			                                        
+			                                    </div>
+			                                    <ul class="cv-right-item-mota">
+			                                        <li>
+			                                            Mô tả 
+			                                    </ul>
+			                                </div>
+			                            </li>
+			                        </ul> 
+		                     	</c:otherwise>
+	                     </c:choose>
                 </div>
+                </c:if>
+                <c:if test="${cv.isShowChungChi() }">
                 <div class="cv-right-item">
                     <div class="cv-right-item-name"><h5 >CHỨNG CHỈ</h5></div>
                     <div class="row mb-2" style="margin-left: 20px;"   >
-                        <div class="col-8 chungchi-name">
-                            N4 Tiếng Nhật
-                        </div>
-                        <div class="col-4">
-                            2018
-                        </div>
+                    	<c:choose>
+                     		<c:when test="${!chungChis.isEmpty() }">
+                     			<c:forEach items="${chungChis }" var="cc">
+                     				<div class="col-8 chungchi-name">
+			                            ${cc.getTenChungChi() }
+			                        </div>
+			                        <div class="col-4">
+			                            ${cc.getNam() }
+			                        </div>
+                     			</c:forEach>
+	                     		
+	                     	</c:when>
+	                     	<c:otherwise>
+	                     		<div class="col-9 chungchi-name">
+		                            Tên chứng chỉ
+		                        </div>
+		                        <div class="col-3">
+		                            Năm
+		                        </div>
+	                     	</c:otherwise>
+                     	</c:choose>
+                        
+                        
                         
                     </div>
                 </div>
+                </c:if>
             </div>
         </div>
     </div>
 	
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <a href="/sinhvien/suaCV" style="text-decoration: none; color: black;">
+    	<div class="btn-suacv" >
+    	<h5>Chỉnh sửa CV <br>của bạn!</h5>
+    	</div>
+    </a>
+    
+    
 </body>
 </html>

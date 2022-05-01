@@ -22,14 +22,21 @@ public class SinhVienDAO {
 			rs= ps.executeQuery();	
 			while(rs.next()) {
 				String maSinhVien=rs.getString("MaSinhVien");
-				String matKhau=rs.getNString("MatKhau");
-				String tenSinhVien=rs.getNString("TenSinhVien");
+				String hoVaTen=rs.getNString("HoVaTen");
+				boolean gioiTinh=rs.getBoolean("GioiTinh");
+				String ngaySinh=rs.getString("NgaySinh");
+				String diaChi=rs.getNString("DiaChi");
+				String dienThoai=rs.getString("DienThoai");
+				String diDong=rs.getString("DiDong");
+				String email=rs.getNString("Email");
 				String maNganhDaoTao=rs.getString("MaNganhDaoTao");
-				String khoa=rs.getString("Khoa");
-				String lop=rs.getString("Lop");
-				Boolean daDuyet=rs.getBoolean("DaDuyet");
+				boolean daDuyet=rs.getBoolean("DaDuyet");
+				int khoa=rs.getInt("Khoa");
+				String anhDaiDien=rs.getNString("AnhDaiDien");
 				
-				ds.add(new SinhVien(maSinhVien, matKhau, tenSinhVien, maNganhDaoTao, khoa, lop, daDuyet));
+				ds.add( new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien));
+				
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,22 +54,27 @@ public class SinhVienDAO {
 		}
 		return ds;
 	}
-	public SinhVien KiemTraDangNhap(String maSinhVien, String matKhau) throws SQLException {
-		String query = "select * from SinhVien where lower(MaSinhVien)=? and MatKhau=?";
+	public SinhVien KiemTraDangNhap(String maSinhVien) throws SQLException {
+		String query = "select * from SinhVien where lower(MaSinhVien)=?";
 		try {
 			conn = new DBConnect().getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setNString(1,maSinhVien.toLowerCase());
-			ps.setNString(2, matKhau);
+			ps.setString(1,maSinhVien.toLowerCase());
 			rs= ps.executeQuery();	
 			if(rs.next()) {
-				String tenSinhVien=rs.getNString("TenSinhVien");
+				String hoVaTen=rs.getNString("HoVaTen");
+				boolean gioiTinh=rs.getBoolean("GioiTinh");
+				String ngaySinh=rs.getString("NgaySinh");
+				String diaChi=rs.getNString("DiaChi");
+				String dienThoai=rs.getString("DienThoai");
+				String diDong=rs.getString("DiDong");
+				String email=rs.getNString("Email");
 				String maNganhDaoTao=rs.getString("MaNganhDaoTao");
-				String khoa=rs.getString("Khoa");
-				String lop=rs.getString("Lop");
-				Boolean daDuyet=rs.getBoolean("DaDuyet");
+				boolean daDuyet=rs.getBoolean("DaDuyet");
+				int khoa=rs.getInt("Khoa");
+				String anhDaiDien=rs.getNString("AnhDaiDien");
 				
-				return new SinhVien(maSinhVien, matKhau, tenSinhVien, maNganhDaoTao, khoa, lop, daDuyet);
+				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,5 +91,32 @@ public class SinhVienDAO {
 			}	
 		}
 		return null;
+	}
+	public int updateAnhDaiDien(String anhDaiDien, String maSinhVien) throws SQLException {
+		String query = "update SinhVien set AnhDaiDien=? where MaSinhVien=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setNString(1, anhDaiDien);
+			ps.setString(2, maSinhVien);
+			
+			
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
 	}
 }

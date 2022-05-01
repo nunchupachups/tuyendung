@@ -17,7 +17,7 @@ public class HelloController {
 	 	try {
 	 		response.setContentType("text/html;charset=UTF-8");
 	 		request.setCharacterEncoding("UTF-8");
-	    	return "test";
+	    	return "testAPI";
 		} catch (Exception e) {
 			e.getStackTrace();
 			return null;

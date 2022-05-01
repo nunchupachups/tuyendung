@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "12739f45-96f3-4992-aff8-30ca7f4b51eb",
+		"name": "HUSC API For Student",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "account/v1/authorize/student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "ums-application",
+						"value": "TestApp",
+						"type": "text"
+					},
+					{
+						"key": "ums-time",
+						"value": "20220401230000",
+						"type": "text"
+					},
+					{
+						"key": "ums-signature",
+						"value": "1adcbf88065227d7c8cdbaf25be7aa00",
+						"type": "text"
+					},
+					{
+						"key": "ums-token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"UserName\": \"18T1021325\",\r\n    \"Password\": \"b027a4ee25b6cfde014f2083563929fa\"\r\n}"
+				},
+				"url": {
+					"raw": "http://ums-dev.husc.edu.vn/apigateway/account/v1/authorize/student",
+					"protocol": "http",
+					"host": [
+						"ums-dev",
+						"husc",
+						"edu",
+						"vn"
+					],
+					"path": [
+						"apigateway",
+						"account",
+						"v1",
+						"authorize",
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "account/v1/profile (student)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "ums-application",
+						"value": "TestApp",
+						"type": "text"
+					},
+					{
+						"key": "ums-time",
+						"value": "20220401230000",
+						"type": "text"
+					},
+					{
+						"key": "ums-signature",
+						"value": "1adcbf88065227d7c8cdbaf25be7aa00",
+						"type": "text"
+					},
+					{
+						"key": "ums-token",
+						"value": "0n0M2z2b382Z172d042s3x0o0J3q1b3N2g2I020k0P210H1C0g1x2g3E3v063O1u1z0q1L3c0Q0V0A1-3p3e3b3f1Y1E0c2E0W2C1C1p3E3q1T3v2R0A0Q0k3N2L2p0a11091c0r0D2F2B1y3i0B0B2a0n3Z263n",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://ums-dev.husc.edu.vn/apigateway/account/v1/profile",
+					"protocol": "http",
+					"host": [
+						"ums-dev",
+						"husc",
+						"edu",
+						"vn"
+					],
+					"path": [
+						"apigateway",
+						"account",
+						"v1",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "student-services/v1/get-final-learning-result",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "ums-application",
+						"value": "TestApp",
+						"type": "text"
+					},
+					{
+						"key": "ums-time",
+						"value": "20220401230000",
+						"type": "text"
+					},
+					{
+						"key": "ums-signature",
+						"value": "1adcbf88065227d7c8cdbaf25be7aa00",
+						"type": "text"
+					},
+					{
+						"key": "ums-token",
+						"value": "0n0M2z2b382Z172d042s3x0o0J3q1b3N2g2I020k0P210H1C0g1x2g3E3v063O1u1z0q1L3c0Q0V0A1-3p3e3b3f1Y1E0c2E0W2C1C1p3E3q1T3v2R0A0Q0k3N2L2p0a11091c0r0D2F2B1y3i0B0B2a0n3Z263n",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://ums-dev.husc.edu.vn/apigateway/student-services/v1/get-final-learning-result",
+					"protocol": "http",
+					"host": [
+						"ums-dev",
+						"husc",
+						"edu",
+						"vn"
+					],
+					"path": [
+						"apigateway",
+						"student-services",
+						"v1",
+						"get-final-learning-result"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cntt.trang.bean.DonVi;
 import cntt.trang.bean.NganhDaoTao;
 import cntt.trang.bean.QuanHuyen;
 
@@ -24,7 +25,9 @@ public class NganhDaoTaoDAO {
 			while (rs.next()) {
 				String maNganh = rs.getString("MaNganh"); 
 				String tenNganh = rs.getNString("TenNganh"); 
-				ds.add(new NganhDaoTao(maNganh, tenNganh));
+				int soTinChi = rs.getInt("SoTinChi");
+				int namDaoTao = rs.getInt("NamDaoTao");
+				ds.add(new NganhDaoTao(maNganh, tenNganh, soTinChi, namDaoTao));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,5 +44,35 @@ public class NganhDaoTaoDAO {
 			}	
 		}
 		return ds;
+	}
+	public NganhDaoTao getNganhDaoTaoById(String maNganh) throws SQLException {
+		String query = "select * from NganhDaoTao where MaNganh=?";
+		
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setNString(1,maNganh);
+			rs= ps.executeQuery();	
+			if(rs.next()) {
+				String tenNganh=rs.getNString("TenNganh");
+				int soTinChi=rs.getInt("SoTinChi");
+				int namDaoTao=rs.getInt("NamDaoTao");
+				return new NganhDaoTao(maNganh, tenNganh, soTinChi, namDaoTao);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return null;
 	}
 }
