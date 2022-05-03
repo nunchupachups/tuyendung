@@ -27,17 +27,24 @@ body{
     background-color: rgb(121, 214, 178);
     padding: 10px 20px;
 }
-.btn-suacv{
+.btn-suacv,.btn-xemcv, .btn-xemdiem{
 	position: fixed;
-	top:150px;
-	left:20px;
 	text-align: center; 
 	background-color: white; 
 	border-radius: 20px;
 	padding: 10px 15px; 
 	border: 5px #012E45 dotted;
+	width: 170px;
 }
-.btn-suacv:hover{
+.btn-suacv,.btn-xemcv{
+	top:150px;
+	left:20px;
+}
+.btn-xemdiem{
+	top:220px;
+	left:20px;
+}
+.btn-suacv:hover, .btn-xemcv:hover, .btn-xemdiem:hover{
 	cursor: pointer;
 	background-color: orange;
 }

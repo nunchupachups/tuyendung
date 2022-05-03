@@ -1,0 +1,216 @@
+body{
+	background-color: #f0f5f8;
+}
+
+.container{
+    width: 1146px;
+    background-color: white;
+    min-height: calc(100vh - 120px);
+    padding: 15px;
+}
+.tuyendung-container{
+    padding-bottom: 50px;
+}
+.tuyendung-dropdown{
+    position: absolute;
+    top: -20px;
+    right: 20px;
+}
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 30px;
+
+}
+.grid-container div{
+    border-radius: 20px; 
+    background-color: rgb(121, 214, 178);
+    padding: 10px 20px;
+}
+.btn-suacv{
+	position: fixed;
+	top:150px;
+	left:20px;
+	text-align: center; 
+	background-color: white; 
+	border-radius: 20px;
+	padding: 10px 15px; 
+	border: 5px #012E45 dotted;
+}
+.btn-suacv:hover{
+	cursor: pointer;
+	background-color: orange;
+}
+.cv-left{
+    background-color: #012E45;
+    padding: 20px;
+    color: white;
+}
+.cv-left-item{
+    margin-top: 30px;
+    font-size: 14px;
+}
+.contact-icon{
+    color: #548CA8;
+}
+.cv-right-item{
+    font-size: 14px ;
+    border-top: 5px #012E45 solid;
+    position: relative;
+    margin-top: 30px;
+    padding-top: 20px;
+}
+.cv-right-item-name{
+    position: absolute;
+    top:-15px;
+    background-color: white;
+    padding-right:10px;
+    color: #012E45;
+   
+}
+.cv-right{
+    background-color: white;
+    padding: 20px;
+
+}
+.chungchi-name::before{
+    content: "-";
+}
+.info{
+    font-size: 14px;
+    line-height: 30px;
+}
+.avatar{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.required{
+    color: red;
+}
+.taocv-item{
+    border: #548CA8 2px solid;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.taocv-huongdan{
+	overflow:auto;
+    border: #548CA8 2px solid;
+    border-radius: 10px;
+    position: fixed;
+    height: calc(100% - 170px);
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.dropdown-toggle, .dropdown-toggle:hover, .dropdown-toggle:focus{
+    background-color: transparent;
+    border: none;
+    color: #717171;
+}
+.dropdown-toggle::after{
+    content: none;
+}
+.dropdown-account{
+	transform: translateX(-100px);
+}
+.taocv-huongdan-item{
+    display: none;
+}
+.taocv-huongdan-chung{
+    display: block;
+}
+.doanhnghiep, .sinhvien, .tuyendung{
+    border: #548CA8 2px solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.doanhnghiep a{
+    text-decoration: none;
+}
+.footer{
+	height: 50px;
+	background-color: #cccccc;
+	text-align: center;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+.trash{
+	color: red;
+}
+.trash:hover{
+	color: #a60000;
+	cursor: pointer;
+}
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+
+.h-custom {
+height: calc(100% - 73px);
+}
+.slideshow-container {
+    width: 1146px;
+    height: 500px;
+    margin: auto;
+    transform: translateX(-3px);
+  }
+  .mySlide{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(102, 180, 141);
+    padding: 20px 10px 80px 10px;
+    position: relative;
+    z-index: 0;
+  }
+  .slide-right {
+    width: 50%;
+    height: 100%;
+  }
+  .slide-right img{
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+  }
+  .slide-content{
+    height: 290px; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+  }
+  /* định dạng các chấm chuyển đổi các slide */
+  .dot {
+    cursor:pointer;
+    height: 8px;
+    width: 20px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+  .dots{
+    position: absolute;
+    bottom: 10px;
+
+  }
+  /* khi được hover, active đổi màu nền */
+  .active, .dot:hover {
+    background-color: #717171;
+  }
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}

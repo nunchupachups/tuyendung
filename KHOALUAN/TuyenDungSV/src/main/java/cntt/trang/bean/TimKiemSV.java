@@ -41,6 +41,17 @@ public class TimKiemSV {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+	@Override
+	public boolean equals(Object arg0) {
+		if(arg0 instanceof TimKiemSV) {
+			return ((TimKiemSV) arg0).getMaSinhVien().equals(maSinhVien);
+		} 
+		else return false; 
+	}
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

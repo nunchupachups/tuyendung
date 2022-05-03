@@ -93,6 +93,44 @@ public class SinhVienDAO {
 		}
 		return null;
 	}
+	public SinhVien getSinhVienByMaSinhVien(String maSinhVien) throws SQLException {
+		String query = "select * from SinhVien where lower(MaSinhVien)=?";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1,maSinhVien.toLowerCase());
+			rs= ps.executeQuery();	
+			if(rs.next()) {
+				String hoVaTen=rs.getNString("HoVaTen");
+				boolean gioiTinh=rs.getBoolean("GioiTinh");
+				String ngaySinh=rs.getString("NgaySinh");
+				String diaChi=rs.getNString("DiaChi");
+				String dienThoai=rs.getString("DienThoai");
+				String diDong=rs.getString("DiDong");
+				String email=rs.getNString("Email");
+				String maNganhDaoTao=rs.getString("MaNganhDaoTao");
+				boolean daDuyet=rs.getBoolean("DaDuyet");
+				int khoa=rs.getInt("Khoa");
+				String anhDaiDien=rs.getNString("AnhDaiDien");
+				
+				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return null;
+	}
 	public int updateAnhDaiDien(String anhDaiDien, String maSinhVien) throws SQLException {
 		String query = "update SinhVien set AnhDaiDien=? where MaSinhVien=?";
 		int flag=-1;
@@ -214,7 +252,7 @@ public class SinhVienDAO {
 			conn = new DBConnect().getConnection();
 			ps = conn.prepareStatement(query);
 			dem=0;
-			if(!key.equals("")) ps.setNString(++dem, "N'%"+key+"%'");
+			if(!key.equals("")) ps.setNString(++dem, "%"+key+"%");
 			
 			if(nam!=-1) ps.setInt(++dem, nam);
 			if(loaiGPA!=-1) ps.setInt(++dem, loaiGPA);
