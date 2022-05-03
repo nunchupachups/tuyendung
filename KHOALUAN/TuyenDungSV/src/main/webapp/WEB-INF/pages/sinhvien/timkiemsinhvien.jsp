@@ -64,9 +64,9 @@
     	</c:if>
         <c:forEach items="${dssinhvien }" var="sv">
         	<div class="sinhvien">
-	            <h5><a href="#">sv.getTenSinhVien() </a></h5>
-	            <div><b> Ngành đào tạo:</b> </div>
-	            <div><b>GPA:</b> sv.getGPA() </div>
+	            <h5><a href="#">${sv.getHoVaTen()} </a></h5>
+	            <div><b> Ngành đào tạo:</b> ${sv.getTenNganh() }</div>
+	            <div><b>GPA:</b> ${sv.getGPA()} </div>
         	</div>
         	
         </c:forEach>

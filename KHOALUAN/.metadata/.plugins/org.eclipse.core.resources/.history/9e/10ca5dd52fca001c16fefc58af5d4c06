@@ -1,0 +1,8 @@
+package cntt.trang.bean;
+
+public class TimKiemSV {
+	private String maSinhVien;
+	private float GPA;
+	
+	
+}

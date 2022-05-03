@@ -31,6 +31,7 @@ import cntt.trang.dao.CVDAO;
 import cntt.trang.dao.ChungChiDAO;
 import cntt.trang.dao.DoanhNghiepDAO;
 import cntt.trang.dao.DonViDAO;
+import cntt.trang.dao.KetQuaHocTapDAO;
 import cntt.trang.dao.KyNangDAO;
 import cntt.trang.dao.NganhDaoTaoDAO;
 import cntt.trang.dao.QuangBaDAO;
@@ -48,8 +49,15 @@ public class SinhVienController {
 	 		request.setCharacterEncoding("UTF-8");
 	 		
 	 		NganhDaoTaoDAO nganhDaoTaoDAO= new NganhDaoTaoDAO();
+	 		SinhVienDAO sinhVienDAO= new SinhVienDAO();
+	 		KetQuaHocTapDAO ketQuaHocTapDAO=new KetQuaHocTapDAO();
+	 		
+	 		
 	 		
 	 		model.addAttribute("dsNganhDaoTao", nganhDaoTaoDAO.getAllNganhDaoTao());
+	 		model.addAttribute("dssinhvien", ketQuaHocTapDAO.getAllGPA());
+	 		model.addAttribute("nganhDaoTaoDAO", nganhDaoTaoDAO);
+	 		
 	    	return "sinhvien/timkiemsinhvien";
 		} catch (Exception e) {
 			e.getStackTrace();

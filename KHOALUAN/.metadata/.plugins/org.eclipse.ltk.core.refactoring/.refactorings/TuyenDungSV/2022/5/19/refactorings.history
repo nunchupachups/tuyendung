@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;cntt.trang.bean.GPA.java&apos; to &apos;TimKiemSV.java&apos;&#x0D;&#x0A;- Original project: &apos;TuyenDungSV&apos;&#x0D;&#x0A;- Original element: &apos;cntt.trang.bean.GPA.java&apos;&#x0D;&#x0A;- Renamed element: &apos;cntt.trang.bean.TimKiemSV.java&apos;" description="Rename compilation unit &apos;GPA.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java&lt;cntt.trang.bean{GPA.java" name="TimKiemSV.java" references="false" stamp="1651506733493" version="1.0"/>
+</session>
