@@ -26,6 +26,7 @@ import cntt.trang.bean.DoanhNghiep;
 import cntt.trang.bean.DonVi;
 import cntt.trang.bean.KyNang;
 import cntt.trang.bean.SinhVien;
+import cntt.trang.bean.TimKiemSV;
 import cntt.trang.bean.ViTri;
 import cntt.trang.dao.CVDAO;
 import cntt.trang.dao.ChungChiDAO;
@@ -50,13 +51,13 @@ public class SinhVienController {
 	 		
 	 		NganhDaoTaoDAO nganhDaoTaoDAO= new NganhDaoTaoDAO();
 	 		SinhVienDAO sinhVienDAO= new SinhVienDAO();
-	 		KetQuaHocTapDAO ketQuaHocTapDAO=new KetQuaHocTapDAO();
 	 		
 	 		
 	 		
 	 		model.addAttribute("dsNganhDaoTao", nganhDaoTaoDAO.getAllNganhDaoTao());
-	 		model.addAttribute("dssinhvien", ketQuaHocTapDAO.getAllGPA());
+	 		model.addAttribute("dssinhvien", sinhVienDAO.timKiemAllSinhVien());
 	 		model.addAttribute("nganhDaoTaoDAO", nganhDaoTaoDAO);
+	 		
 	 		
 	    	return "sinhvien/timkiemsinhvien";
 		} catch (Exception e) {
@@ -65,6 +66,42 @@ public class SinhVienController {
 		}
        
     }
+	@RequestMapping(value= {"/timkiem"}, method=RequestMethod.POST)
+    public void timKiemSinhVien(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String key= request.getParameter("key");
+	 		String nam= request.getParameter("nam");
+	 		String maNganhDaoTao= request.getParameter("maNganhDaoTao");
+	 		String loaiGPA= request.getParameter("loaiGPA");
+	 		SinhVienDAO sinhVienDAO=new SinhVienDAO();
+	 		
+	 		ArrayList<TimKiemSV> ds=sinhVienDAO.timKiemSinhVien(key, Integer.parseInt(nam), maNganhDaoTao, Integer.parseInt(loaiGPA));
+	 		
+	 		for (TimKiemSV timKiemSV : ds) {
+				System.out.println(timKiemSV.getHoVaTen());
+				
+			}
+	 		PrintWriter out=response.getWriter();
+	 		if(ds.isEmpty()) 
+	 			out.print("<h4 style=\"color: #c0c0c0;\">Không có sinh viên nào thoả mãn yêu cầu tìm kiếm</h4>");
+	 		else
+	 			for (TimKiemSV sv : ds) {
+					out.print("<div class=\"sinhvien\" >\r\n" + 
+							"	            <h5><a href=\"/sinhvien/CV/id?id="+sv.getMaSinhVien() +"\">"+sv.getHoVaTen()+" </a></h5>\r\n" + 
+							"	            <div><b> Ngành đào tạo:</b> "+sv.getTenNganh() +"</div>\r\n" + 
+							"	            <div><b>GPA:</b> "+sv.getGPA()+" </div>\r\n" + 
+							"        	</div>");
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+       
+    }
+	
 	@RequestMapping(value= {"/dangnhap"}, method=RequestMethod.GET)
     public String displayDangNhap(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
 	 	try {

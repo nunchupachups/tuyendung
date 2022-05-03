@@ -2,7 +2,6 @@ INDEX VERSION 1.131+C:\Users\Admin\Desktop\TuyenDung\KHOALUAN\.metadata\.plugins
 988102679.index
 3435648363.index
 1646863430.index
-2259219471.index
 1829277451.index
 2956475831.index
 2866303726.index

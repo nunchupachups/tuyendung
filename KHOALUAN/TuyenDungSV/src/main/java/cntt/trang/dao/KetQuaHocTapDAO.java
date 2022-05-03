@@ -49,41 +49,7 @@ public class KetQuaHocTapDAO {
 		}
 		return ds;
 	}
-	public ArrayList<TimKiemSV> getAllGPA() throws SQLException {
-		String query = "select TenNganh ,HoVaTen,sv.MaSinhVien,  (CASE \r\n" + 
-				"    WHEN round(Sum(kq.SoTinChi*DiemHe4)/sum(kq.SoTinChi),2) is null THEN 0 \r\n" + 
-				"    ELSE round(Sum(kq.SoTinChi*DiemHe4)/sum(kq.SoTinChi),2)\r\n" + 
-				"END) as GPA \r\n" + 
-				"from KetQuaHocTap as kq right join SinhVien as sv on sv.MaSinhVien=kq.MaSinhVien join NganhDaoTao as ndt on ndt.MaNganh=sv.MaNganhDaoTao\r\n" + 
-				"group by TenNganh ,HoVaTen,sv.MaSinhVien order by GPA desc";
-		ArrayList<TimKiemSV> ds= new ArrayList<TimKiemSV>();
-		try {
-			conn = new DBConnect().getConnection();
-			ps = conn.prepareStatement(query);
-			rs= ps.executeQuery();	
-			while(rs.next()) {
-				String maSinhVien=rs.getString("MaSinhVien");
-				float GPA=rs.getFloat("GPA");
-				String hoVaTen=rs.getNString("HoVaTen");
-				String tenNganh=rs.getNString("TenNganh");
-				ds.add(new TimKiemSV(maSinhVien, GPA, hoVaTen, tenNganh));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(rs!=null) {
-				rs.close();
-			}
-			if(ps!=null) {
-				ps.close();
-			}
-			if(conn!=null) {
-				conn.close();
-			}	
-		}
-		return ds;
-	}
+	
 	public int getSumSoTinChiByMaSinhVien(String maSinhVien) throws SQLException {
 		String query = "select MaSinhVien, Sum(SoTinChi) as SoTinChi from KetQuaHocTap where MaSinhVien=? group by MaSinhVien";
 		try {
