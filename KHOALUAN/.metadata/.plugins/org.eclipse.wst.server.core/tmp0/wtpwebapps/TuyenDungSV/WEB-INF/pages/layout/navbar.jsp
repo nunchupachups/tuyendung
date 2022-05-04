@@ -35,7 +35,6 @@
 			            <i class="fas fa-sort-down"></i>
 			          </button>
 			          <ul class="dropdown-menu dropdown-account">
-			            <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
 			            <li><a class="dropdown-item" href="/sinhvien/dangxuat">Đăng xuất <i class="fas fa-sign-out-alt"></i></a></li>
 			          </ul>
 			        </div>

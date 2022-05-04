@@ -1,0 +1,119 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html>
+<head>
+	<title>${title }</title>
+	<jsp:include page="/WEB-INF/pages/layout/header.jsp" />
+</head>
+<body>
+    <div class="bg">
+    <jsp:include page="/WEB-INF/pages/layout/navbar.jsp" />
+    <div style="height:70px;">
+    </div>
+    <div class="container">
+    	<h2>KẾT QUẢ HỌC TẬP</h2>
+
+<div class="container-fluid text-right" style="margin-bottom:5px;">
+    <div class="btn-group">
+        <a href="/Statistics/StudyResult/ProgramComparing/" class="btn btn-default">Đối chiếu kết quả học tập với chương trình đào tạo</a>   
+        <a href="/Statistics/HistoryOfStudying" class="btn btn-default">Lịch sử quá trình học</a>   
+    </div>
+</div>
+
+<div class="container-fluid form-horizontal">
+    <div class="row form-group hitec-border-bottom-dotted">
+        <label class="control-label col-xs-3">Khóa nhập học:</label>
+        <div class="col-xs-9">
+            <p class="form-control-static">Kh&#243;a 42 (2018-2022)</p>
+        </div>
+    </div>
+
+    <div class="row form-group hitec-border-bottom-dotted">
+        <label class="control-label col-xs-3">Ngành học:</label>
+        <div class="col-xs-9">
+            <p class="form-control-static">C&#212;NG NGHỆ TH&#212;NG TIN</p>
+        </div>
+    </div>
+
+    <div class="row form-group hitec-border-bottom-dotted">
+        <label class="control-label col-xs-3">Tính chất ngành học:</label>
+        <div class="col-xs-9">
+            <p class="form-control-static">Ng&#224;nh học ch&#237;nh</p>
+        </div>
+    </div>
+
+    <div class="row form-group hitec-border-bottom-dotted">
+        <label class="control-label col-xs-3">Số tín chỉ đã tích lũy:</label>
+        <div class="col-xs-2">
+            <p class="form-control-static">112</p>
+        </div>
+        <label class="control-label col-xs-4">Điểm trung bình tích lũy:</label>
+        <div class="col-xs-3">
+            <p class="form-control-static">3.59</p>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover" style="margin-top:20px">
+    <thead style="background-color: #d2d2d2;">
+        <tr>
+            <th class="text-center" rowspan="2" style="width:100px">Mã<br />học phần</th>
+            <th class="text-center" rowspan="2">Tên học phần</th>
+            <th class="text-center" rowspan="2" style="width:40px">Số TC</th>
+            <th class="text-center" colspan="3" style="width:210px">Điểm đánh giá học phần</th>
+        </tr>
+        <tr>
+            <th class="text-center" style="width:70px">Hệ 10</th>
+            <th class="text-center" style="width:70px">Đ.Chữ</th>
+            <th class="text-center" style="width:70px">Hệ 4</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<c:set var="hocky" value="0"></c:set>
+    	<c:set var="namhoc" value="0"></c:set>
+    	<c:forEach items="${ketQuas }" var="kq">
+    	<c:if test=""></c:if>
+           <tr style="background-color: #f2f2f2;">	
+                    <td colspan="2" class="table-cell-title">
+                        <b>Học kỳ: 1 - Năm học: 2018-2019</b>
+                    </td>
+                    <td colspan="6" class="table-cell-title">
+                        Tổng số TC tích lũy: <b>16</b>
+                    </td>
+                </tr>
+            <tr>
+                <td class="text-center">
+                    ma hoc phan
+                </td>
+                <td>
+                    ten hoc phan
+                </td>
+                <td class="text-center">2</td>
+                <td class="text-center">7.3</td>
+                <td class="text-center">B</td>
+                <td class="text-center">3.0</td>
+            </tr>
+           </c:forEach>
+    </tbody>
+</table>
+    </div>
+	
+	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
+    </div>
+    <a href="/sinhvien/CV/id?id=${sv.getMaSinhVien() }" style="text-decoration: none; color: black;">
+    	<div class="btn-xemcv" >
+    	<h5>Xem CV </h5>
+    	</div>
+    </a>
+    <a href="/sinhvien/diem/id?id=${sv.getMaSinhVien() }" style="text-decoration: none; color: black;">
+    	<div class="btn-xemdiem" style="background-color: orange;">
+    	<h5>Xem điểm</h5>
+    	</div>
+    </a>
+    
+    
+</body>
+</html>

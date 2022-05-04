@@ -28,6 +28,7 @@ import cntt.trang.bean.ChungChi;
 import cntt.trang.bean.DoanhNghiep;
 import cntt.trang.bean.DonVi;
 import cntt.trang.bean.KyNang;
+import cntt.trang.bean.NganhDaoTao;
 import cntt.trang.bean.SinhVien;
 import cntt.trang.bean.TimKiemSV;
 import cntt.trang.bean.ViTri;
@@ -242,6 +243,35 @@ public class SinhVienController {
 	 		model.addAttribute("chungChis", chungChis);
 	 		
 	 		return "sinhvien/CV/xem";
+	 		
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/diem/id"}, method=RequestMethod.GET)
+    public String xemDiem(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		KetQuaHocTapDAO ketQuaHocTapDAO= new KetQuaHocTapDAO();
+	 		SinhVienDAO sinhVienDAO=new SinhVienDAO();
+	 		NganhDaoTaoDAO nganhDaoTaoDAO=new NganhDaoTaoDAO();
+	 		
+	 		String maSinhVien=request.getParameter("id");
+	 		SinhVien sinhVien=sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien);
+	 		int khoa=sinhVien.getKhoa();
+	 		NganhDaoTao nganhDaoTao=nganhDaoTaoDAO.getNganhDaoTaoById(sinhVien.getMaNganhDaoTao());
+	 		
+	 		
+	 		model.addAttribute("ketQuas", ketQuaHocTapDAO.getAllKetQuaHocTapByMaSinhVien(maSinhVien));
+	 		model.addAttribute("maSinhVien",maSinhVien);
+	 		model.addAttribute("khoa", "Khoa "+khoa+" ("+(khoa+1976)+"-"+(khoa+1976+nganhDaoTao.getNamDaoTao())+")");
+	 		model.addAttribute("nganh", nganhDaoTao.getTenNganh().toUpperCase());
+	 		model.addAttribute("soTinChi", ketQuaHocTapDAO.getSumSoTinChiByMaSinhVien(maSinhVien));
+	 		model.addAttribute("GPA", ketQuaHocTapDAO.getGPAByMaSinhVien(maSinhVien));
+	 		return "sinhvien/diem";
 	 		
 		} catch (Exception e) {
 			e.getStackTrace();

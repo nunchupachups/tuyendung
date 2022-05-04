@@ -3,13 +3,14 @@ package cntt.trang.bean;
 public class KetQuaHocTap {
 	private String maHocPhan;
 	private String maSinhVien;
-	private String tenSinhVien;
+	private String tenHocPhan;
 	private int soTinChi;
 	private int hocKy;
 	private String namHoc;
 	private float diemHe10;
 	private float diemHe4;
 	private String diemChu;
+	private int tongSoTinChiTheoKy;
 	public String getMaHocPhan() {
 		return maHocPhan;
 	}
@@ -22,11 +23,11 @@ public class KetQuaHocTap {
 	public void setMaSinhVien(String maSinhVien) {
 		this.maSinhVien = maSinhVien;
 	}
-	public String getTenSinhVien() {
-		return tenSinhVien;
+	public String getTenHocPhan() {
+		return tenHocPhan;
 	}
-	public void setTenSinhVien(String tenSinhVien) {
-		this.tenSinhVien = tenSinhVien;
+	public void setTenHocPhan(String tenHocPhan) {
+		this.tenHocPhan = tenHocPhan;
 	}
 	public int getSoTinChi() {
 		return soTinChi;
@@ -64,18 +65,26 @@ public class KetQuaHocTap {
 	public void setDiemChu(String diemChu) {
 		this.diemChu = diemChu;
 	}
-	public KetQuaHocTap(String maHocPhan, String maSinhVien, String tenSinhVien, int soTinChi, int hocKy, String namHoc,
-			float diemHe10, float diemHe4, String diemChu) {
+	
+	public int getTongSoTinChiTheoKy() {
+		return tongSoTinChiTheoKy;
+	}
+	public void setTongSoTinChiTheoKy(int tongSoTinChiTheoKy) {
+		this.tongSoTinChiTheoKy = tongSoTinChiTheoKy;
+	}
+	public KetQuaHocTap(String maHocPhan, String maSinhVien, String tenHocPhan, int soTinChi, int hocKy, String namHoc,
+			float diemHe10, float diemHe4, String diemChu, int tongSoTinChiTheoKy) {
 		super();
 		this.maHocPhan = maHocPhan;
 		this.maSinhVien = maSinhVien;
-		this.tenSinhVien = tenSinhVien;
+		this.tenHocPhan = tenHocPhan;
 		this.soTinChi = soTinChi;
 		this.hocKy = hocKy;
 		this.namHoc = namHoc;
 		this.diemHe10 = diemHe10;
 		this.diemHe4 = diemHe4;
 		this.diemChu = diemChu;
+		this.tongSoTinChiTheoKy = tongSoTinChiTheoKy;
 	}
 	public KetQuaHocTap() {
 		super();

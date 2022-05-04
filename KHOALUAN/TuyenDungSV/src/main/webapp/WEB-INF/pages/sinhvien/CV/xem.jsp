@@ -229,10 +229,10 @@
                     	
                      		<c:if test="${!chungChis.isEmpty() }">
                      			<c:forEach items="${chungChis }" var="cc">
-                     				<div class="col-8 chungchi-name">
+                     				<div class="col-9 chungchi-name">
 			                            ${cc.getTenChungChi() }
 			                        </div>
-			                        <div class="col-4">
+			                        <div class="col-3">
 			                            ${cc.getNam() }
 			                        </div>
                      			</c:forEach>

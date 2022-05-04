@@ -154,7 +154,7 @@ public class DocJSON {
 		}
 		return flag;
 	}
-	public static int insertDiem(String maHocPhan,String maSinhVien, String tenHocPhan, int soTinChi, String hocKy, String namHoc, float diemHe10, float diemHe4, String diemChu) throws SQLException {
+	public static int insertDiem(String maHocPhan,String maSinhVien, String tenHocPhan, int soTinChi, int hocKy, String namHoc, float diemHe10, float diemHe4, String diemChu) throws SQLException {
 		int flag= -1;
 		String query = "insert into KetQuaHocTap(MaHocPhan,MaSinhVien, TenHocPhan, SoTinChi, HocKy, NamHoc, DiemHe10, DiemHe4, DiemChu) values(?,?,?,?,?,?,?,?,?)";
 		try {
@@ -164,7 +164,7 @@ public class DocJSON {
 			ps.setString(2, maSinhVien);
 			ps.setNString(3, tenHocPhan);
 			ps.setInt(4, soTinChi);
-			ps.setString(5, hocKy);
+			ps.setInt(5, hocKy);
 			ps.setString(6, namHoc);
 			ps.setFloat(7, diemHe10);
 			ps.setFloat(8, diemHe4);
@@ -302,49 +302,51 @@ public class DocJSON {
 //            }
 //	}	
 //		diem
-//		try {
-//          	FileReader reader1 = new FileReader("C:\\Users\\Admin\\Desktop\\TuyenDung\\KHOALUAN\\TuyenDungSV\\src\\main\\webapp\\json\\learning_result.json");
-//                // Read JSON file
-//                Object obj1 = jsonParser.parse(reader1);
-//
-//                JSONObject list = (JSONObject) obj1;
-//                Iterator<String> listMaSV=list.keySet().iterator();
-//                while(listMaSV.hasNext()) {
-//                	String maSinhVien=listMaSV.next();
-//                	JSONArray listDiem = (JSONArray)list.get(maSinhVien);
-//                	for (Object object : listDiem) {
-//                		JSONObject kq=(JSONObject)object;
-//                    	String maHocPhan = (String)kq.get("MaHocPhan");
-//                    	String tenHocPhan = (String)kq.get("TenHocPhan");
-//                    	long soTinChi = (long) kq.get("SoTinChi");
-//                    	String hocKy = (String)kq.get("HocKy");
-//                    	String namHoc = (String)kq.get("NamHoc");
-//                    	double diemHe10 = (double)kq.get("DiemHe10");
-//                    	double diemHe4 = (double)kq.get("DiemHe4");
-//                    	String diemChu = (String)kq.get("DiemChu");
-//                    	insertDiem(maHocPhan, maSinhVien, tenHocPhan, (int)soTinChi, hocKy, namHoc, (float)diemHe10, (float)diemHe4, diemChu);
-//                        System.out.println("ok");
-//					}
-//                }
-//        	
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-		SinhVienDAO sinhVienDAO= new SinhVienDAO();
-		ArrayList<SinhVien> sinhvien=sinhVienDAO.getAllSinhVien();
-		NganhDaoTaoDAO nganhDaoTaoDAO= new NganhDaoTaoDAO();
-		DonViDAO donViDAO=new DonViDAO();
-		ViTriDAO viTriDAO= new ViTriDAO();
-		
-		for (SinhVien sv : sinhvien) {
-			donViDAO.insertDonVi("Trường Đại học Khoa học Huế", sv.getMaSinhVien(), "hocvan");
-			DonVi truong= donViDAO.getDonViByTenDonViAndMucCVAndMaCV("hocvan", sv.getMaSinhVien(), "Trường Đại học Khoa học Huế");
-			viTriDAO.insertViTri("Sinh viên ngành "+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getTenNganh(), (1976+sv.getKhoa())+" - "+(1976+sv.getKhoa()+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getNamDaoTao()>=new Date().getYear() ? "Nay" : 1976+sv.getKhoa()+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getNamDaoTao()), truong.getMaDonVi(), "");
-		}
+		try {
+          	FileReader reader1 = new FileReader("C:\\Users\\Admin\\Desktop\\TuyenDung\\KHOALUAN\\TuyenDungSV\\src\\main\\webapp\\json\\learning_result.json");
+                // Read JSON file
+                Object obj1 = jsonParser.parse(reader1);
+
+                JSONObject list = (JSONObject) obj1;
+                Iterator<String> listMaSV=list.keySet().iterator();
+                while(listMaSV.hasNext()) {
+                	String maSinhVien=listMaSV.next();
+                	JSONArray listDiem = (JSONArray)list.get(maSinhVien);
+                	for (Object object : listDiem) {
+                		JSONObject kq=(JSONObject)object;
+                    	String maHocPhan = (String)kq.get("MaHocPhan");
+                    	String tenHocPhan = (String)kq.get("TenHocPhan");
+                    	long soTinChi = (long) kq.get("SoTinChi");
+                    	String hocKy = (String)kq.get("HocKy");
+                    	String namHoc = (String)kq.get("NamHoc");
+                    	double diemHe10 = (double)kq.get("DiemHe10");
+                    	double diemHe4 = (double)kq.get("DiemHe4");
+                    	String diemChu = (String)kq.get("DiemChu");
+                    	insertDiem(maHocPhan, maSinhVien, tenHocPhan, (int)soTinChi, Integer.parseInt(hocKy) , namHoc, (float)diemHe10, (float)diemHe4, diemChu);
+                        System.out.println("ok");
+					}
+                }
+        	
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+		//them truong hoc
+//		SinhVienDAO sinhVienDAO= new SinhVienDAO();
+//		ArrayList<SinhVien> sinhvien=sinhVienDAO.getAllSinhVien();
+//		NganhDaoTaoDAO nganhDaoTaoDAO= new NganhDaoTaoDAO();
+//		DonViDAO donViDAO=new DonViDAO();
+//		ViTriDAO viTriDAO= new ViTriDAO();
+//		KetQuaHocTapDAO ketQuaHocTapDAO=new KetQuaHocTapDAO();
+//		
+//		for (SinhVien sv : sinhvien) {
+//			donViDAO.insertDonVi("Trường Đại học Khoa học Huế", sv.getMaSinhVien(), "hocvan");
+//			DonVi truong= donViDAO.getDonViByTenDonViAndMucCVAndMaCV("hocvan", sv.getMaSinhVien(), "Trường Đại học Khoa học Huế");
+//			viTriDAO.insertViTri("Sinh viên ngành "+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getTenNganh(), (1976+sv.getKhoa())+" - "+(1976+sv.getKhoa()+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getNamDaoTao()>=new Date().getYear() ? "Nay" : 1976+sv.getKhoa()+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getNamDaoTao()), truong.getMaDonVi(), "- GPA: "+ketQuaHocTapDAO.getGPAByMaSinhVien(sv.getMaSinhVien()));
+//		}
 }
 
 }
