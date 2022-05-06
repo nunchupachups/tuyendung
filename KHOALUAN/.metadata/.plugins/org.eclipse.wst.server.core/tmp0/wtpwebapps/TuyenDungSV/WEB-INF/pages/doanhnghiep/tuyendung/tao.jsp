@@ -84,9 +84,9 @@
                 <label for="title" class="col-sm-2 col-form-label">Khu vực tuyển<span class="required"> *</span></label>
                 <div class="col-sm-4">
                     <select class="form-select" aria-label="Default select example" id="city" required="required" name="cmbKhuVucTuyen">
-                        <option value="Cả nước">Cả nước</option>
+                        <option value="00">Cả nước</option>
                         <c:forEach items="${dsTinhThanh }" var="tt">
-                        	<option value="${tt.getTenTinhThanh() }">${tt.getTenTinhThanh() }</option>
+                        	<option value="${tt.getMaTinhThanh() }">${tt.getTenTinhThanh() }</option>
                         </c:forEach>
                       </select>
                 </div>

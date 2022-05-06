@@ -43,4 +43,33 @@ public class TinhThanhDAO {
 		}
 		return ds;
 	}
+	public TinhThanh getTinhThanhById(String maTinhThanh) throws SQLException {
+		String query = "select * from TinhThanh where MaTinhThanh=?";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1,maTinhThanh);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				String tenTinhThanh = rs.getNString("TenTinhThanh");  
+				String type = rs.getNString("Type"); 
+				
+				return new TinhThanh(maTinhThanh, tenTinhThanh, type);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return null;
+	}
 }

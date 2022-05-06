@@ -1,6 +1,12 @@
 body{
 	background-color: #f0f5f8;
 }
+.carousel-cell {
+  width: 47%;
+  height: 200px;
+  margin-right: 10px;
+  counter-increment: gallery-cell;
+}
 
 .container{
     width: 1146px;
@@ -9,7 +15,7 @@ body{
     padding: 15px;
 }
 .tuyendung-container{
-    padding-bottom: 50px;
+    padding-bottom: 10px;
 }
 .tuyendung-dropdown{
     position: absolute;

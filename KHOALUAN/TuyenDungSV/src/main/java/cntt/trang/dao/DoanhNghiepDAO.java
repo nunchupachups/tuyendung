@@ -152,7 +152,46 @@ public class DoanhNghiepDAO {
 		}
 		return null;
 	}
-	
+	public DoanhNghiep getDoanhNghiepById(long maDoanhNghiep) throws SQLException {
+		String query = "select * from DoanhNghiep where MaDoanhNghiep=? ";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setLong(1, maDoanhNghiep);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				String emailDangNhap=rs.getNString("EmailDangNhap");
+				String matKhau=rs.getNString("MatKhau");
+				String tenLienHe = rs.getNString("TenLienHe"); 
+				String emailLienHe = rs.getNString("EmailLienHe"); 
+				String soDienThoai = rs.getString("SoDienThoai"); 
+				String tenDoanhNghiep = rs.getNString("TenDoanhNghiep"); 
+				String maSoThue = rs.getString("MaSoThue"); 
+				String maXaPhuong = rs.getString("MaXaPhuong"); 
+				String diaChiDuong = rs.getNString("DiaChiDuong"); 
+				String maLinhVucHoatDong = rs.getString("MaLinhVucHoatDong"); 
+				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
+				String giayChungNhan = rs.getNString("GiayChungNhan"); 
+				boolean daDuyet = rs.getBoolean("DaDuyet");
+				
+				return new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return null;
+	}
 	public int insertDoanhNghiep(String emailDangNhap, String matKhau, String tenLienHe, String emailLienHe, String soDienThoai, String tenDoanhNghiep, String maSoThue, String maXaPhuong, String diaChiDuong,String maLinhVucHoatDong, long maLoaiHinhDoanhNghiep, String giayChungNhan, boolean daDuyet) throws SQLException {
 		String query = "insert into DoanhNghiep(EmailDangNhap, MatKhau, TenLienHe, EmailLienHe, SoDienThoai, TenDoanhNghiep, MaSoThue, MaXaPhuong, DiaChiDuong,MaLinhVucHoatDong,MaLoaiHinhDoanhNghiep, GiayChungNhan, DaDuyet) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		int flag=-1;

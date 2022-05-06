@@ -19,7 +19,7 @@
 			        <a class="nav-link " href="/doanhnghiep">Doanh Nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="/sinhvien/tuyendung">Tuyển dụng</a>
+			        <a class="nav-link" href="/tuyendung">Tuyển dụng</a>
 			      </li>
 			      <li class="nav-item">
 			        <a class="nav-link" href="/sinhvien/CV">CV</a>
@@ -77,10 +77,10 @@
     		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
 			      <li class="nav-item">
-			        <a class="nav-link " href="#">Doanh nghiệp</a>
+			        <a class="nav-link " href="/doanhnghiep">Doanh nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="#">Tuyển dụng</a>
+			        <a class="nav-link" href="/tuyendung">Tuyển dụng</a>
 			      </li>
 			    </ul>
 			    </div>
@@ -101,7 +101,7 @@
 			        <a class="nav-link " href="/doanhnghiep">Doanh nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="#">Tuyển dụng</a>
+			        <a class="nav-link" href="/tuyendung">Tuyển dụng</a>
 			      </li>
 			      <li class="nav-item">
 			        <a class="nav-link" onclick="alert('Bạn cần phải đăng nhập trước!')">CV</a>
