@@ -1,0 +1,188 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>${title }</title>
+	<jsp:include page="/WEB-INF/pages/layout/header.jsp" />
+	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+	<style type="text/css">
+		.tuyendung-item{
+			margin-top: 15px;}
+		.tuyendung-item span{
+			padding: 5px; 
+			background-color: #EDEEF0; 
+			margin: 3px; 
+			border-radius: 5px;
+		}
+	</style>
+</head>
+<body>
+    <div class="bg">
+    <jsp:include page="/WEB-INF/pages/layout/navbar.jsp" />
+    <div style="height:70px;">
+    </div>
+    <div class="container" > 
+    <div style="height: 15px;"></div>
+
+        
+        	<div class="tuyendung" style="position: relative;">
+		        <div class="tuyendung-container">
+		        	
+		            <h4>${tuyenDung.getTieuDe() }</h4>
+		       
+		            <a href="/doanhnghiep/chitiet/id=${tuyenDung.getMaDoanhNghiep() }" style="text-decoration: none; color: black;">
+		            	<span style="margin-bottom:20px;">${doanhNghiepDAO.getDoanhNghiepById(tuyenDung.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase()  }</span>
+		            </a>
+		            <div style="margin: 5px 0;">
+		            	<b><i>Tên công việc : </i></b>${tuyenDung.getTenCongViec() } 
+		            </div>    
+		        </div>
+		        
+		        <div style="position: absolute;bottom: 15px;right: 50px;">
+		        	<c:if test="${tuyenDung.isDaDuyet()}">
+		            	<button class="btn btn-danger">Chưa được duyệt</button>
+		        	</c:if>
+		        </div>
+		    </div>
+		    
+		    
+		<div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>    
+		    
+		    
+		    
+	<div class="tuyendung" >
+		        <div class="tuyendung-container">
+		            <h3>${tuyenDung.getTieuDe() }</h3>
+		            <b><i>Ngành nghề: </i></b>${nganhNgheDAO.getNganhNgheByID(tuyenDung.getMaNganhNghe()).getTenNganhNghe() }<br>
+		            <b><i>Tên công việc: </i></b>${tuyenDung.getTenCongViec() } <br>
+		            <b><i>Hình thức làm việc: </i></b>${hinhThucLamViecDAO.getHinhThucLamViecByID(tuyenDung.getMaHinhThuc()).getTenHinhThuc() }<br>
+		            <c:if test="${tuyenDung.getThoiGianThuViec()!=null }">
+		            	<b><i>Thời gian thử việc: </i></b>${tuyenDung.getThoiGianThuViec() }<br>
+		            </c:if>
+		            
+		            <c:if test="${tuyenDung.getSinhVienNam()!=0 }">
+		            	<b><i>Sinh viên năm: </i></b>${tuyenDung.getSinhVienNam() }<br>
+		            </c:if>
+		            <c:if test="${tuyenDung.getGioiTinh()!=null }">
+		            	<b><i>Giới tính: </i></b>${tuyenDung.getGioiTinh() }<br>
+		            </c:if> 
+		            <b><i>Khu vực tuyển: </i></b>
+		            <c:choose>
+		            	<c:when test="${tuyenDung.getKhuVucTuyenDung()=='00' }">
+		            		<span>Cả nước</span>
+		            	</c:when>
+		            	<c:otherwise>
+		            		<span>${tinhThanhDAO.getTinhThanhById(tuyenDung.getKhuVucTuyenDung()).getTenTinhThanh() }</span>
+		            		
+		            	</c:otherwise>
+		            </c:choose>
+		            
+		            <b><i>Số lượng: </i></b>${tuyenDung.getSoLuong() }<br>
+		            <b><i>Mức lương: </i></b>${tuyenDung.getMucLuong() }<br>
+		            <b><i>Hạn đăng ký: </i></b>${tuyenDung.getHanDangKy() }<br>
+		            <b><i>MÔ TẢ CÔNG VIỆC</i></b> <br>
+		            ${tuyenDung.getMoTaCongViec() }
+		            <b><i>YÊU CẦU CÔNG VIỆC</i></b><br>
+		            ${tuyenDung.getYeuCauCongViec() }
+		            <b><i>QUYỀN LỢI</i></b><br>
+		            ${tuyenDung.getQuyenLoi() } 
+		        </div>
+		    </div>
+        
+      
+      
+       <div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>
+       
+       
+       <div>
+       <h5 style="margin: 30px 0;">Việc làm cùng công ty</h5>
+       <div class="carousel" data-flickity data-flickity-options='{ "wrapAround": true, "pageDots": false, "cellAlign": "left" }'>
+  <c:forEach items="${tuyenDungCungCongTy }" var="td" varStatus="i">
+  <c:if test="${i.count<=10 }">
+  <div class="carousel-cell">
+  	<div class="tuyendung">
+		   <div class="tuyendung-container">
+		        	<a href="/tuyendung/chitiet?id=${td.getMaTuyenDung() }"  style="text-decoration: none; ">
+		            	<h4>${td.getTieuDe() }</h4>
+		            </a>
+		            <a href="/doanhnghiep/chitiet?id=${td.getMaDoanhNghiep() }" style="text-decoration: none; color: black;">
+		            	<span style="margin-bottom:20px;">${doanhNghiepDAO.getDoanhNghiepById(td.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase()  }</span>
+		            </a>
+		            <div style="margin: 5px 0;">
+		            	<b><i>Tên công việc : </i></b>${td.getTenCongViec() } 
+		            </div>
+		            
+		            <div class="tuyendung-item">
+		            <c:choose>
+		            	<c:when test="${td.getKhuVucTuyenDung()=='00' }">
+		            		<span>Cả nước</span>
+		            	</c:when>
+		            	<c:otherwise>
+		            		<span>${tinhThanhDAO.getTinhThanhById(td.getKhuVucTuyenDung()).getTenTinhThanh() }</span>
+		            		
+		            	</c:otherwise>
+		            </c:choose>
+		            
+		            	<span>${td.getMucLuong() }</span>
+		            	<span>Hạn đăng ký : ${td.getHanDangKy() }</span>
+		            </div>
+		            
+		        </div>
+		        
+		    </div>
+  </div>
+  </c:if>
+  </c:forEach>
+</div>
+</div>
+<div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>
+<div>
+<h5 style="margin: 30px 0;">Việc làm liên quan</h5>
+     <c:forEach items="${tuyenDungLienQuan }" var="td">
+        	<div class="tuyendung" style="position: relative;">
+		        <div class="tuyendung-container">
+		        	<a href="/tuyendung/chitiet?id=${td.getMaTuyenDung() }" style="text-decoration: none; ">
+		            	<h4>${td.getTieuDe() }</h4>
+		            </a>
+		            <a href="/doanhnghiep/chitiet?id=${td.getMaDoanhNghiep() }" style="text-decoration: none; color: black;">
+		            	<span style="margin-bottom:20px;">${doanhNghiepDAO.getDoanhNghiepById(td.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase()  }</span>
+		            </a>
+		            <div style="margin: 5px 0;">
+		            	<b><i>Tên công việc : </i></b>${td.getTenCongViec() } 
+		            </div>
+		            
+		            <div class="tuyendung-item">
+		            <c:choose>
+		            	<c:when test="${td.getKhuVucTuyenDung()=='00' }">
+		            		<span>Cả nước</span>
+		            	</c:when>
+		            	<c:otherwise>
+		            		<span>${tinhThanhDAO.getTinhThanhById(td.getKhuVucTuyenDung()).getTenTinhThanh() }</span>
+		            		
+		            	</c:otherwise>
+		            </c:choose>
+		            
+		            	<span>${td.getMucLuong() }</span>
+		            	<span>Hạn đăng ký : ${td.getHanDangKy() }</span>
+		            </div>
+		            
+		        </div>
+		        
+		        <div style="position: absolute;bottom: 15px;right: 50px;">
+		        	<c:if test="${td.isDaDuyet()}">
+		            	<button class="btn btn-danger">Chưa được duyệt</button>
+		        	</c:if>
+		        </div>
+		    </div>
+        	
+        </c:forEach>  
+        </div>
+    </div>
+	
+	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
+    </div>
+</body>
+</html>

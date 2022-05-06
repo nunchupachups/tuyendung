@@ -69,12 +69,13 @@
     	</c:if>
     	
         <c:forEach items="${tuyenDungs }" var="td">
-        	<div class="tuyendung" style="position: relative;">
+        	<div  id="tuyendung-item${td.getMaTuyenDung() }">
+        	<div class="tuyendung" style="position: relative;" >
 		        <div class="tuyendung-container">
-		        	<a href="#" style="text-decoration: none; ">
+		        	<a href="/tuyendung/chitiet?id=${td.getMaTuyenDung() }" style="text-decoration: none; ">
 		            	<h4>${td.getTieuDe() }</h4>
 		            </a>
-		            <a href="#" style="text-decoration: none; color: black;">
+		            <a href="/doanhnghiep/chitiet?id=${td.getMaDoanhNghiep() }" style="text-decoration: none; color: black;">
 		            	<span style="margin-bottom:20px;">${doanhNghiepDAO.getDoanhNghiepById(td.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase()  }</span>
 		            </a>
 		            <div style="margin: 5px 0;">
@@ -99,12 +100,27 @@
 		        </div>
 		        
 		        <div style="position: absolute;bottom: 15px;right: 50px;">
-		        	<c:if test="${td.isDaDuyet()}">
-		            	<button class="btn btn-danger">Chưa được duyệt</button>
-		        	</c:if>
+		        	<c:choose>
+		        		<c:when test="${sessionScope.sinhvien==null }">
+		        			<button class="btn btn-success" onclick="alert('Bạn cần phải đăng nhập trước!')">Đăng ký</button>
+		        		</c:when>
+		        		<c:otherwise>
+		        			<c:choose>
+		        				<c:when test="${dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sessionScope.sinhvien.getMaSinhVien(), td.getMaTuyenDung())==null }">
+		        					<button class="btn btn-success" onclick="dangKyTuyenDung(${td.getMaTuyenDung()})">Đăng ký</button>
+		        				</c:when>
+		        				<c:when test="${dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sessionScope.sinhvien.getMaSinhVien(), td.getMaTuyenDung())!=null &&dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sessionScope.sinhvien.getMaSinhVien(), td.getMaTuyenDung()).isDaDuyet()}">
+		        					<button class="btn btn-primary">Đã duyệt</button>
+		        				</c:when>
+		        				<c:otherwise>
+		        					<button class="btn btn-danger" onclick="huyDangKy(${td.getMaTuyenDung()})">Huỷ đăng ký</button>
+		        				</c:otherwise>
+		        			</c:choose>
+		        		</c:otherwise>
+		        	</c:choose>
 		        </div>
 		    </div>
-        	
+        	</div>
         </c:forEach>
         
         <c:if test="${soPage>1 }">
@@ -138,10 +154,10 @@
   <div class="carousel-cell">
   	<div class="tuyendung">
 		   <div class="tuyendung-container">
-		        	<a href="#" style="text-decoration: none; ">
+		        	<a href="/tuyendung/chitiet?id=${td.getMaTuyenDung() }" style="text-decoration: none; ">
 		            	<h4>${td.getTieuDe() }</h4>
 		            </a>
-		            <a href="#" style="text-decoration: none; color: black;">
+		            <a href="/doanhnghiep/chitiet?id=${td.getMaDoanhNghiep() }" style="text-decoration: none; color: black;">
 		            	<span style="margin-bottom:20px;">${doanhNghiepDAO.getDoanhNghiepById(td.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase()  }</span>
 		            </a>
 		            <div style="margin: 5px 0;">
@@ -219,6 +235,34 @@
 		    }, 
 		    success: function(data) { 
 		    	let row = document.getElementById("tuyendung");
+		    	row.innerHTML = data;
+		    },
+		})
+	};
+	function dangKyTuyenDung(id){
+		$.ajax({ 
+		    type:"post", 
+		    url: "/tuyendung/dangky", 
+		    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		    data: {
+		    	maTuyenDung: id
+		    }, 
+		    success: function(data) { 
+		    	let row = document.getElementById("tuyendung-item"+id);
+		    	row.innerHTML = data;
+		    },
+		})
+	};
+	function huyDangKy(id){
+		$.ajax({ 
+		    type:"post", 
+		    url: "/tuyendung/huydangky", 
+		    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		    data: {
+		    	maTuyenDung: id
+		    }, 
+		    success: function(data) { 
+		    	let row = document.getElementById("tuyendung-item"+id);
 		    	row.innerHTML = data;
 		    },
 		})

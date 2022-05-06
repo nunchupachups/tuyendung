@@ -61,6 +61,50 @@ public class TuyenDungDAO {
 		}
 		return ds;
 	}
+	public ArrayList<TuyenDung> getAllTuyenDungDaDuyetByMaDoanhNghiep(long maDoanhNghiep) throws SQLException {
+		ArrayList<TuyenDung> ds=new ArrayList<TuyenDung>();
+		String query = "select * from TuyenDung where MaDoanhNghiep=? and DaDuyet=1 order by ThoiGianDangBai desc";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setLong(1, maDoanhNghiep);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				long maTuyenDung = rs.getLong("MaTuyenDung");
+				long maNganhNghe = rs.getLong("MaNganhNghe"); 
+				long maHinhThuc = rs.getLong("MaHinhThuc");
+				int sinhVienNam = rs.getInt("SinhVienNam");
+				String khuVucTuyenDung = rs.getString("KhuVucTuyenDung");
+				String mucLuong = rs.getNString("MucLuong"); 
+				String tenCongViec = rs.getNString("TenCongViec");
+				String thoiGianThuViec = rs.getNString("ThoiGianThuViec");
+				String gioiTinh = rs.getNString("GioiTinh");
+				int soLuong = rs.getInt("SoLuong");
+				Date hanDangKy = rs.getDate("HanDangKy");
+				String tieuDe = rs.getNString("TieuDe");
+				String moTaCongViec = rs.getNString("MoTaCongViec");
+				String yeuCauCongViec = rs.getNString("YeuCauCongViec");
+				String quyenLoi = rs.getNString("QuyenLoi");
+				boolean daDuyet = rs.getBoolean("DaDuyet");
+				Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
+				ds.add(new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return ds;
+	}
 	public ArrayList<TuyenDung> getAllTuyenDungDaDuyet() throws SQLException {
 		ArrayList<TuyenDung> ds=new ArrayList<TuyenDung>();
 		String query = "select * from TuyenDung where DaDuyet=?  order by ThoiGianDangBai desc";

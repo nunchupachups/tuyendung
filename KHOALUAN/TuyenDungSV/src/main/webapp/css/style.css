@@ -2,12 +2,22 @@ body{
 	background-color: #f0f5f8;
 }
 .carousel-cell {
-  width: 47%;
+  width: 49%;
   height: 200px;
   margin-right: 10px;
   counter-increment: gallery-cell;
 }
-
+.tab-chitiet a{
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	
+}
+.tab-chitiet .active{
+	border-bottom: black 2px solid;
+	background-color: transparent;
+	padding-bottom: 5px;
+}
 .container{
     width: 1146px;
     background-color: white;

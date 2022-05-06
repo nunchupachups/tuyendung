@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +25,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cntt.trang.bean.DoanhNghiep;
 import cntt.trang.bean.QuanHuyen;
 import cntt.trang.bean.QuangBa;
+import cntt.trang.bean.SinhVien;
 import cntt.trang.bean.TuyenDung;
 import cntt.trang.bean.XaPhuong;
+import cntt.trang.dao.DangKyTuyenDungDAO;
 import cntt.trang.dao.DoanhNghiepDAO;
 import cntt.trang.dao.HinhThucLamViecDAO;
 import cntt.trang.dao.LinhVucHoatDongCap1DAO;
@@ -35,6 +39,7 @@ import cntt.trang.dao.QuanHuyenDAO;
 import cntt.trang.dao.QuangBaDAO;
 import cntt.trang.dao.TinhThanhDAO;
 import cntt.trang.dao.TuyenDungDAO;
+import cntt.trang.dao.VNCharacterUtils;
 import cntt.trang.dao.XaPhuongDAO;
 
 @Controller
@@ -564,6 +569,37 @@ public class DoanhNghiepController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/chitiet"}, method=RequestMethod.GET)
+	public String chiTiet(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		long maDoanhNghiep= Long.parseLong(request.getParameter("id"));
+	 		
+	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
+	 		QuangBaDAO quangBaDAO=new QuangBaDAO();
+	 		TuyenDungDAO tuyenDungDAO=new TuyenDungDAO();
+	 		XaPhuongDAO xaPhuongDAO= new XaPhuongDAO();
+	 		TinhThanhDAO tinhThanhDAO=new TinhThanhDAO();
+	 		
+	 		model.addAttribute("doanhNghiep", doanhNghiepDAO.getDoanhNghiepById(maDoanhNghiep));
+	 		model.addAttribute("quangBas", quangBaDAO.getAllQuangBaDaDuyetByMaDoanhNghiep(maDoanhNghiep));
+	 		model.addAttribute("tuyenDungs", tuyenDungDAO.getAllTuyenDungDaDuyetByMaDoanhNghiep(maDoanhNghiep));
+	 		model.addAttribute("xaPhuongDAO", xaPhuongDAO);
+	 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);
+	 		model.addAttribute("title", "Doanh Nghiệp");
+	 		System.out.println(quangBaDAO.getAllQuangBaDaDuyetByMaDoanhNghiep(maDoanhNghiep).size());
+	 		for (QuangBa a : quangBaDAO.getAllQuangBaDaDuyetByMaDoanhNghiep(maDoanhNghiep)) {
+				System.out.println(a.getTieuDe());
+			}
+	    	return "doanhnghiep/chitiet";
+		} catch (Exception e) {
+			e.getStackTrace();
 			return null;
 		}
        

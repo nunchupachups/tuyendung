@@ -3,7 +3,7 @@ package cntt.trang.bean;
 public class DangKyTuyenDung {
 	private long maTuyenDung;
 	private String maSinhVien;
-	private boolean duocNhan;
+	private boolean daDuyet;
 	public long getMaTuyenDung() {
 		return maTuyenDung;
 	}
@@ -16,17 +16,18 @@ public class DangKyTuyenDung {
 	public void setMaSinhVien(String maSinhVien) {
 		this.maSinhVien = maSinhVien;
 	}
-	public boolean isDuocNhan() {
-		return duocNhan;
+	
+	public boolean isDaDuyet() {
+		return daDuyet;
 	}
-	public void setDuocNhan(boolean duocNhan) {
-		this.duocNhan = duocNhan;
+	public void setDaDuyet(boolean daDuyet) {
+		this.daDuyet = daDuyet;
 	}
-	public DangKyTuyenDung(long maTuyenDung, String maSinhVien, boolean duocNhan) {
+	public DangKyTuyenDung(long maTuyenDung, String maSinhVien, boolean daDuyet) {
 		super();
 		this.maTuyenDung = maTuyenDung;
 		this.maSinhVien = maSinhVien;
-		this.duocNhan = duocNhan;
+		this.daDuyet = daDuyet;
 	}
 	public DangKyTuyenDung() {
 		super();

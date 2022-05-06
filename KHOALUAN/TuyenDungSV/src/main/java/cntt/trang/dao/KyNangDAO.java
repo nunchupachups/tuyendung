@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import cntt.trang.bean.CV;
 import cntt.trang.bean.KyNang;
 
 public class KyNangDAO {
