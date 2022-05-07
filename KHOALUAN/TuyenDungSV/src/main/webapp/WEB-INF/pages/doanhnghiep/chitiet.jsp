@@ -84,8 +84,9 @@ $(document).ready(function(){
 		    
 		 <div id="quang-ba" >   
 	<h5 style="margin: 30px 0;">Về doanh nghiệp</h5>
+	<c:if test="${!quangBas.isEmpty() }">
 		<div class="slideshow-container" >
-        <c:if test="${!quangBas.isEmpty() }">
+        
 	        <div class="mySlide row" >
 	        
 	        	<c:forEach items="${quangBas}" var="qb">
@@ -102,20 +103,25 @@ $(document).ready(function(){
 		            </div>
 	        	</c:forEach>
 	        	<div style="text-align:center" class="dots">
-	            <c:forEach items="${dsQuangBa}" varStatus="theCount">
+	            <c:forEach items="${quangBas}" varStatus="theCount">
 		            <span class="dot" onclick="currentSlide(${theCount.index})"></span> 
 	        	</c:forEach>
 	        	</div>
 	        </div>
-        </c:if>
+        
       </div>
+      </c:if>
+      <c:if test="${quangBas.isEmpty() }">
+      	<h4 style="color: #c0c0c0;">Không có thông tin</h4>
+      </c:if>
       </div>
       
     
-    <c:if test="${!tuyenDungs.isEmpty() }"> 
+    
 <div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>
 <div id="tuyen-dung"  >
 <h5 style="margin: 30px 0;">Tin tuyển dụng</h5>
+<c:if test="${!tuyenDungs.isEmpty() }"> 
        <div class="carousel" data-flickity data-flickity-options='{ "wrapAround": true, "pageDots": false, "cellAlign": "left" }'>
   <c:forEach items="${tuyenDungs }" var="td" varStatus="i">
   
@@ -153,8 +159,13 @@ $(document).ready(function(){
   </div>
   </c:forEach>
 </div>
-</div>
 </c:if>
+<c:if test="${!tuyenDungs.isEmpty() }">
+	<h4 style="color: #c0c0c0;">Chưa có bài tuyển dụng</h4>
+</c:if>
+</div>
+
+
     </div>
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>

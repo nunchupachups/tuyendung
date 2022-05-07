@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -144,7 +150,28 @@ public class SinhVienController {
 	 		
 	 		String maSinhVien=request.getParameter("txtMaSinhVien");
 	 		
-	 		
+	 		String result = "";
+	        HttpPost post = new HttpPost("http://ums-dev.husc.edu.vn/apigateway/account/v1/authorize/student");
+	        StringBuilder json = new StringBuilder();
+	        json.append("{");
+	        json.append("\"UserName\":\"18T1021198\",");
+	        json.append("\"Password\":\"b027a4ee25b6cfde014f2083563929fa\"");
+	        json.append("}");
+	        post.setEntity(new StringEntity(json.toString()));
+	        
+	        post.addHeader("Content-Type", "application/json");
+	        post.addHeader("ums-application", "TestApp");
+	        post.addHeader("ums-time", "20220401230000");
+	        post.addHeader("ums-signature", "1adcbf88065227d7c8cdbaf25be7aa00");
+	        
+	        
+	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+	                CloseableHttpResponse res = httpClient.execute(post)) {
+
+	               result = EntityUtils.toString(res.getEntity());
+	           }
+
+	           System.out.println(result);
 	 		if(sinhVienDAO.KiemTraDangNhap(maSinhVien)!= null) {
 	 			SinhVien sinhvien= sinhVienDAO.KiemTraDangNhap(maSinhVien);
 	 			session.setAttribute("sinhvien",sinhvien);

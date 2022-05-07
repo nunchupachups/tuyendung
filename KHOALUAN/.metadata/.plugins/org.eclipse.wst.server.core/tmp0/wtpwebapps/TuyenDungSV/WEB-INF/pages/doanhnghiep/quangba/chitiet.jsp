@@ -27,6 +27,7 @@
       				${msg2 } 
       			</div>
     </c:if>
+    <c:if test="${sessionScope.doanhnghiep!=null }">
     <div class="dropdown" style="position: absolute; top:0; right:60px;">
           <button style="padding-top: 0;" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
             <h1>...</h1>
@@ -36,6 +37,7 @@
             <li><a class="dropdown-item" href="/doanhnghiep/quangba/sua?id=${quangBa.getMaQuangBa() }">Sửa</a></li>
           </ul>
         </div>
+        </c:if>
 	<c:if test="${quangBa!=null }">
 	<div style="text-align: center;">
 		<h1>${quangBa.getTieuDe() }</h1>

@@ -63,7 +63,7 @@
     	</c:if>
         <c:forEach items="${dsdoanhnghiep }" var="dn">
         	<div class="doanhnghiep">
-	            <h5><a href="#">${dn.getTenDoanhNghiep() }</a></h5>
+	            <h5><a href="/doanhnghiep/chitiet?id=${dn.getMaDoanhNghiep() }">${dn.getTenDoanhNghiep() }</a></h5>
 	            <div><b> Lĩnh vực hoạt động:</b> <c:if test="${linhVucHoatDongCap2DAO.getLinhVucHoatDongById(dn.getMaLinhVucHoatDong())!=null}">${linhVucHoatDongCap2DAO.getLinhVucHoatDongById(dn.getMaLinhVucHoatDong()).getTenLinhVuc() }</c:if></div>
 	            <div><b>Địa chỉ:</b> ${dn.getDiaChiDuong() }, <c:if test="${xaPhuongDAO.getXaPhuongById(dn.getMaXaPhuong())!=null}">${xaPhuongDAO.getXaPhuongById(dn.getMaXaPhuong()).getPathWithType() }</c:if>  </div>
         	</div>

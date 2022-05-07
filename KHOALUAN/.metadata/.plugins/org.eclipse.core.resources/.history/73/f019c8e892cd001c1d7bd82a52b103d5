@@ -1,0 +1,75 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>${title }</title>
+	<jsp:include page="/WEB-INF/pages/layout/header.jsp" />
+	<script>
+		$(document).ready(function(){
+			$('#myModal').modal('show');
+		});
+		
+	</script>
+</head>
+<body>
+	<c:if test="${sessionScope.sinhvien!=null }">
+		<c:if test="${!sessionScope.sinhvien.isDaDuyet() }">
+				<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Cho phép trang web sử dụng công khai thông tin cá nhân và kết quả học tập của bạn?
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      	<a class="btn btn-primary" onclick="ok()">OK</a>
+      	<!-- them thong tin ca nhan va diem cua sv, tao cv -->
+        <a class="btn btn-danger" href="/sinhvien/dangxuat">NO</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+					
+		</c:if>
+	</c:if>
+    <div class="bg">
+    <jsp:include page="/WEB-INF/pages/layout/navbar.jsp" />
+    <div style="height:70px;">
+    </div>
+    <div class="container">
+    	
+    </div>
+	
+	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
+    </div>
+    <script >
+    function ok(){
+		$.ajax({ 
+		    type:"post", 
+		    url: "http://ums-dev.husc.edu.vn/apigateway/account/v1/authorize/student", 
+		    headers:{
+		    	'Access-Control-Allow-Origin':'http://localhost:8080/',
+	            'Content-Type':'application/json',
+	            'ums-application':'TestApp',
+	            'ums-time':'20220401230000',
+	            'ums-signature':'1adcbf88065227d7c8cdbaf25be7aa00',
+	        },
+		    data: {
+		    	UserName: "18T1021198",
+		        Password: "b027a4ee25b6cfde014f2083563929fa"
+		    }, 
+		    success: function(data) { 
+		    	console.log(data);
+		    },
+		})
+	};
+    </script>
+</body>
+</html>

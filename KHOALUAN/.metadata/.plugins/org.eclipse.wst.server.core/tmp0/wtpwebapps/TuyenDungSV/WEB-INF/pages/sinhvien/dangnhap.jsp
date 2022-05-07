@@ -64,5 +64,6 @@
       </section>
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    
 </body>
 </html>
