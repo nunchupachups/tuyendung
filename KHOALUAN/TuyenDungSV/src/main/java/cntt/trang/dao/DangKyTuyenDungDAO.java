@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import cntt.trang.bean.DangKyTuyenDung;
+import cntt.trang.bean.TuyenDung;
 
 public class DangKyTuyenDungDAO {
 	static Connection conn =null;
@@ -40,17 +42,18 @@ public class DangKyTuyenDungDAO {
 		}
 		return null;
 	}
-	public DangKyTuyenDung getDangKyByMaTuyenDung(long maTuyenDung) throws SQLException {
+	public ArrayList<DangKyTuyenDung> getDangKyByMaTuyenDung(long maTuyenDung) throws SQLException {
 		String query = "select * from DangKyTuyenDung where MaTuyenDung=?";
+		ArrayList<DangKyTuyenDung> ds= new ArrayList<DangKyTuyenDung>();
 		try {
 			conn = new DBConnect().getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setLong(1, maTuyenDung);
 			rs= ps.executeQuery();	
-			if(rs.next()) {
+			while(rs.next()) {
 				boolean daDuyet=rs.getBoolean("DaDuyet");
 				String maSinhVien=rs.getString("MaSinhVien");
-				return new DangKyTuyenDung(maTuyenDung, maSinhVien, daDuyet);
+				ds.add(new DangKyTuyenDung(maTuyenDung, maSinhVien, daDuyet));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,9 +69,9 @@ public class DangKyTuyenDungDAO {
 				conn.close();
 			}	
 		}
-		return null;
+		return ds;
 	}
-	public int updateTuyenDung(String maSinhVien, long maTuyenDung, boolean daDuyet) throws SQLException {
+	public int updateDangKyTuyenDung(String maSinhVien, long maTuyenDung, boolean daDuyet) throws SQLException {
 		String query = "update DangKyTuyenDung set DaDuyet=? where MaSinhVien=? and MaTuyenDung=?";
 		int flag=-1;
 		try {

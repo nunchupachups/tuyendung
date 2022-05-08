@@ -392,6 +392,83 @@ public class TuyenDungDAO {
 			}
 			return ds;
 		}
+		public ArrayList<TuyenDung> timKiemTuyenDungByMaDoanhNghiep(long maDoanhNghiep, String key, long maNganhNghe, long maHinhThuc, String maKhuVuc) throws SQLException {
+			String query= "select * from TuyenDung where ";
+			int dem=0;
+			if(!key.equals("")) {
+				if(dem==0) query+="(TenCongViec like ? or TieuDe like ?) ";
+				else query+="and (TenCongViec like ? or TieuDe like ?) ";
+				dem++;
+			}
+			if(maNganhNghe!=-1) {
+				if(dem==0) query+="MaNganhNghe=? ";
+				else query+="and MaNganhNghe=? ";
+				dem++;
+			}
+			if(maHinhThuc!=-1) {
+				if(dem==0) query+="MaHinhThuc=? ";
+				else query+="and MaHinhThuc=? ";
+				dem++;
+			}
+			if(!maKhuVuc.equals("-1")) {
+				if(dem==0) query+="KhuVucTuyenDung=? ";
+				else query+="and KhuVucTuyenDung=? ";
+				dem++;
+			}
+			if(dem==0) query+=" MaDoanhNghiep= ? order by ThoiGianDangBai desc";
+			else query+=" and MaDoanhNghiep= ? order by ThoiGianDangBai desc";
+			System.out.println(query);
+			ArrayList<TuyenDung> ds= new ArrayList<TuyenDung>();
+			try {
+				conn = new DBConnect().getConnection();
+				ps = conn.prepareStatement(query);
+				dem=0;
+				if(!key.equals("")) {
+					ps.setNString(++dem, "%"+key+"%");
+					ps.setNString(++dem, "%"+key+"%");
+				}
+				
+				if(maNganhNghe!=-1) ps.setLong(++dem, maNganhNghe);
+				if(maHinhThuc!=-1) ps.setLong(++dem, maHinhThuc);
+				if(!maKhuVuc.equals("-1")) ps.setString(++dem, maKhuVuc);
+				ps.setLong(++dem, maDoanhNghiep);
+				rs= ps.executeQuery();	
+				while(rs.next()) {
+					long maNganhNghe1 = rs.getLong("MaNganhNghe"); 
+					long maHinhThuc1 = rs.getLong("MaHinhThuc");
+					int sinhVienNam = rs.getInt("SinhVienNam");
+					String khuVucTuyenDung = rs.getString("KhuVucTuyenDung");
+					String mucLuong = rs.getNString("MucLuong"); 
+					String tenCongViec = rs.getNString("TenCongViec");
+					String thoiGianThuViec = rs.getNString("ThoiGianThuViec");
+					String gioiTinh = rs.getNString("GioiTinh");
+					int soLuong = rs.getInt("SoLuong");
+					Date hanDangKy = rs.getDate("HanDangKy");
+					String tieuDe = rs.getNString("TieuDe");
+					String moTaCongViec = rs.getNString("MoTaCongViec");
+					String yeuCauCongViec = rs.getNString("YeuCauCongViec");
+					String quyenLoi = rs.getNString("QuyenLoi");
+					boolean daDuyet = rs.getBoolean("DaDuyet");	
+					Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
+					long maTuyenDung=rs.getLong("MaTuyenDung");
+					ds.add(new TuyenDung(maTuyenDung, maNganhNghe1, maHinhThuc1, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				if(rs!=null) {
+					rs.close();
+				}
+				if(ps!=null) {
+					ps.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}	
+			}
+			return ds;
+		}
 		public int getSoPage(String key, long maNganhNghe, long maHinhThuc, String maKhuVuc) throws SQLException {
 			int soPage=0;
 			String query= "select count(1) from TuyenDung as td join DoanhNghiep as dn on dn.MaDoanhNghiep=td.MaDoanhNghiep ";

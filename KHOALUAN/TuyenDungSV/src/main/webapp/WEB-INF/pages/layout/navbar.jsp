@@ -27,7 +27,31 @@
 			    </ul>
 			    </div>
 			    <div style="display: inline-block;float:right;">
-			    <ul class="navbar-nav " >
+			    <div class="navbar-nav " >
+			    	<div class="dropdown">
+					    	<button type="button" style="height: 45px; width: 45px; background-color: #fafafa;border-radius: 50%; display: flex;justify-content: center;align-items: center; margin-right: 15px; position: relative;" class="dropdown-toggle" data-bs-toggle="dropdown">
+					    		<i class="fas fa-bell" style="font-size: 25px;"></i>
+					    		<div style="position: absolute; color: red; top: -5px; right: -5px; ">${thongBaoDAO.getSumThongBaoChuaXemByMaSinhVien(sessionScope.sinhvien.getMaSinhVien()) }</div>
+					    	</button>
+			          <ul class="dropdown-menu" style="width: 500px;right: 0; left: auto ; max-height: 500px;overflow: auto;padding-bottom: 0;box-shadow: 0 3px 6px #00000029;">
+			          	<h4 style="margin: 15px;">Thông báo</h4>
+			          	<hr>
+			          	<c:if test="${thongBaoDAO.getAllThongBaoByMaSinhVien(sessionScope.sinhvien.getMaSinhVien()).size()==0 }">
+			          		<li style="margin: 15px;font-weight: normal;">Bạn không có thông báo nào</li>
+			          	</c:if>
+			          	<c:if test="${thongBaoDAO.getAllThongBaoByMaSinhVien(sessionScope.sinhvien.getMaSinhVien()).size()!=0 }">
+			          	<c:forEach items="${thongBaoDAO.getAllThongBaoByMaSinhVien(sessionScope.sinhvien.getMaSinhVien()) }" var="tb">
+			          		<c:if test="${tb.isDaXem() }">
+				            	<li style="border-bottom: 1px black solid;"><a class="dropdown-item" href="${tb.getLink() }" style="white-space: normal;">${tb.getNoiDung() }</a></li>
+				            </c:if>
+				            <c:if test="${!tb.isDaXem() }">
+				            	<li style="border-bottom: 1px black solid;"><a class="dropdown-item" href="${tb.getLink() }" style="white-space: normal;" onclick="daXem(${tb.getMaThongBao()})"><b>${tb.getNoiDung() }</b></a></li>
+				            </c:if>
+				            
+			            </c:forEach>
+			            </c:if>
+			          </ul>
+			        </div>
 			    	<span style="margin-top: 10px;">${sessionScope.sinhvien.getHoVaTen() }</span> 
 				   <div class="dropdown">
 			          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
@@ -39,7 +63,7 @@
 			          </ul>
 			        </div>
 				      
-				    </ul>
+				    </div>
 			    </div>
     		</c:when>
     		<c:when test="${sessionScope.doanhnghiep != null}">
@@ -57,7 +81,32 @@
 			    </ul>
 			</div>
 			    <div style="display: inline-block;float:right;">
-			    <ul class="navbar-nav " >
+			    <div class="navbar-nav " >
+			    	<div class="dropdown">
+					    	<button type="button" style="height: 45px; width: 45px; background-color: #fafafa;border-radius: 50%; display: flex;justify-content: center;align-items: center; margin-right: 15px; position: relative;" class="dropdown-toggle" data-bs-toggle="dropdown">
+					    		<i class="fas fa-bell" style="font-size: 25px;"></i>
+					    		<div style="position: absolute; color: red; top: -5px; right: -5px;">${thongBaoDAO.getSumThongBaoChuaXemByMaDoanhNghiep(sessionScope.doanhnghiep.getMaDoanhNghiep()) }</div>
+					    	</button>
+			          <ul class="dropdown-menu" style="width: 500px;right: 0; left: auto ; max-height: 500px;overflow: auto;padding-bottom: 0;box-shadow: 0 3px 6px #00000029;">
+			          	<h4 style="margin: 15px;">Thông báo</h4>
+			          	<hr>
+			          	<c:if test="${thongBaoDAO.getAllThongBaoByMaDoanhNghiep(sessionScope.doanhnghiep.getMaDoanhNghiep()).size()==0 }">
+			          		<li style="margin: 15px;font-weight: normal;">Bạn không có thông báo nào</li>
+			          	</c:if>
+			          	<c:if test="${thongBaoDAO.getAllThongBaoByMaDoanhNghiep(sessionScope.doanhnghiep.getMaDoanhNghiep()).size()!=0 }">
+			          		
+			          	
+			          	<c:forEach items="${thongBaoDAO.getAllThongBaoByMaDoanhNghiep(sessionScope.doanhnghiep.getMaDoanhNghiep()) }" var="tb">
+			          		<c:if test="${tb.isDaXem() }">
+				            	<li style="border-bottom: 1px black solid;"><a class="dropdown-item" href="${tb.getLink() }" style="white-space: normal;">${tb.getNoiDung() }</a></li>
+				            </c:if>
+				            <c:if test="${!tb.isDaXem() }">
+				            	<li style="border-bottom: 1px black solid;"><a class="dropdown-item" href="${tb.getLink() }" style="white-space: normal;" onclick="daXem(${tb.getMaThongBao()})"><b>${tb.getNoiDung() }</b></a></li>
+				            </c:if>
+			            </c:forEach>
+			            </c:if>
+			          </ul>
+			        </div>
 			    	<span style="margin-top: 10px;">${sessionScope.doanhnghiep.tenDoanhNghiep }</span> 
 				   <div class="dropdown">
 			          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
@@ -70,7 +119,7 @@
 			          </ul>
 			        </div>
 				      
-				    </ul>
+				    </div>
 			    </div>
     		</c:when>
     		<c:otherwise>
@@ -124,3 +173,16 @@
     
   </div>  
 </nav>
+<script>
+function daXem(id){
+	console.log(id);
+	$.ajax({ 
+	    type:"post", 
+	    url: "/thongbao/daxem", 
+	    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	    data: {
+	    	maThongBao: id
+	    }, 
+	})
+};
+</script>

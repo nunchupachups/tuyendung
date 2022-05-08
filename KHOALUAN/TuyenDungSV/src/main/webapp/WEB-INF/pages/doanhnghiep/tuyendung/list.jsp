@@ -26,19 +26,45 @@
       			</div>
     	</c:if> 
     <div style="height: 15px;"></div>
-    
-    <form action="/doanhnghiep/tuyendung/timkiem" class="row">
-    	<div class="col-9">
-        	<input type="text" class="form-control" name="txtTieuDe" placeholder="Nhập tiêu đề tuyển dụng" >
+    <div class="row">
+    	<div class="col-3">
+        	<input type="text" class="form-control" id="key" placeholder="Tiêu đề, tên công việc...	" >
         </div>
+        <div class="col-2">
+        	<select class="form-select" aria-label="Default select example"  id="cmbNganhNghe" >
+                        <option value="-1">Tất cả ngành nghề</option>
+                        <c:forEach items="${dsNganhNghe }" var="nn">
+                        	<option value="${nn.getMaNganhNghe() }">${nn.getTenNganhNghe() }</option>
+                        </c:forEach>
+            </select>
+        </div>
+        <div class="col-2">
+                    <select class="form-select" aria-label="Default select example" id="cmbHinhThuc">
+                        <option value="-1">Tất cả hình thức làm việc</option>
+                        <c:forEach items="${dsHinhThuc }" var="ht">
+                        	<option value="${ht.getMaHinhThuc() }">${ht.getTenHinhThuc() }</option>
+                        </c:forEach>
+                      </select>
+                </div>
+                <div class="col-2">
+                    <select class="form-select" aria-label="Default select example" id="cmbKhuVucTuyen">
+                        <option value="-1">Tất cả khu vực</option>
+                        <option value="00">Cả nước</option>
+                        <c:forEach items="${dsTinhThanh }" var="tt">
+                        	<option value="${tt.getMaTinhThanh() }">${tt.getTenTinhThanh() }</option>
+                        </c:forEach>
+                      </select>
+                </div>
         <div class="col-1">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            <button class="btn btn-primary" onclick="timKiemTuyenDung()"><i class="fas fa-search"></i></button>
         </div>
         <div class="col-2">
             <a class="btn btn-primary" href="/doanhnghiep/tuyendung/taotuyendung">Tạo bài tuyển dụng</a>
         </div>
-    </form>
+    </div>
+    
     <hr>
+    <div id="tuyendung">
     	<c:if test="${dsTuyenDung.isEmpty() }">
     	<h4 style="color: #c0c0c0;">Không có bài tuyển dụng nào</h4>
     	</c:if>
@@ -60,7 +86,15 @@
 		            <c:if test="${td.getGioiTinh()!=null }">
 		            	<b><i>Giới tính: </i></b>${td.getGioiTinh() }<br>
 		            </c:if> 
-		            <b><i>Khu vực tuyển: </i></b>${td.getKhuVucTuyenDung() }<br>
+		            <c:choose>
+		            	<c:when test="${td.getKhuVucTuyenDung()=='00' }">
+		            		<span><b><i>Khu vực tuyển: </i></b>Cả nước</span>
+		            	</c:when>
+		            	<c:otherwise>
+		            		<span><b><i>Khu vực tuyển: </i></b>${tinhThanhDAO.getTinhThanhById(td.getKhuVucTuyenDung()).getTenTinhThanh() }</span>
+		            	</c:otherwise>
+		            </c:choose>
+		            <br>
 		            <b><i>Số lượng: </i></b>${td.getSoLuong() }<br>
 		            <b><i>Mức lương: </i></b>${td.getMucLuong() }<br>
 		            <b><i>Hạn đăng ký: </i></b>${td.getHanDangKy() }<br>
@@ -83,7 +117,7 @@
 		        <div style="position: absolute;bottom: 15px;right: 50px;">
 		        	
 		        	<c:if test="${td.isDaDuyet()}">
-		            	<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">10 người đã đăng ký</button>
+		            	<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal${td.getMaTuyenDung() }">${dangKyTuyenDungDAO.getDangKyByMaTuyenDung(td.getMaTuyenDung()).size()} người đã đăng ký</button>
 		        	</c:if>
 		        	<c:if test="${!td.isDaDuyet()}">
 		            	<button class="btn btn-danger">Chưa được duyệt</button>
@@ -91,7 +125,7 @@
 		        </div>
 		
 		        <!-- The Modal -->
-		        <div class="modal" id="myModal">
+		        <div class="modal" id="myModal${td.getMaTuyenDung() }">
 		            <div class="modal-dialog">
 		                <div class="modal-content">
 		
@@ -103,9 +137,22 @@
 		
 		                    <!-- Modal body -->
 		                    <div class="modal-body">
-		                        <a href="">Dương Kiều Trang</a><hr>
-		                        Bùi Anh Thư <hr>
-		                        Lê Quỳnh Phương
+		                    <c:if test="${dangKyTuyenDungDAO.getDangKyByMaTuyenDung(td.getMaTuyenDung()).size()==0}">
+		                    	<span style="color: #c0c0c0;">Chưa có đăng ký nào</span>
+		                    </c:if>
+		                    <c:if test="${dangKyTuyenDungDAO.getDangKyByMaTuyenDung(td.getMaTuyenDung()).size()>0}">
+		                    	<c:forEach items="${dangKyTuyenDungDAO.getDangKyByMaTuyenDung(td.getMaTuyenDung())}" var="dk">
+		                    		<div style="display: flex;justify-content: space-between;margin-bottom: 10px;align-items: center;" id="dang-ky-${dk.getMaSinhVien() }-${td.getMaTuyenDung()}">
+		                    			<a style="text-decoration: none; font-weight: bold;" href="/sinhvien/CV/id?id=${dk.getMaSinhVien() }">${sinhVienDAO.getSinhVienByMaSinhVien(dk.getMaSinhVien()).getHoVaTen() }</a><hr>
+		                    			<c:if test="${dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(dk.getMaSinhVien(), td.getMaTuyenDung()).isDaDuyet() }">
+		                    				<button type="button" class="btn btn-success" >Đã duyệt</button>
+		                    			</c:if>
+		                    			<c:if test="${!dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(dk.getMaSinhVien(), td.getMaTuyenDung()).isDaDuyet() }">
+		                    				<button type="button" class="btn btn-primary" onclick="duyetSinhVien('${dk.getMaSinhVien()}','${td.getMaTuyenDung() }')">Duyệt</button>
+		                    			</c:if>
+		                    		</div>
+		                    	</c:forEach>
+		                    </c:if>
 		                    </div>
 		
 		                    <!-- Modal footer -->
@@ -119,9 +166,51 @@
 		    </div>
         	
         </c:forEach>
+        </div>
     </div>
 	
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <script>
+    function timKiemTuyenDung(){
+    	var key=document.getElementById("key").value;
+    	var maNganhNghe=document.getElementById("cmbNganhNghe").value;
+    	var maHinhThuc=document.getElementById("cmbHinhThuc").value;
+    	var maKhuVuc=document.getElementById("cmbKhuVucTuyen").value;
+		$.ajax({ 
+		    type:"post", 
+		    url: "/doanhnghiep/tuyendung/timkiem", 
+		    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		    data: {
+		    	key: key,
+		    	maNganhNghe: maNganhNghe,
+		    	maHinhThuc: maHinhThuc,
+		    	maKhuVuc: maKhuVuc
+		    	
+		    }, 
+		    success: function(data) { 
+		    	let row = document.getElementById("tuyendung");
+		    	row.innerHTML = data;
+		    },
+		})
+	};
+	function duyetSinhVien(maSV, maTD){
+		console.log(maSV);
+		console.log(maTD);
+		$.ajax({ 
+		    type:"post", 
+		    url: "/doanhnghiep/tuyendung/duyetsinhvien", 
+		    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		    data: {
+		    	maSinhVien: maSV,
+		    	maTuyenDung: maTD
+		    }, 
+		    success: function(data) { 
+		    	let row = document.getElementById("dang-ky-"+maSV+"-"+maTD);
+		    	row.innerHTML = data;
+		    },
+		})
+	};
+	</script>
 </body>
 </html>

@@ -160,7 +160,7 @@ $(document).ready(function(){
   </c:forEach>
 </div>
 </c:if>
-<c:if test="${!tuyenDungs.isEmpty() }">
+<c:if test="${tuyenDungs.isEmpty() }">
 	<h4 style="color: #c0c0c0;">Chưa có bài tuyển dụng</h4>
 </c:if>
 </div>

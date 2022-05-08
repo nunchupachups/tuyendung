@@ -193,19 +193,20 @@
                 <div class="col-sm-4">
                     <select class="form-select" aria-label="Default select example" id="city" required="required" name="cmbKhuVucTuyen">
                         <c:choose>
-                        	<c:when test="${tuyenDung.getKhuVucTuyenDung().equals('Cả nước') }">
-                        		<option value="Cả nước" selected="selected">Cả nước</option>
+                        	<c:when test="${tuyenDung.getKhuVucTuyenDung().equals('00') }">
+                        		<option value="00" selected="selected">Cả nước</option>
                         		<c:forEach items="${dsTinhThanh }" var="tt">
-		                        	<option value="${tt.getTenTinhThanh() }">${tt.getTenTinhThanh() }</option>
+		                        	<option value="${tt.getMaTinhThanh() }">${tt.getTenTinhThanh() }</option>
 		                        </c:forEach>
                         	</c:when>
                         	<c:otherwise>
+                        		<option value="00">Cả nước</option>
                         		<c:forEach items="${dsTinhThanh }" var="tt">
-                        			<c:if test="${tt.getTenTinhThanh().equals(tuyenDung.getKhuVucTuyenDung()) }">
-                        				<option value="${tt.getTenTinhThanh() }" selected="selected">${tt.getTenTinhThanh() }</option>
+                        			<c:if test="${tt.getMaTinhThanh().equals(tuyenDung.getKhuVucTuyenDung()) }">
+                        				<option value="${tt.getMaTinhThanh() }" selected="selected">${tt.getTenTinhThanh() }</option>
                         			</c:if>
-                        			<c:if test="${!tt.getTenTinhThanh().equals(tuyenDung.getKhuVucTuyenDung()) }">
-                        				<option value="${tt.getTenTinhThanh() }">${tt.getTenTinhThanh() }</option>
+                        			<c:if test="${!tt.getMaTinhThanh().equals(tuyenDung.getKhuVucTuyenDung()) }">
+                        				<option value="${tt.getMaTinhThanh() }">${tt.getTenTinhThanh() }</option>
                         			</c:if>
 		                        	
 		                        </c:forEach>

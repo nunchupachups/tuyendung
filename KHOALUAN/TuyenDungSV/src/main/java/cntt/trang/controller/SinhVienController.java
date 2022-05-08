@@ -47,6 +47,7 @@ import cntt.trang.dao.KyNangDAO;
 import cntt.trang.dao.NganhDaoTaoDAO;
 import cntt.trang.dao.QuangBaDAO;
 import cntt.trang.dao.SinhVienDAO;
+import cntt.trang.dao.ThongBaoDAO;
 import cntt.trang.dao.VNCharacterUtils;
 import cntt.trang.dao.ViTriDAO;
 
@@ -64,7 +65,8 @@ public class SinhVienController {
 	 		SinhVienDAO sinhVienDAO= new SinhVienDAO();
 	 		
 	 		
-	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("dsNganhDaoTao", nganhDaoTaoDAO.getAllNganhDaoTao());
 	 		model.addAttribute("dssinhvien", sinhVienDAO.timKiemAllSinhVien());
 	 		model.addAttribute("nganhDaoTaoDAO", nganhDaoTaoDAO);
@@ -130,7 +132,6 @@ public class SinhVienController {
 	 	try {
 	 		response.setContentType("text/html;charset=UTF-8");
 	 		request.setCharacterEncoding("UTF-8");
-	 		
 	 		model.addAttribute("title", "Đăng nhập tài khoản sinh viên");
 	    	return "sinhvien/dangnhap";
 		} catch (Exception e) {
@@ -150,28 +151,28 @@ public class SinhVienController {
 	 		
 	 		String maSinhVien=request.getParameter("txtMaSinhVien");
 	 		
-	 		String result = "";
-	        HttpPost post = new HttpPost("http://ums-dev.husc.edu.vn/apigateway/account/v1/authorize/student");
-	        StringBuilder json = new StringBuilder();
-	        json.append("{");
-	        json.append("\"UserName\":\"18T1021198\",");
-	        json.append("\"Password\":\"b027a4ee25b6cfde014f2083563929fa\"");
-	        json.append("}");
-	        post.setEntity(new StringEntity(json.toString()));
-	        
-	        post.addHeader("Content-Type", "application/json");
-	        post.addHeader("ums-application", "TestApp");
-	        post.addHeader("ums-time", "20220401230000");
-	        post.addHeader("ums-signature", "1adcbf88065227d7c8cdbaf25be7aa00");
-	        
-	        
-	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-	                CloseableHttpResponse res = httpClient.execute(post)) {
-
-	               result = EntityUtils.toString(res.getEntity());
-	           }
-
-	           System.out.println(result);
+//	 		String result = "";
+//	        HttpPost post = new HttpPost("http://ums-dev.husc.edu.vn/apigateway/account/v1/authorize/student");
+//	        StringBuilder json = new StringBuilder();
+//	        json.append("{");
+//	        json.append("\"UserName\":\"18T1021198\",");
+//	        json.append("\"Password\":\"b027a4ee25b6cfde014f2083563929fa\"");
+//	        json.append("}");
+//	        post.setEntity(new StringEntity(json.toString()));
+//	        
+//	        post.addHeader("Content-Type", "application/json");
+//	        post.addHeader("ums-application", "TestApp");
+//	        post.addHeader("ums-time", "20220401230000");
+//	        post.addHeader("ums-signature", "1adcbf88065227d7c8cdbaf25be7aa00");
+//	        
+//	        
+//	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+//	                CloseableHttpResponse res = httpClient.execute(post)) {
+//
+//	               result = EntityUtils.toString(res.getEntity());
+//	           }
+//
+//	           System.out.println(result);
 	 		if(sinhVienDAO.KiemTraDangNhap(maSinhVien)!= null) {
 	 			SinhVien sinhvien= sinhVienDAO.KiemTraDangNhap(maSinhVien);
 	 			session.setAttribute("sinhvien",sinhvien);
@@ -222,6 +223,8 @@ public class SinhVienController {
 	 		ArrayList<DonVi> hoatDongs= donViDAO.getAllDonViByMucCVAndMaCV("hoatdong", sinhVien.getMaSinhVien());
 	 		ArrayList<KyNang> kynangs= kyNangDAO.getAllKyNangByMaCV(sinhVien.getMaSinhVien());
 	 		CV cv=cvdao.getCVByMaSinhVien(sinhVien.getMaSinhVien());
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("sinhVien", sinhVien);
 	 		model.addAttribute("cv", cv);
 	 		model.addAttribute("kynangs", kynangs);
@@ -260,6 +263,8 @@ public class SinhVienController {
 	 		ArrayList<DonVi> hoatDongs= donViDAO.getAllDonViByMucCVAndMaCV("hoatdong", sinhVien.getMaSinhVien());
 	 		ArrayList<KyNang> kynangs= kyNangDAO.getAllKyNangByMaCV(sinhVien.getMaSinhVien());
 	 		CV cv=cvdao.getCVByMaSinhVien(sinhVien.getMaSinhVien());
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("sinhVien", sinhVien);
 	 		model.addAttribute("cv", cv);
 	 		model.addAttribute("kynangs", kynangs);
@@ -290,7 +295,8 @@ public class SinhVienController {
 	 		SinhVien sinhVien=sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien);
 	 		int khoa=sinhVien.getKhoa();
 	 		NganhDaoTao nganhDaoTao=nganhDaoTaoDAO.getNganhDaoTaoById(sinhVien.getMaNganhDaoTao());
-	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		
 	 		model.addAttribute("ketQuas", ketQuaHocTapDAO.getAllKetQuaHocTapByMaSinhVien(maSinhVien));
 	 		model.addAttribute("maSinhVien",maSinhVien);
@@ -318,7 +324,8 @@ public class SinhVienController {
 	 		DonViDAO donViDAO= new DonViDAO();
 	 		ViTriDAO viTriDAO=new ViTriDAO();
 	 		ChungChiDAO chungChiDAO=new ChungChiDAO();
-	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		ArrayList<DonVi> hocVans=donViDAO.getAllDonViByMucCVAndMaCV("hocvan", sinhVien.getMaSinhVien());
 	 		ArrayList<DonVi> kinhNghiems=donViDAO.getAllDonViByMucCVAndMaCV("kinhnghiemlamviec", sinhVien.getMaSinhVien());
 	 		ArrayList<DonVi> hoatDongs=donViDAO.getAllDonViByMucCVAndMaCV("hoatdong", sinhVien.getMaSinhVien());

@@ -22,6 +22,7 @@ import cntt.trang.dao.DoanhNghiepDAO;
 import cntt.trang.dao.HinhThucLamViecDAO;
 import cntt.trang.dao.NganhNgheDAO;
 import cntt.trang.dao.SinhVienDAO;
+import cntt.trang.dao.ThongBaoDAO;
 import cntt.trang.dao.TinhThanhDAO;
 import cntt.trang.dao.TuyenDungDAO;
 import cntt.trang.dao.VNCharacterUtils;
@@ -40,7 +41,8 @@ public class TuyenDungController {
 	 		TinhThanhDAO tinhThanhDAO= new TinhThanhDAO();
 	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
 	 		DangKyTuyenDungDAO dangKyTuyenDungDAO=new DangKyTuyenDungDAO();
-	 
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("dsNganhNghe", nganhNgheDAO.getAllNganhNghe());
 	 		model.addAttribute("dsHinhThuc",hinhThucLamViecDAO.getAllHinhThucLamViec());
 	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
@@ -323,7 +325,8 @@ public class TuyenDungController {
 	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
 	 		DangKyTuyenDungDAO dangKyTuyenDungDAO=new DangKyTuyenDungDAO();
 	 		TuyenDung tuyenDung=tuyenDungDAO.getTuyenDungByID(maTuyenDung);
-	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("tuyenDung", tuyenDung);
 	 		model.addAttribute("nganhNgheDAO", nganhNgheDAO);
 	 		model.addAttribute("doanhNghiepDAO", doanhNghiepDAO);
