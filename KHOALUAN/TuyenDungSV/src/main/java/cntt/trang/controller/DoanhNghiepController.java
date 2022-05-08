@@ -30,6 +30,7 @@ import cntt.trang.bean.TuyenDung;
 import cntt.trang.bean.XaPhuong;
 import cntt.trang.dao.DangKyTuyenDungDAO;
 import cntt.trang.dao.DoanhNghiepDAO;
+import cntt.trang.dao.HashMD5;
 import cntt.trang.dao.HinhThucLamViecDAO;
 import cntt.trang.dao.LinhVucHoatDongCap1DAO;
 import cntt.trang.dao.LinhVucHoatDongCap2DAO;
@@ -110,12 +111,12 @@ public class DoanhNghiepController {
 	 		request.setCharacterEncoding("UTF-8");
 	 		
 	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
-	 		
+	 		HashMD5 hashMD5=new HashMD5();
 	 		String email=request.getParameter("txtemail");
 	 		String password=request.getParameter("txtpassword");
 	 		
-	 		if(doanhNghiepDAO.KiemTraDangNhap(email, password)!= null) {
-	 			session.setAttribute("doanhnghiep",doanhNghiepDAO.KiemTraDangNhap(email, password));
+	 		if(doanhNghiepDAO.KiemTraDangNhap(email, hashMD5.convertHashToString(password))!= null) {
+	 			session.setAttribute("doanhnghiep",doanhNghiepDAO.KiemTraDangNhap(email, hashMD5.convertHashToString(password)));
 	 			return "redirect:/sinhvien";
 	 		}
 	 		else model.addAttribute("msg", "Email đăng nhập hoặc mật khẩu sai");
@@ -205,8 +206,9 @@ public class DoanhNghiepController {
 	 		
 	 		anh.substring(0, anh.length()-2);
 	 		DoanhNghiepDAO doanhNghiepDAO= new DoanhNghiepDAO();
-			int hihi=doanhNghiepDAO.insertDoanhNghiep(email, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong,Long.parseLong(maLoaiHinhDoanhNghiep) , anh, false);
-	 		DoanhNghiep doanhNghiep=doanhNghiepDAO.KiemTraDangNhap(email, matKhau);
+	 		HashMD5 hashMD5=new HashMD5();
+			int hihi=doanhNghiepDAO.insertDoanhNghiep(email, hashMD5.convertHashToString(matKhau), tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong,Long.parseLong(maLoaiHinhDoanhNghiep) , anh, false);
+	 		DoanhNghiep doanhNghiep=doanhNghiepDAO.KiemTraDangNhap(email, hashMD5.convertHashToString(matKhau));
 			session.setAttribute("doanhnghiep", doanhNghiep);
 			redirectAttributes.addFlashAttribute("dktc", "Đăng ký tài khoản doanh nghiệp thành công!");
 			return "redirect:/trangchu";
@@ -836,8 +838,9 @@ public class DoanhNghiepController {
 	 		String oldPassword=request.getParameter("oldPassword");
 	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
 	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
+	 		HashMD5 hashMD5=new HashMD5();
 	 		PrintWriter out=response.getWriter();
-	 		if(doanhNghiepDAO.checkMatKhau(doanhNghiep.getMaDoanhNghiep(), oldPassword)) out.print("true");
+	 		if(doanhNghiepDAO.checkMatKhau(doanhNghiep.getMaDoanhNghiep(), hashMD5.convertHashToString(oldPassword))) out.print("true");
 	 		else out.print("false");
 	 		
 		} catch (Exception e) {
@@ -854,10 +857,117 @@ public class DoanhNghiepController {
 	 		String newPassord=request.getParameter("txtNewPassword");
 	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
 	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
-	 		int kq=doanhNghiepDAO.updateMatKhau(doanhNghiep.getMaDoanhNghiep(), newPassord);
+	 		HashMD5 hashMD5=new HashMD5();
+	 		
+	 		int kq=doanhNghiepDAO.updateMatKhau(doanhNghiep.getMaDoanhNghiep(), hashMD5.convertHashToString(newPassord));
+	 		
+	 		DoanhNghiep dn=doanhNghiepDAO.getDoanhNghiepById(doanhNghiep.getMaDoanhNghiep());
+	 		session.removeAttribute("doanhnghiep");
+	 		session.setAttribute("doanhnghiep", dn);
 	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Đổi mật khẩu thành công!");
 			else redirectAttributes.addFlashAttribute("msg2", "Đổi mật khẩu thất bại!");
+				
 	 		return "redirect:/trangchu";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	@RequestMapping(value= {"/thongtin"}, method=RequestMethod.GET)
+    public String thongTinDoanhNghiep(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		
+	 		
+	 		XaPhuongDAO xaPhuongDAO= new XaPhuongDAO();
+	 		QuanHuyenDAO quanHuyenDAO=new QuanHuyenDAO();
+	 		TinhThanhDAO tinhThanhDAO= new TinhThanhDAO();
+	 		LinhVucHoatDongCap1DAO linhVucHoatDongCap1DAO= new LinhVucHoatDongCap1DAO();
+	 		LinhVucHoatDongCap2DAO linhVucHoatDongCap2DAO= new LinhVucHoatDongCap2DAO();
+	 		LoaiHinhDoanhNghiepDAO loaiHinhDoanhNghiepDAO= new LoaiHinhDoanhNghiepDAO();
+	 		
+	 		model.addAttribute("title", "Thông Tin Doanh Nghiệp");
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
+	 		model.addAttribute("xaPhuongDAO", xaPhuongDAO);
+	 		model.addAttribute("quanHuyenDAO", quanHuyenDAO);
+	 		model.addAttribute("linhVucHoatDongCap2DAO", linhVucHoatDongCap2DAO);
+	 		model.addAttribute("loaiHinhDoanhNghiepDAO", loaiHinhDoanhNghiepDAO);
+	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
+	 		model.addAttribute("dsLinhVuc", linhVucHoatDongCap1DAO.getAllLinhVucHoatDongCap1());
+	 		model.addAttribute("dsLoaiHinhDoanhNghiep", loaiHinhDoanhNghiepDAO.getAllLoaiHinhDoanhNghiep());
+	 		return "doanhnghiep/thongtin/xem";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	@RequestMapping(value= {"/thongtin/sua"}, method=RequestMethod.GET)
+    public String displaySuaThongTinDoanhNghiep(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
+	 		
+	 		XaPhuongDAO xaPhuongDAO= new XaPhuongDAO();
+	 		QuanHuyenDAO quanHuyenDAO=new QuanHuyenDAO();
+	 		TinhThanhDAO tinhThanhDAO= new TinhThanhDAO();
+	 		LinhVucHoatDongCap1DAO linhVucHoatDongCap1DAO= new LinhVucHoatDongCap1DAO();
+	 		LinhVucHoatDongCap2DAO linhVucHoatDongCap2DAO= new LinhVucHoatDongCap2DAO();
+	 		LoaiHinhDoanhNghiepDAO loaiHinhDoanhNghiepDAO= new LoaiHinhDoanhNghiepDAO();
+	 		
+	 		model.addAttribute("title", "Sửa Thông Tin");
+	 		model.addAttribute("xaPhuongDAO", xaPhuongDAO);
+	 		model.addAttribute("quanHuyenDAO", quanHuyenDAO);
+	 		model.addAttribute("linhVucHoatDongCap2DAO", linhVucHoatDongCap2DAO);
+	 		model.addAttribute("loaiHinhDoanhNghiepDAO", loaiHinhDoanhNghiepDAO);
+	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
+	 		model.addAttribute("dsLinhVuc", linhVucHoatDongCap1DAO.getAllLinhVucHoatDongCap1());
+	 		model.addAttribute("dsLoaiHinhDoanhNghiep", loaiHinhDoanhNghiepDAO.getAllLoaiHinhDoanhNghiep());
+	 		
+	 		
+	 		return "doanhnghiep/thongtin/sua";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	@RequestMapping(value= {"/thongtin/sua"}, method=RequestMethod.POST)
+    public String suaThongTinDoanhNghiep(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response,RedirectAttributes redirectAttributes) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		
+	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
+	 		
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep"); 
+	 		String tenLienHe=request.getParameter("txtTenLienHe"); 
+	 		String emailLienHe=request.getParameter("txtEmailLienHe"); 
+	 		String soDienThoai=request.getParameter("txtSoDienThoai");  
+	 		String maXaPhuong=request.getParameter("cmbXaPhuong"); 
+	 		String diaChiDuong=request.getParameter("txtDiaChiDuong"); 
+	 		int kq= doanhNghiepDAO.updateDoanhNghiep(doanhNghiep.getMaDoanhNghiep(), tenLienHe, emailLienHe, soDienThoai, maXaPhuong, diaChiDuong);
+	 		
+	 		DoanhNghiep dn=doanhNghiepDAO.getDoanhNghiepById(doanhNghiep.getMaDoanhNghiep());
+	 		session.removeAttribute("doanhnghiep");
+	 		session.setAttribute("doanhnghiep", dn);
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Chỉnh sửa thông tin thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Chỉnh sửa thông tin thất bại!");
+	 		
+	 		
+	 		return "redirect:/doanhnghiep/thongtin";
 
 	 		
 		} catch (Exception e) {

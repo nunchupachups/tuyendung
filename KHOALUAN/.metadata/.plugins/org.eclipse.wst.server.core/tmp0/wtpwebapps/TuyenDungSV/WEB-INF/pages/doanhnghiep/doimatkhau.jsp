@@ -44,7 +44,7 @@
             </div>
        
           <div class="row mb-3">
-            <div class="col-sm-11 offset-sm-1">
+            <div class="col-sm-10 offset-sm-2">
               <button type="submit"  class="btn btn-primary">Đăng ký</button>
             </div>
           </div>

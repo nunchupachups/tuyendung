@@ -1,5 +1,7 @@
 package cntt.trang.bean;
 
+import java.util.Date;
+
 public class SinhVien {
 	private String maSinhVien;
 	private String hoVaTen;
@@ -13,6 +15,7 @@ public class SinhVien {
 	private boolean daDuyet;
 	private int khoa;
 	private String anhDaiDien;
+	private Date ngayCapNhat;
 	public String getMaSinhVien() {
 		return maSinhVien;
 	}
@@ -87,12 +90,19 @@ public class SinhVien {
 	public void setAnhDaiDien(String anhDaiDien) {
 		this.anhDaiDien = anhDaiDien;
 	}
+	public Date getNgayCapNhat() {
+		return ngayCapNhat;
+	}
+	public void setNgayCapNhat(Date ngayCapNhat) {
+		this.ngayCapNhat = ngayCapNhat;
+	}
 	public SinhVien() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public SinhVien(String maSinhVien, String hoVaTen, boolean gioiTinh, String ngaySinh, String diaChi,
-			String dienThoai, String diDong, String email, String maNganhDaoTao, boolean daDuyet, int khoa, String anhDaiDien) {
+			String dienThoai, String diDong, String email, String maNganhDaoTao, boolean daDuyet, int khoa,
+			String anhDaiDien, Date ngayCapNhat) {
 		super();
 		this.maSinhVien = maSinhVien;
 		this.hoVaTen = hoVaTen;
@@ -106,6 +116,8 @@ public class SinhVien {
 		this.daDuyet = daDuyet;
 		this.khoa = khoa;
 		this.anhDaiDien = anhDaiDien;
+		this.ngayCapNhat = ngayCapNhat;
 	}
+	
 	
 }

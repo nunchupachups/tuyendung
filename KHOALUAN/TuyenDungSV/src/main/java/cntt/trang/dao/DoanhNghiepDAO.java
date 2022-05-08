@@ -296,6 +296,35 @@ public class DoanhNghiepDAO {
 		}
 		return flag;
 	}
+	public int updateDoanhNghiep(long maDoanhNghiep,String tenLienHe, String emailLienHe, String soDienThoai, String maXaPhuong, String diaChiDuong) throws SQLException {
+		String query = "update DoanhNghiep set TenLienHe=?, EmailLienHe=?, SoDienThoai=?, MaXaPhuong=?, DiaChiDuong=? where MaDoanhNghiep=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setNString(1, tenLienHe);
+			ps.setNString(2, emailLienHe);
+			ps.setString(3, soDienThoai);
+			ps.setString(4, maXaPhuong);
+			ps.setNString(5, diaChiDuong);
+			ps.setLong(6, maDoanhNghiep);
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
 	public int updateMatKhau(long maDoanhNghiep, String matKhau) throws SQLException {
 		String query = "update DoanhNghiep set MatKhau=? where MaDoanhNghiep=?";
 		int flag=-1;

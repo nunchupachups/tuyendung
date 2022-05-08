@@ -120,7 +120,7 @@
 			            <i class="fas fa-sort-down"></i>
 			          </button>
 			          <ul class="dropdown-menu dropdown-account">
-			            <li><a class="dropdown-item" href="#">Thông tin doanh nghiệp</a></li>
+			            <li><a class="dropdown-item" href="/doanhnghiep/thongtin">Thông tin doanh nghiệp</a></li>
 			            <li><a class="dropdown-item" href="/doanhnghiep/doimatkhau">Đổi mật khẩu</a></li>
 			            <li><a class="dropdown-item" href="/doanhnghiep/dangxuat">Đăng xuất <i class="fas fa-sign-out-alt"></i></a></li>
 			          </ul>

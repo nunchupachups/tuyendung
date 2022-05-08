@@ -42,4 +42,33 @@ public class LoaiHinhDoanhNghiepDAO {
 		}
 		return ds;
 	}
+	public LoaiHinhDoanhNghiep getLoaiHinhDoanhNghiepById(long maLoaiHinhDoanhNghiep) throws SQLException {
+		
+		String query = "select * from LoaiHinhDoanhNghiep where MaLoaiHinhDoanhNghiep=?";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setLong(1, maLoaiHinhDoanhNghiep);
+			rs= ps.executeQuery();	
+			if(rs.next()) {
+				String tenLoaiHinhDoanhNghiep = rs.getNString("TenLoaiHinhDoanhNghiep");   
+				return new LoaiHinhDoanhNghiep(maLoaiHinhDoanhNghiep, tenLoaiHinhDoanhNghiep);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return null;
+	}
 }

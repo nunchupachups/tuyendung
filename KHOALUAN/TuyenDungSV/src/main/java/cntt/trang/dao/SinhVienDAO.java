@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cntt.trang.bean.SinhVien;
 import cntt.trang.bean.TimKiemSV;
@@ -34,8 +35,9 @@ public class SinhVienDAO {
 				boolean daDuyet=rs.getBoolean("DaDuyet");
 				int khoa=rs.getInt("Khoa");
 				String anhDaiDien=rs.getNString("AnhDaiDien");
+				Date ngayCapNhat=rs.getDate("NgayCapNhat");
 				
-				ds.add( new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien));
+				ds.add( new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien, ngayCapNhat));
 				
 				
 			}
@@ -74,8 +76,9 @@ public class SinhVienDAO {
 				boolean daDuyet=rs.getBoolean("DaDuyet");
 				int khoa=rs.getInt("Khoa");
 				String anhDaiDien=rs.getNString("AnhDaiDien");
+				Date ngayCapNhat=rs.getDate("NgayCapNhat");
 				
-				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien);
+				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien, ngayCapNhat);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,8 +115,8 @@ public class SinhVienDAO {
 				boolean daDuyet=rs.getBoolean("DaDuyet");
 				int khoa=rs.getInt("Khoa");
 				String anhDaiDien=rs.getNString("AnhDaiDien");
-				
-				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien);
+				Date ngayCapNhat=rs.getDate("NgayCapNhat");
+				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien, ngayCapNhat);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -280,5 +283,66 @@ public class SinhVienDAO {
 			}	
 		}
 		return ds;
+	}
+	public int updateThongTinSinhVien(String maSinhVien, String hoVaTen, boolean gioiTinh, String ngaySinh, String diaChi,
+			String dienThoai, String diDong, String email, String maNganhDaoTao, boolean daDuyet, int khoa, Date ngayCapNhat) throws SQLException {
+		String query = "update SinhVien set HoVaTen=?, GioiTinh=?, NgaySinh=?, DiaChi=?,DienThoai=?, DiDong=?, Email=?, MaNganhDaoTao=?, DaDuyet=?, Khoa=?, NgayCapNhat=? where MaSinhVien=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setNString(1, hoVaTen);
+			ps.setBoolean(2, gioiTinh);
+			ps.setString(3, ngaySinh);
+			ps.setNString(4, diaChi);
+			ps.setString(5, dienThoai);
+			ps.setString(6, diDong);
+			ps.setNString(7, email);
+			ps.setString(8, maNganhDaoTao);
+			ps.setBoolean(9, daDuyet);
+			ps.setInt(10, khoa);
+			ps.setDate(11, new java.sql.Date(ngayCapNhat.getTime()));
+			ps.setString(12, maSinhVien);
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
+	public int insertSinhVien(String maSinhVien) throws SQLException {
+		String query = "insert into SinhVien(MaSinhVien) values(?,?)";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, maSinhVien);
+			
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
 	}
 }

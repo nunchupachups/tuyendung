@@ -44,4 +44,34 @@ public class QuanHuyenDAO {
 		}
 		return ds;
 	}
+	public QuanHuyen getQuanHuyenById(String maQuanHuyen) throws SQLException {
+		String query = "select * from QuanHuyen where maQuanHuyen = ?";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, maQuanHuyen);
+			rs= ps.executeQuery();	
+			if (rs.next()) {
+				String maTinhThanh = rs.getString("MaTinhThanh"); 
+				String tenQuanHuyen = rs.getNString("TenQuanHuyen"); 
+				String type = rs.getNString("Type"); 
+				String pathWithType = rs.getNString("path_with_type"); 
+				return new QuanHuyen(maQuanHuyen, tenQuanHuyen, type, pathWithType, maTinhThanh);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return null;
+	}
 }

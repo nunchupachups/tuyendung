@@ -150,6 +150,7 @@ public class SinhVienController {
 	 		SinhVienDAO sinhVienDAO = new SinhVienDAO();
 	 		
 	 		String maSinhVien=request.getParameter("txtMaSinhVien");
+	 		String matKhau=request.getParameter("txtMatKhau");
 	 		
 //	 		String result = "";
 //	        HttpPost post = new HttpPost("http://ums-dev.husc.edu.vn/apigateway/account/v1/authorize/student");
