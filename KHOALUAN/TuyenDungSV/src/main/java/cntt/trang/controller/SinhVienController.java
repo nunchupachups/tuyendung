@@ -177,7 +177,7 @@ public class SinhVienController {
 	 			SinhVien sinhvien= sinhVienDAO.KiemTraDangNhap(maSinhVien);
 	 			session.setAttribute("sinhvien",sinhvien);
 	 			
-	 			return "trangchu";
+	 			return "redirect:/trangchu";
 	 		}
 	 		else model.addAttribute("msg", "Mã sinh viên hoặc mật khẩu sai");
 	 		
@@ -196,7 +196,7 @@ public class SinhVienController {
 	 		request.setCharacterEncoding("UTF-8");
 	 		
 	 		session.removeAttribute("sinhvien");
-	 		return "redirect:/doanhnghiep";
+	 		return "redirect:/trangchu";
 	 		
 		} catch (Exception e) {
 			e.getStackTrace();

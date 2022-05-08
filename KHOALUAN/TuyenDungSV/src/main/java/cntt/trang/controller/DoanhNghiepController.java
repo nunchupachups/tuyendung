@@ -26,7 +26,6 @@ import cntt.trang.bean.DangKyTuyenDung;
 import cntt.trang.bean.DoanhNghiep;
 import cntt.trang.bean.QuanHuyen;
 import cntt.trang.bean.QuangBa;
-import cntt.trang.bean.SinhVien;
 import cntt.trang.bean.TuyenDung;
 import cntt.trang.bean.XaPhuong;
 import cntt.trang.dao.DangKyTuyenDungDAO;
@@ -122,7 +121,7 @@ public class DoanhNghiepController {
 	 		else model.addAttribute("msg", "Email đăng nhập hoặc mật khẩu sai");
 	 		
 	 		model.addAttribute("title", "Đăng nhập tài khoản doanh nghiệp");
-	    	return "doanhnghiep/dangnhap";
+	    	return "redirect:/trangchu";
 		} catch (Exception e) {
 			e.getStackTrace();
 			return null;
@@ -136,7 +135,7 @@ public class DoanhNghiepController {
 	 		request.setCharacterEncoding("UTF-8");
 	 		
 	 		session.removeAttribute("doanhnghiep");
-	 		return "redirect:/doanhnghiep";
+	 		return "redirect:/trangchu";
 	 		
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -210,7 +209,7 @@ public class DoanhNghiepController {
 	 		DoanhNghiep doanhNghiep=doanhNghiepDAO.KiemTraDangNhap(email, matKhau);
 			session.setAttribute("doanhnghiep", doanhNghiep);
 			redirectAttributes.addFlashAttribute("dktc", "Đăng ký tài khoản doanh nghiệp thành công!");
-			return "redirect:/sinhvien";
+			return "redirect:/trangchu";
 	 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -809,5 +808,60 @@ public class DoanhNghiepController {
 			return null;
 		}
        
+    }
+	@RequestMapping(value= {"/doimatkhau"}, method=RequestMethod.GET)
+	public String displayDoiMatKhau(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
+	 		
+	    	return "doanhnghiep/doimatkhau";
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/checkmatkhaucu"}, method=RequestMethod.POST)
+    public void checkMatKhauCu(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String oldPassword=request.getParameter("oldPassword");
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
+	 		PrintWriter out=response.getWriter();
+	 		if(doanhNghiepDAO.checkMatKhau(doanhNghiep.getMaDoanhNghiep(), oldPassword)) out.print("true");
+	 		else out.print("false");
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+	@RequestMapping(value= {"/doimatkhau"}, method=RequestMethod.POST)
+    public String doiMatKhau(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String newPassord=request.getParameter("txtNewPassword");
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
+	 		int kq=doanhNghiepDAO.updateMatKhau(doanhNghiep.getMaDoanhNghiep(), newPassord);
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Đổi mật khẩu thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Đổi mật khẩu thất bại!");
+	 		return "redirect:/trangchu";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
     }
 }

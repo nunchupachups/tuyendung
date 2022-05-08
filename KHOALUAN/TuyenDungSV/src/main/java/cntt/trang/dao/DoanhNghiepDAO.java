@@ -232,6 +232,34 @@ public class DoanhNghiepDAO {
 		}
 		return null;
 	}
+	public boolean checkMatKhau(long maDoanhNghiep, String matKhau) throws SQLException {
+		String query = "select * from DoanhNghiep where MaDoanhNghiep=? and matKhau=?";
+		boolean kt=false;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setLong(1, maDoanhNghiep);
+			ps.setNString(2, matKhau);
+			rs= ps.executeQuery();	
+			if(rs.next()) {
+				kt=true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return kt;
+	}
 	public int insertDoanhNghiep(String emailDangNhap, String matKhau, String tenLienHe, String emailLienHe, String soDienThoai, String tenDoanhNghiep, String maSoThue, String maXaPhuong, String diaChiDuong,String maLinhVucHoatDong, long maLoaiHinhDoanhNghiep, String giayChungNhan, boolean daDuyet) throws SQLException {
 		String query = "insert into DoanhNghiep(EmailDangNhap, MatKhau, TenLienHe, EmailLienHe, SoDienThoai, TenDoanhNghiep, MaSoThue, MaXaPhuong, DiaChiDuong,MaLinhVucHoatDong,MaLoaiHinhDoanhNghiep, GiayChungNhan, DaDuyet) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		int flag=-1;
@@ -251,6 +279,31 @@ public class DoanhNghiepDAO {
 			ps.setLong(11, maLoaiHinhDoanhNghiep);
 			ps.setNString(12, giayChungNhan);
 			ps.setBoolean(13, daDuyet);
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
+	public int updateMatKhau(long maDoanhNghiep, String matKhau) throws SQLException {
+		String query = "update DoanhNghiep set MatKhau=? where MaDoanhNghiep=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setNString(1, matKhau);
+			ps.setLong(2, maDoanhNghiep);
 			flag= ps.executeUpdate();	
 		} catch (Exception e) {
 			e.printStackTrace();

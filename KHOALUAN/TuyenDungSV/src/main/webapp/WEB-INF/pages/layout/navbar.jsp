@@ -5,7 +5,7 @@
 
 <nav class="navbar navbar-expand-lg d-flex ">
 	<div class="navbar-container">
-	<a class="navbar-brand " href="#" >
+	<a class="navbar-brand " href="/trangchu" >
       <img src="${contextPath }/image/brand.png" class="img-brand" > 
     </a>
     
@@ -15,6 +15,9 @@
     		<c:when test="${sessionScope.sinhvien != null}">
     		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
+    			<li class="nav-item">
+			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
+			      </li>
 			      <li class="nav-item">
 			        <a class="nav-link " href="/doanhnghiep">Doanh Nghiệp</a>
 			      </li>
@@ -69,6 +72,9 @@
     		<c:when test="${sessionScope.doanhnghiep != null}">
     		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
+    			<li class="nav-item">
+			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
+			      </li>
 			      <li class="nav-item">
 			        <a class="nav-link " href="/sinhvien/timkiem">Sinh viên</a>
 			      </li>
@@ -115,6 +121,7 @@
 			          </button>
 			          <ul class="dropdown-menu dropdown-account">
 			            <li><a class="dropdown-item" href="#">Thông tin doanh nghiệp</a></li>
+			            <li><a class="dropdown-item" href="/doanhnghiep/doimatkhau">Đổi mật khẩu</a></li>
 			            <li><a class="dropdown-item" href="/doanhnghiep/dangxuat">Đăng xuất <i class="fas fa-sign-out-alt"></i></a></li>
 			          </ul>
 			        </div>
@@ -125,6 +132,9 @@
     		<c:otherwise>
     		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
+    			<li class="nav-item">
+			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
+			      </li>
 			      <li class="nav-item">
 			        <a class="nav-link " href="/doanhnghiep">Doanh nghiệp</a>
 			      </li>
@@ -146,6 +156,9 @@
     	<c:otherwise>
     	<div style="display: inline-block;">
     		<ul class="navbar-nav " >
+    		<li class="nav-item">
+			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
+			      </li>
 			      <li class="nav-item">
 			        <a class="nav-link " href="/doanhnghiep">Doanh nghiệp</a>
 			      </li>

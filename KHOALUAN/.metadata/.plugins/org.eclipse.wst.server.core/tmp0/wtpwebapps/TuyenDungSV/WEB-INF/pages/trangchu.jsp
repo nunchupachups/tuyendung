@@ -14,6 +14,8 @@
 	</script>
 </head>
 <body>
+
+
 	<c:if test="${sessionScope.sinhvien!=null }">
 		<c:if test="${!sessionScope.sinhvien.isDaDuyet() }">
 				<div class="modal" id="myModal">
@@ -44,7 +46,18 @@
     <div style="height:70px;">
     </div>
     <div class="container">
-    	
+    	<c:if test="${msg1!=null }">
+      			<div class="alert alert-success alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				${msg1 } 
+      			</div>
+    	</c:if> 
+    	<c:if test="${msg2!=null }">
+      			<div class="alert alert-danger alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				${msg2 } 
+      			</div>
+    	</c:if> 
     </div>
 	
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />

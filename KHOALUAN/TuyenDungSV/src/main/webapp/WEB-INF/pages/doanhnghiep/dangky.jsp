@@ -197,11 +197,11 @@
               <small><i>Bằng việc nhấn nút Đăng ký, Quý khách đã đồng ý với <a href="">điều khoản sử dụng</a> và <a href="">chính sách bảo mật</a> của chúng tôi.</i></small>  
             </div>
           </div>
-          <div id="">
-          <div class="alert alert-danger alert-dismissible mt-3 d-none" >
-      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      
+          <div class="alert alert-danger alert-dismissible mt-3 d-none" id="msgCheckEmail">
+      			
       				Email đăng nhập đã tồn tại. Vui lòng chọn email khác.
-      	</div></div>
+      	</div>
           <div class="row mb-3">
             <div class="col-sm-11 offset-sm-1">
               <button type="submit"  class="btn btn-primary">Đăng ký</button>
@@ -358,8 +358,7 @@ function validateThongTinDoanhNghiep(){
 };
 function checkEmailDangNhap(){
 	var email = document.getElementById("email").value;
-	var kt;
-	console.log(email);
+	var kt=false;
 	$.ajax({ 
 	    type:"post", 
 	    url: "/doanhnghiep/dangky/checkemaildangnhap", 
@@ -367,20 +366,22 @@ function checkEmailDangNhap(){
 	    data: {
 	    	email: email,
 	    }, 
+	    async: false,
 	    success: function(data) { 
 	    	console.log(data);
 	    	var x=document.getElementById("msgCheckEmail");
 	    	if(data=="true"){
 	    		x.className="alert alert-danger alert-dismissible mt-3 d-block"; 
-	    		
+	    		kt=false;
 	    	}
 	    	else {
 	    		x.className="alert alert-danger alert-dismissible mt-3 d-none";
-	    		
+	    		kt=true;
 	    	}
 	    },
 	    })
-	  return false;
+	console.log(kt);
+	  return kt;
 };
 </script>
 </body>
