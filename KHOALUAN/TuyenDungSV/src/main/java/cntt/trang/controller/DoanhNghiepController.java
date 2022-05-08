@@ -256,6 +256,25 @@ public class DoanhNghiepController {
 		}
        
     }
+	@RequestMapping(value= {"/dangky/checkemaildangnhap"}, method=RequestMethod.POST)
+    public void checkEmailDangNhap(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String email=request.getParameter("email");
+	 		
+	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
+	 		PrintWriter out=response.getWriter();
+	 		if(doanhNghiepDAO.getDoanhNghiepByEmailDangNhap(email)!=null) out.print("true");
+	 		else out.print("false");
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 	@RequestMapping(value= {"/quangba"}, method=RequestMethod.GET)
     public String displayQuangBa(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
 	 	try {
