@@ -57,7 +57,7 @@ public class SinhVienDAO {
 		}
 		return ds;
 	}
-	public SinhVien KiemTraDangNhap(String maSinhVien) throws SQLException {
+	public SinhVien getSinhVienById(String maSinhVien) throws SQLException {
 		String query = "select * from SinhVien where lower(MaSinhVien)=?";
 		try {
 			conn = new DBConnect().getConnection();
@@ -321,7 +321,7 @@ public class SinhVienDAO {
 		return flag;
 	}
 	public int insertSinhVien(String maSinhVien) throws SQLException {
-		String query = "insert into SinhVien(MaSinhVien) values(?,?)";
+		String query = "insert into SinhVien(MaSinhVien) values(?)";
 		int flag=-1;
 		try {
 			conn = new DBConnect().getConnection();

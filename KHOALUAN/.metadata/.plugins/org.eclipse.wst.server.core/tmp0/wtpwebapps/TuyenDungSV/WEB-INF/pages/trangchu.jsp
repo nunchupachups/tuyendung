@@ -30,7 +30,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-      	<a class="btn btn-primary" href="/doanhnghiep">OK</a>
+      	<a class="btn btn-primary" href="/sinhvien/updatethongtin">OK</a>
       	<!-- them thong tin ca nhan va diem cua sv, tao cv -->
         <a class="btn btn-danger" href="/sinhvien/dangxuat">NO</a>
       </div>
@@ -46,6 +46,12 @@
     <div style="height:70px;">
     </div>
     <div class="container">
+    	<c:if test="${msgCapNhat!=null }">
+      			<div class="alert alert-danger alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				<a href="/sinhvien/updatethongtin">${msgCapNhat } </a>
+      			</div>
+    	</c:if> 
     	<c:if test="${msg1!=null }">
       			<div class="alert alert-success alert-dismissible mt-3">
       			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>

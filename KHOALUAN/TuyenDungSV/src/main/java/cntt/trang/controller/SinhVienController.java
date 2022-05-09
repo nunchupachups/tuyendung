@@ -5,8 +5,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,11 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +48,7 @@ import cntt.trang.dao.CVDAO;
 import cntt.trang.dao.ChungChiDAO;
 import cntt.trang.dao.DoanhNghiepDAO;
 import cntt.trang.dao.DonViDAO;
+import cntt.trang.dao.HashMD5;
 import cntt.trang.dao.KetQuaHocTapDAO;
 import cntt.trang.dao.KyNangDAO;
 import cntt.trang.dao.NganhDaoTaoDAO;
@@ -142,50 +149,66 @@ public class SinhVienController {
     }
 	
 	@RequestMapping(value= {"/dangnhap"}, method=RequestMethod.POST)
-    public String dangNhap(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+    public String dangNhap(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response,RedirectAttributes redirectAttributes) {
 	 	try {
 	 		response.setContentType("text/html;charset=UTF-8");
 	 		request.setCharacterEncoding("UTF-8");
 	 		
 	 		SinhVienDAO sinhVienDAO = new SinhVienDAO();
-	 		
+	 		HashMD5 hashMD5=new HashMD5();
 	 		String maSinhVien=request.getParameter("txtMaSinhVien");
 	 		String matKhau=request.getParameter("txtMatKhau");
 	 		
-//	 		String result = "";
-//	        HttpPost post = new HttpPost("http://ums-dev.husc.edu.vn/apigateway/account/v1/authorize/student");
-//	        StringBuilder json = new StringBuilder();
-//	        json.append("{");
-//	        json.append("\"UserName\":\"18T1021198\",");
-//	        json.append("\"Password\":\"b027a4ee25b6cfde014f2083563929fa\"");
-//	        json.append("}");
-//	        post.setEntity(new StringEntity(json.toString()));
-//	        
-//	        post.addHeader("Content-Type", "application/json");
-//	        post.addHeader("ums-application", "TestApp");
-//	        post.addHeader("ums-time", "20220401230000");
-//	        post.addHeader("ums-signature", "1adcbf88065227d7c8cdbaf25be7aa00");
-//	        
-//	        
-//	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-//	                CloseableHttpResponse res = httpClient.execute(post)) {
-//
-//	               result = EntityUtils.toString(res.getEntity());
-//	           }
-//
-//	           System.out.println(result);
-	 		if(sinhVienDAO.KiemTraDangNhap(maSinhVien)!= null) {
-	 			SinhVien sinhvien= sinhVienDAO.KiemTraDangNhap(maSinhVien);
-	 			session.setAttribute("sinhvien",sinhvien);
-	 			
-	 			return "redirect:/trangchu";
-	 		}
-	 		else model.addAttribute("msg", "Mã sinh viên hoặc mật khẩu sai");
-	 		
+	 		String result = "";
+	        HttpPost post = new HttpPost("http://ums-dev.husc.edu.vn/apigateway/account/v1/authorize/student");
+	        StringBuilder json = new StringBuilder();
+	        json.append("{\"UserName\":\"");
+	        json.append(maSinhVien);
+	        json.append("\",\"Password\":\"");
+	        json.append(hashMD5.convertHashToString(matKhau));
+	        json.append("\"}");
+	        post.setEntity(new StringEntity(json.toString()));
+	        
+	        String applicationID="TestApp";
+	        String secretKey="1234567890";
+	        post.addHeader("Content-Type", "application/json");
+	        post.addHeader("ums-application", applicationID);
+	        Date date=new Date();
+	        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddhhmmss");
+	        String time=sdf.format(date);
+	        post.addHeader("ums-time", time);
+	        post.addHeader("ums-signature", hashMD5.convertHashToString(applicationID+secretKey+time));
+	        
+	        
+	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+	                CloseableHttpResponse res = httpClient.execute(post)) {
+	               result = EntityUtils.toString(res.getEntity());
+	           }
+
+	           System.out.println(result);
+	           JSONParser jsonParser= new JSONParser();
+	           JSONObject jsonRes= (JSONObject) jsonParser.parse(result);
+	        if((long)jsonRes.get("Code")==1) {
+	        	JSONObject data=(JSONObject) jsonRes.get("Data");
+	        	String token=(String)data.get("Token");
+	        	session.removeAttribute("token");
+	        	session.setAttribute("token", token);
+	        	System.out.println(token);
+	        	if(sinhVienDAO.getSinhVienById(maSinhVien)==null) sinhVienDAO.insertSinhVien(maSinhVien);
+	        	session.setAttribute("sinhvien",sinhVienDAO.getSinhVienById(maSinhVien));
+	        	Calendar c=Calendar.getInstance();
+	        	c.add(Calendar.MONTH, -6);
+	        	if(sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien).getNgayCapNhat().getTime()<=c.getTimeInMillis()) 
+	        		redirectAttributes.addFlashAttribute("msgCapNhat", "Đã hơn 6 tháng bạn chưa cập nhật thông tin và điểm, cập nhật tại đây nhé!");
+	        	
+	        	return "redirect:/trangchu";
+	        }
+	        else model.addAttribute("msg", "Mã sinh viên hoặc mật khẩu sai");
+	        
 	 		model.addAttribute("title", "Đăng nhập tài khoản sinh viên");
 	    	return "sinhvien/dangnhap";
 		} catch (Exception e) {
-			e.getStackTrace();
+			e.printStackTrace();
 			return null;
 		}
        
@@ -204,6 +227,118 @@ public class SinhVienController {
 			return null;
 		}
        
+    }
+	@SuppressWarnings("deprecation")
+	@RequestMapping(value= {"/updatethongtin"}, method=RequestMethod.GET)
+    public String updateThongTin(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		String token=(String)session.getAttribute("token");
+	 		HashMD5 hashMD5= new HashMD5();
+	 		DonViDAO donViDAO=new DonViDAO();
+	 		ViTriDAO viTriDAO=new ViTriDAO();
+	 		NganhDaoTaoDAO nganhDaoTaoDAO=new NganhDaoTaoDAO();
+	 		KetQuaHocTapDAO ketQuaHocTapDAO=new KetQuaHocTapDAO();
+	 		
+	 		SinhVienDAO sinhVienDAO=new SinhVienDAO();
+	 		SinhVien sinhVien=(SinhVien)session.getAttribute("sinhvien");
+	 		
+	 		String applicationID="TestApp";
+	        String secretKey="1234567890";
+	 		Date date=new Date();
+	        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddhhmmss");
+	        String time=sdf.format(date);
+//	 		diem
+	        String result1 = "";
+	        HttpGet get1 = new HttpGet("http://ums-dev.husc.edu.vn/apigateway/student-services/v1/get-final-learning-result");
+	        
+	        get1.addHeader("Content-Type", "application/json");
+	        get1.addHeader("ums-application", applicationID);
+	        get1.addHeader("ums-time", time);
+	        get1.addHeader("ums-signature", hashMD5.convertHashToString(applicationID+secretKey+time));
+	        get1.addHeader("ums-token", token);
+//	 		thong tin ca nhan
+	 		String result2 = "";
+	        HttpGet get2 = new HttpGet("http://ums-dev.husc.edu.vn/apigateway/account/v1/profile");
+	        
+	        get2.addHeader("Content-Type", "application/json");
+	        get2.addHeader("ums-application", applicationID);
+	        get2.addHeader("ums-time", time);
+	        get2.addHeader("ums-signature", hashMD5.convertHashToString(applicationID+secretKey+time));
+	        get2.addHeader("ums-token", token);
+	        
+	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+	                CloseableHttpResponse res1 = httpClient.execute(get1)) {
+	               result1 = EntityUtils.toString(res1.getEntity());
+	           }
+	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+	                CloseableHttpResponse res2 = httpClient.execute(get2)) {
+	               result2 = EntityUtils.toString(res2.getEntity());
+	           }
+
+	           System.out.println(result1);
+	           System.out.println(result2);
+	           JSONParser jsonParser= new JSONParser();
+	           JSONObject jsonRes1= (JSONObject) jsonParser.parse(result1);
+	           JSONObject jsonRes2= (JSONObject) jsonParser.parse(result2);
+	           boolean kt=true;
+			        if((long)jsonRes2.get("Code")==1) {
+			        	JSONObject data=(JSONObject) jsonRes2.get("Data");
+			        	String maSinhVien = (String)data.get("MaSinhVien");
+			        	String hoVaTen = (String)data.get("HoVaTen");
+		            	boolean gioiTinh = (boolean)data.get("GioiTinh");
+		            	String ngaySinh = (String)data.get("NgaySinh");
+		            	String TTru_ThongTin = (String)data.get("TTru_ThongTin");
+		            	String dienThoai = (String)data.get("DienThoai");
+		            	String diDong = (String)data.get("DiDong");
+		            	String email = (String)data.get("Email");
+			        	
+		            	int kq=sinhVienDAO.updateThongTinSinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, TTru_ThongTin, dienThoai, diDong, email, "7480201", true, 42, new Date());
+		            	
+			        	if(kq==-1) kt=false;
+			        	
+			        }
+			        else kt=false;
+			        
+			        
+			        if((long)jsonRes1.get("Code")==1) {
+			        	JSONArray data=(JSONArray) jsonRes1.get("Data");
+			        	ketQuaHocTapDAO.deleteDiemByMaSinhVien(sinhVien.getMaSinhVien());
+			        	for (Object object : data) {
+			        		JSONObject obj=(JSONObject)object;
+			        		
+				        	String maHocPhan = (String)obj.get("MaHocPhan");
+			            	String tenHocPhan = (String)obj.get("TenHocPhan");
+			            	long soTinChi = (long) obj.get("SoTinChi");
+			            	String hocKy = (String)obj.get("HocKy");
+			            	String namHoc = (String)obj.get("NamHoc");
+			            	double diemHe10 = (double)obj.get("DiemHe10");
+			            	double diemHe4 = (double)obj.get("DiemHe4");
+			            	String diemChu = (String)obj.get("DiemChu");
+			            	int kq=ketQuaHocTapDAO.insertDiem(maHocPhan, sinhVien.getMaSinhVien(), tenHocPhan, (int)soTinChi, Integer.parseInt(hocKy) , namHoc, (float)diemHe10, (float)diemHe4, diemChu);
+			                
+				        	if(kq==-1) kt=false;
+				        	
+			        	}
+			        }
+			        else kt=false;
+			        
+			        if(kt) {
+			        	if(!sinhVien.isDaDuyet()) {
+			        	donViDAO.insertDonVi("Trường Đại học Khoa học Huế", sinhVien.getMaSinhVien(), "hocvan");
+			    		DonVi truong= donViDAO.getDonViByTenDonViAndMucCVAndMaCV("hocvan", sinhVien.getMaSinhVien(), "Trường Đại học Khoa học Huế");
+			    		viTriDAO.insertViTri("Sinh viên ngành "+nganhDaoTaoDAO.getNganhDaoTaoById("7480201").getTenNganh(), (1976+42)+" - "+(1976+42+nganhDaoTaoDAO.getNganhDaoTaoById("7480201").getNamDaoTao()>=new Date().getYear() ? "Nay" : 1976+42+nganhDaoTaoDAO.getNganhDaoTaoById("7480201").getNamDaoTao()), truong.getMaDonVi(), "- GPA: "+ketQuaHocTapDAO.getGPAByMaSinhVien(sinhVien.getMaSinhVien()));
+			        	}
+			    		redirectAttributes.addFlashAttribute("msg1", "Cập nhật thông tin thành công!");
+			        }else redirectAttributes.addFlashAttribute("msg2", "Cập nhật thông tin không thành công!");
+	           session.removeAttribute("sinhvien");
+	           session.setAttribute("sinhvien", sinhVienDAO.getSinhVienByMaSinhVien(sinhVien.getMaSinhVien()));
+	    	return "redirect:/trangchu";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
     }
 	@RequestMapping(value= {"/CV"}, method=RequestMethod.GET)
     public String displayCV(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {

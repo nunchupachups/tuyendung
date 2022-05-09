@@ -61,7 +61,8 @@
 			            
 			            <i class="fas fa-sort-down"></i>
 			          </button>
-			          <ul class="dropdown-menu dropdown-account">
+			          <ul class="dropdown-menu " style="right: 0; left: auto ;">
+			          	<li><a class="dropdown-item" href="/sinhvien/updatethongtin">Cật nhập thông tin và điểm từ trang tín chỉ</a></li>
 			            <li><a class="dropdown-item" href="/sinhvien/dangxuat">Đăng xuất <i class="fas fa-sign-out-alt"></i></a></li>
 			          </ul>
 			        </div>

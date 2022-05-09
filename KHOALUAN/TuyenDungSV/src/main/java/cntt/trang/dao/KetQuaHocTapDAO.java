@@ -119,4 +119,61 @@ public class KetQuaHocTapDAO {
 		}
 		return 0;
 	}
+	public int insertDiem(String maHocPhan,String maSinhVien, String tenHocPhan, int soTinChi, int hocKy, String namHoc, float diemHe10, float diemHe4, String diemChu) throws SQLException {
+		int flag= -1;
+		String query = "insert into KetQuaHocTap(MaHocPhan,MaSinhVien, TenHocPhan, SoTinChi, HocKy, NamHoc, DiemHe10, DiemHe4, DiemChu) values(?,?,?,?,?,?,?,?,?)";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, maHocPhan);
+			ps.setString(2, maSinhVien);
+			ps.setNString(3, tenHocPhan);
+			ps.setInt(4, soTinChi);
+			ps.setInt(5, hocKy);
+			ps.setString(6, namHoc);
+			ps.setFloat(7, diemHe10);
+			ps.setFloat(8, diemHe4);
+			ps.setString(9, diemChu);
+			
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
+	public int deleteDiemByMaSinhVien(String maSinhVien) throws SQLException {
+		int flag= -1;
+		String query = "delete from KetQuaHocTap where MaSinhVien=?";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, maSinhVien);
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
 }
