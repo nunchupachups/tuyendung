@@ -120,7 +120,7 @@ public class DoanhNghiepDAO {
 			ps.setNString(1, emailDangNhap);
 			ps.setNString(2, matKhau);
 			rs= ps.executeQuery();	
-			while(rs.next()) {
+			if(rs.next()) {
 				long maDoanhNghiep = rs.getLong("MaDoanhNghiep");
 				String tenLienHe = rs.getNString("TenLienHe"); 
 				String emailLienHe = rs.getNString("EmailLienHe"); 

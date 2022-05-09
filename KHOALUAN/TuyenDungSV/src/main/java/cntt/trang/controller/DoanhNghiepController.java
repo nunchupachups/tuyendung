@@ -117,12 +117,12 @@ public class DoanhNghiepController {
 	 		
 	 		if(doanhNghiepDAO.KiemTraDangNhap(email, hashMD5.convertHashToString(password))!= null) {
 	 			session.setAttribute("doanhnghiep",doanhNghiepDAO.KiemTraDangNhap(email, hashMD5.convertHashToString(password)));
-	 			return "redirect:/sinhvien";
+	 			return "redirect:/trangchu";
 	 		}
 	 		else model.addAttribute("msg", "Email đăng nhập hoặc mật khẩu sai");
 	 		
 	 		model.addAttribute("title", "Đăng nhập tài khoản doanh nghiệp");
-	    	return "redirect:/trangchu";
+	    	return "doanhnghiep/dangnhap";
 		} catch (Exception e) {
 			e.getStackTrace();
 			return null;
@@ -589,14 +589,11 @@ public class DoanhNghiepController {
 	 				if(dangKyTuyenDungDAO.getDangKyByMaTuyenDung(td.getMaTuyenDung()).size()>0)	
 	 					for (DangKyTuyenDung dk : dangKyTuyenDungDAO.getDangKyByMaTuyenDung(td.getMaTuyenDung())) {
 							out.print("<div style=\"display: flex;justify-content: space-between;margin-bottom: 10px;align-items: center;\" id=\"dang-ky-"+dk.getMaSinhVien() +"-"+td.getMaTuyenDung()+"\">\r\n" + 
-									"		                    			<a style=\"text-decoration: none; font-weight: bold;\" href=\"/sinhvien/CV/id?id="+dk.getMaSinhVien() +"\">"+sinhVienDAO.getSinhVienByMaSinhVien(dk.getMaSinhVien()).getHoVaTen() +"</a><hr>\r\n" + 
-									"		                    			<c:if test=\""+dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(dk.getMaSinhVien(), td.getMaTuyenDung()).isDaDuyet() +"\">\r\n" + 
-									"		                    				<button type=\"button\" class=\"btn btn-success\" >Đã duyệt</button>\r\n" + 
-									"		                    			</c:if>\r\n" + 
-									"		                    			<c:if test=\""+!dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(dk.getMaSinhVien(), td.getMaTuyenDung()).isDaDuyet() +"\">\r\n" + 
-									"		                    				<button type=\"button\" class=\"btn btn-primary\" onclick=\"duyetSinhVien('"+dk.getMaSinhVien()+"','"+td.getMaTuyenDung() +"')\">Duyệt</button>\r\n" + 
-									"		                    			</c:if>\r\n" + 
-									"		                    		</div>");
+									"		                    			<a style=\"text-decoration: none; font-weight: bold;\" href=\"/sinhvien/CV/id?id="+dk.getMaSinhVien() +"\">"+sinhVienDAO.getSinhVienByMaSinhVien(dk.getMaSinhVien()).getHoVaTen() +"</a><hr>\r\n"); 
+							if(dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(dk.getMaSinhVien(), td.getMaTuyenDung()).isDaDuyet())
+								out.print("<button type=\"button\" class=\"btn btn-success\" >Đã duyệt</button>\r\n");
+							else out.print("<button type=\"button\" class=\"btn btn-primary\" onclick=\"duyetSinhVien('"+dk.getMaSinhVien()+"','"+td.getMaTuyenDung() +"')\">Duyệt</button>\r\n");
+							out.print("</div>");
 						}
 	 					out.print("		                    </div>\r\n" + 
 	 						"		                    <!-- Modal footer -->\r\n" + 

@@ -126,5 +126,24 @@
 	
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <script>
+    function duyetSinhVien(maSV, maTD){
+		console.log(maSV);
+		console.log(maTD);
+		$.ajax({ 
+		    type:"post", 
+		    url: "/doanhnghiep/tuyendung/duyetsinhvien", 
+		    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		    data: {
+		    	maSinhVien: maSV,
+		    	maTuyenDung: maTD
+		    }, 
+		    success: function(data) { 
+		    	let row = document.getElementById("dang-ky-"+maSV+"-"+maTD);
+		    	row.innerHTML = data;
+		    },
+		})
+	};
+    </script>
 </body>
 </html>

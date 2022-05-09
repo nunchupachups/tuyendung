@@ -198,7 +198,7 @@ public class SinhVienController {
 	        	session.setAttribute("sinhvien",sinhVienDAO.getSinhVienById(maSinhVien));
 	        	Calendar c=Calendar.getInstance();
 	        	c.add(Calendar.MONTH, -6);
-	        	if(sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien).getNgayCapNhat().getTime()<=c.getTimeInMillis()) 
+	        	if(sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien).getNgayCapNhat()!=null&&sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien).getNgayCapNhat().getTime()<=c.getTimeInMillis()) 
 	        		redirectAttributes.addFlashAttribute("msgCapNhat", "Đã hơn 6 tháng bạn chưa cập nhật thông tin và điểm, cập nhật tại đây nhé!");
 	        	
 	        	return "redirect:/trangchu";
@@ -304,6 +304,7 @@ public class SinhVienController {
 			        
 			        if((long)jsonRes1.get("Code")==1) {
 			        	JSONArray data=(JSONArray) jsonRes1.get("Data");
+			        	System.out.println(sinhVien.getMaSinhVien());
 			        	ketQuaHocTapDAO.deleteDiemByMaSinhVien(sinhVien.getMaSinhVien());
 			        	for (Object object : data) {
 			        		JSONObject obj=(JSONObject)object;

@@ -357,12 +357,15 @@ public class TuyenDungController {
 	 		TuyenDungDAO tuyenDungDAO=new TuyenDungDAO();
 	 		TinhThanhDAO tinhThanhDAO=new TinhThanhDAO();
 	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
 	 		TuyenDung td=tuyenDungDAO.getTuyenDungByID(Long.parseLong(maTuyenDung));
 	 		
 	 		int kq=dangKyTuyenDungDAO.insertDangKyTuyenDung(sinhVien.getMaSinhVien(), Long.parseLong(maTuyenDung));
 	 		
 	 		PrintWriter out=response.getWriter();
 	 		if(kq!=-1)	{
+	 			
+	 			thongBaoDAO.insertThongBao(td.getMaDoanhNghiep(), null,sinhVien.getHoVaTen()+ " đã đăng ký tin tuyển dụng của bạn.", "/doanhnghiep/tuyendung/chitiet?id="+maTuyenDung);
 	 			out.print("<div class=\"tuyendung\" style=\"position: relative;\">\r\n" + 
 						"		        <div class=\"tuyendung-container\">\r\n" + 
 						"		        	<a href=\"/tuyendung/chitiet?id="+td.getMaTuyenDung() +"\" style=\"text-decoration: none; \">\r\n" + 

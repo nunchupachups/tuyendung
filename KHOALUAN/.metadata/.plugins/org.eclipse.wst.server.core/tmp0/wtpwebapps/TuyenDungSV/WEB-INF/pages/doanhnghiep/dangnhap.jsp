@@ -24,7 +24,7 @@
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
               <form method="post" action="/doanhnghiep/dangnhap">
                 <!-- Email input -->
-                <h3 style="color: rgb(6, 109, 70);margin-left: 150px;" class="mb-5 ">Đăng nhập tài khoản doanh nghiệp	</h3>
+                <h3 style="color: rgb(6, 109, 70);margin-left: 30px;" class="mb-5 ">Đăng nhập tài khoản doanh nghiệp	</h3>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="email">Email address</label>
                     <input type="email" id="email" name="txtemail" class="form-control" placeholder="Email đăng nhập" />

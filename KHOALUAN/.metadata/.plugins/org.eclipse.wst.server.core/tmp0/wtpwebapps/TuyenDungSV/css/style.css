@@ -140,9 +140,8 @@ body{
 .dropdown-toggle::after{
     content: none;
 }
-.dropdown-account{
-	transform: translateX(-100px);
-}
+
+
 .taocv-huongdan-item{
     display: none;
 }
