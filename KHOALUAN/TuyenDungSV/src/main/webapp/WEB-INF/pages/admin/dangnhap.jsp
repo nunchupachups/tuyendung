@@ -37,16 +37,7 @@
                   
                 </div>
       
-                <div class="d-flex justify-content-between align-items-center">
-                  <!-- Checkbox -->
-                  <div class="form-check mb-0">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                    <label class="form-check-label" for="form2Example3">
-                      Remember me
-                    </label>
-                  </div>
-                  <a href="#!" class="text-body">Forgot password?</a>
-                </div>
+                
       		<c:if test="${msg!=null }">
       			<div class="alert alert-danger alert-dismissible mt-3">
       			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>

@@ -72,7 +72,7 @@ public class ThongBaoDAO {
 		return flag;
 	}
 	public ArrayList<ThongBao> getAllThongBaoByMaDoanhNghiep(long maDoanhNghiep) throws SQLException {
-		String query = "select * from ThongBao where MaDoanhNghiep=?";
+		String query = "select * from ThongBao where MaDoanhNghiep=? order by MaThongBao desc";
 		ArrayList<ThongBao> ds= new ArrayList<ThongBao>();
 		try {
 			conn = new DBConnect().getConnection();

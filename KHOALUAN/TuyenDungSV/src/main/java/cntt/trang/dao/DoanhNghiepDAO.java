@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,8 +38,9 @@ public class DoanhNghiepDAO {
 				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
 				String giayChungNhan = rs.getNString("GiayChungNhan"); 
 				boolean daDuyet = rs.getBoolean("DaDuyet");
+				String phanHoi=rs.getNString("PhanHoi");
 				
-				ds.add(new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet));
+				ds.add(new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet,phanHoi));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,7 +58,47 @@ public class DoanhNghiepDAO {
 		}
 		return ds;
 	}
-	
+	public ArrayList<DoanhNghiep> getAllDoanhNghiepChuaDuyet() throws SQLException {
+		ArrayList<DoanhNghiep> ds=new ArrayList<DoanhNghiep>();
+		String query = "select * from DoanhNghiep where DaDuyet=0";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				long maDoanhNghiep = rs.getLong("MaDoanhNghiep");
+				String emailDangNhap = rs.getNString("EmailDangNhap"); 
+				String matKhau = rs.getNString("MatKhau");  
+				String tenLienHe = rs.getNString("TenLienHe"); 
+				String emailLienHe = rs.getNString("EmailLienHe"); 
+				String soDienThoai = rs.getString("SoDienThoai"); 
+				String tenDoanhNghiep = rs.getNString("TenDoanhNghiep"); 
+				String maSoThue = rs.getString("MaSoThue"); 
+				String maXaPhuong = rs.getString("MaXaPhuong"); 
+				String diaChiDuong = rs.getNString("DiaChiDuong"); 
+				String maLinhVucHoatDong = rs.getString("MaLinhVucHoatDong"); 
+				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
+				String giayChungNhan = rs.getNString("GiayChungNhan"); 
+				boolean daDuyet = rs.getBoolean("DaDuyet");
+				String phanHoi=rs.getNString("PhanHoi");
+				ds.add(new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet,phanHoi));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return ds;
+	}
 	public ArrayList<DoanhNghiep> timKiemDoanhNghiepDaDuyet(String tenDN, String maTT, String maLVHD, String maLHDN) throws SQLException {
 		ArrayList<DoanhNghiep> ds=new ArrayList<DoanhNghiep>();
 		String query = "select * from DoanhNghiep where DaDuyet=1";
@@ -92,8 +134,8 @@ public class DoanhNghiepDAO {
 				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
 				String giayChungNhan = rs.getNString("GiayChungNhan"); 
 				boolean daDuyet = rs.getBoolean("DaDuyet");
-				
-				ds.add(new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet));
+				String phanHoi=rs.getNString("PhanHoi");
+				ds.add(new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet,phanHoi));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,8 +175,8 @@ public class DoanhNghiepDAO {
 				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
 				String giayChungNhan = rs.getNString("GiayChungNhan"); 
 				boolean daDuyet = rs.getBoolean("DaDuyet");
-				
-				return new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet);
+				String phanHoi=rs.getNString("PhanHoi");
+				return new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet,phanHoi);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,8 +215,8 @@ public class DoanhNghiepDAO {
 				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
 				String giayChungNhan = rs.getNString("GiayChungNhan"); 
 				boolean daDuyet = rs.getBoolean("DaDuyet");
-				
-				return new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet);
+				String phanHoi=rs.getNString("PhanHoi");
+				return new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet,phanHoi);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -213,8 +255,8 @@ public class DoanhNghiepDAO {
 				long maLoaiHinhDoanhNghiep = rs.getLong("MaLoaiHinhDoanhNghiep");
 				String giayChungNhan = rs.getNString("GiayChungNhan"); 
 				boolean daDuyet = rs.getBoolean("DaDuyet");
-				
-				return new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet);
+				String phanHoi=rs.getNString("PhanHoi");
+				return new DoanhNghiep(maDoanhNghiep, emailDangNhap, matKhau, tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, maLoaiHinhDoanhNghiep, giayChungNhan, daDuyet,phanHoi);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -296,8 +338,8 @@ public class DoanhNghiepDAO {
 		}
 		return flag;
 	}
-	public int updateDoanhNghiep(long maDoanhNghiep,String tenLienHe, String emailLienHe, String soDienThoai, String maXaPhuong, String diaChiDuong) throws SQLException {
-		String query = "update DoanhNghiep set TenLienHe=?, EmailLienHe=?, SoDienThoai=?, MaXaPhuong=?, DiaChiDuong=? where MaDoanhNghiep=?";
+	public int updateThongTinLienHe(long maDoanhNghiep,String tenLienHe, String emailLienHe, String soDienThoai) throws SQLException {
+		String query = "update DoanhNghiep set TenLienHe=?, EmailLienHe=?, SoDienThoai=? where MaDoanhNghiep=?";
 		int flag=-1;
 		try {
 			conn = new DBConnect().getConnection();
@@ -305,9 +347,51 @@ public class DoanhNghiepDAO {
 			ps.setNString(1, tenLienHe);
 			ps.setNString(2, emailLienHe);
 			ps.setString(3, soDienThoai);
-			ps.setString(4, maXaPhuong);
-			ps.setNString(5, diaChiDuong);
-			ps.setLong(6, maDoanhNghiep);
+			ps.setLong(4, maDoanhNghiep);
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
+	public int updateThongTinXacNhan(long maDoanhNghiep, String tenDoanhNghiep, String maSoThue, String maXaPhuong, String diaChiDuong,String maLinhVucHoatDong, 
+			long maLoaiHinhDoanhNghiep, String giayChungNhan, boolean daDuyet) throws SQLException {
+		String query = "update DoanhNghiep set TenDoanhNghiep=?, MaSoThue=?, MaXaPhuong=?, DiaChiDuong=?,MaLinhVucHoatDong=?, MaLoaiHinhDoanhNghiep=?, ";
+		if(!giayChungNhan.equals("")) query+="GiayChungNhan=?, ";
+		query+="DaDuyet=?,PhanHoi=? where MaDoanhNghiep=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setNString(1, tenDoanhNghiep);
+			ps.setString(2, maSoThue);
+			ps.setString(3, maXaPhuong);
+			ps.setNString(4, diaChiDuong);
+			ps.setString(5, maLinhVucHoatDong);
+			ps.setLong(6, maLoaiHinhDoanhNghiep);
+			if(!giayChungNhan.equals("")) {
+				ps.setNString(7, giayChungNhan);
+				ps.setBoolean(8, daDuyet);
+				ps.setNull(9, Types.NVARCHAR);
+				ps.setLong(10, maDoanhNghiep);
+			}else {
+				ps.setBoolean(7, daDuyet);
+				ps.setNull(8, Types.NVARCHAR);
+				ps.setLong(9, maDoanhNghiep);
+			}
+			
+			
 			flag= ps.executeUpdate();	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -333,6 +417,55 @@ public class DoanhNghiepDAO {
 			ps = conn.prepareStatement(query);
 			ps.setNString(1, matKhau);
 			ps.setLong(2, maDoanhNghiep);
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
+	public int updatePhanHoi(long maDoanhNghiep, String phanHoi) throws SQLException {
+		String query = "update DoanhNghiep set PhanHoi=? where MaDoanhNghiep=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setNString(1, phanHoi);
+			ps.setLong(2, maDoanhNghiep);
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
+	public int duyetDoanhNghiep(long maDoanhNghiep) throws SQLException {
+		String query = "update DoanhNghiep set DaDuyet=1 where MaDoanhNghiep=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setLong(1, maDoanhNghiep);
 			flag= ps.executeUpdate();	
 		} catch (Exception e) {
 			e.printStackTrace();

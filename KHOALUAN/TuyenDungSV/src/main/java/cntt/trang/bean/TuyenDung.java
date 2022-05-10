@@ -21,7 +21,7 @@ public class TuyenDung {
 	private boolean daDuyet;
 	private long maDoanhNghiep;
 	private Date thoiGianDangBai;
-	
+	private String phanHoi;
 	public long getMaTuyenDung() {
 		return maTuyenDung;
 	}
@@ -131,10 +131,16 @@ public class TuyenDung {
 		this.thoiGianDangBai = thoiGianDangBai;
 	}
 	
+	public String getPhanHoi() {
+		return phanHoi;
+	}
+	public void setPhanHoi(String phanHoi) {
+		this.phanHoi = phanHoi;
+	}
 	public TuyenDung(long maTuyenDung, long maNganhNghe, long maHinhThuc, int sinhVienNam, String khuVucTuyenDung,
 			String mucLuong, String tenCongViec, String thoiGianThuViec, String gioiTinh, int soLuong, Date hanDangKy,
 			String tieuDe, String moTaCongViec, String yeuCauCongViec, String quyenLoi, boolean daDuyet,
-			long maDoanhNghiep, Date thoiGianDangBai) {
+			long maDoanhNghiep, Date thoiGianDangBai, String phanHoi) {
 		super();
 		this.maTuyenDung = maTuyenDung;
 		this.maNganhNghe = maNganhNghe;
@@ -154,6 +160,7 @@ public class TuyenDung {
 		this.daDuyet = daDuyet;
 		this.maDoanhNghiep = maDoanhNghiep;
 		this.thoiGianDangBai = thoiGianDangBai;
+		this.phanHoi=phanHoi;
 	}
 	public TuyenDung() {
 		super();

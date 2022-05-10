@@ -76,16 +76,33 @@
     			<li class="nav-item">
 			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
 			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link " href="/sinhvien/timkiem">Sinh viên</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link" href="/doanhnghiep/quangba">Quảng bá</a>
-			      </li>
-			     <li class="nav-item">
-			        <a class="nav-link" href="/doanhnghiep/tuyendung">Tuyển dụng</a>
-			      </li>
+			      
+			      
+			      <c:if test="${sessionScope.doanhnghiep.isDaDuyet() }">
+				      <li class="nav-item">
+				        <a class="nav-link " href="/sinhvien/timkiem">Sinh viên</a>
+				      </li>
+				      <li class="nav-item">
+				        <a class="nav-link" href="/doanhnghiep/quangba">Quảng bá</a>
+				      </li>
+				     <li class="nav-item">
+				        <a class="nav-link" href="/doanhnghiep/tuyendung">Tuyển dụng</a>
+				      </li>
+			      </c:if>
+			      <c:if test="${!sessionScope.doanhnghiep.isDaDuyet() }">
+				      <li class="nav-item">
+				        <a class="nav-link " onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')">Sinh viên</a>
+				      </li>
+				      <li class="nav-item">
+				        <a class="nav-link" onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')">Quảng bá</a>
+				      </li>
+				     <li class="nav-item">
+				        <a class="nav-link" onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')">Tuyển dụng</a>
+				      </li>
+			      </c:if>
+			      
 			    </ul>
+			    
 			</div>
 			    <div style="display: inline-block;float:right;">
 			    <div class="navbar-nav " >
@@ -133,22 +150,31 @@
     		<c:otherwise>
     		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
-    			<li class="nav-item">
-			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
-			      </li>
+    			
 			      <li class="nav-item">
-			        <a class="nav-link " href="/doanhnghiep">Doanh nghiệp</a>
+			        <a class="nav-link " href="/admin/doanhnghiep">QL Doanh nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="/tuyendung">Tuyển dụng</a>
+			        <a class="nav-link" href="/admin/tuyendung">QL Tuyển dụng</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="/admin/quangba">QL Quảng bá</a>
 			      </li>
 			    </ul>
 			    </div>
 			    <div style="display: inline-block;float:right;">
-			    <ul class="navbar-nav " >
-			      <li><a>Đăng Ký <i class="fas fa-user-plus"></i></a></li>
-			      <li><a>Đăng Nhập <i class="fa-solid fa-right-to-bracket"></i></a></li>
-				</ul>
+			    <div class="navbar-nav " >
+			      <span style="margin-top: 10px;">Admin</span> 
+				   <div class="dropdown">
+			          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+			            
+			            <i class="fas fa-sort-down"></i>
+			          </button>
+			          <ul class="dropdown-menu dropdown-account">
+			            <li><a class="dropdown-item" href="/admin/dangxuat">Đăng xuất <i class="fas fa-sign-out-alt"></i></a></li>
+			          </ul>
+			        </div>
+				</div>
 			    </div>
     		</c:otherwise>
     		</c:choose>

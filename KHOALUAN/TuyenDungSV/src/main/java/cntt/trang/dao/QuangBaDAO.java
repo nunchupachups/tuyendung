@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 
 import cntt.trang.bean.QuangBa;
@@ -28,8 +29,76 @@ public class QuangBaDAO {
 				String hinhAnhDaiDien = rs.getNString("HinhAnhDaiDien");
 				String baiViet = rs.getNString("BaiViet");
 				boolean daDuyet = rs.getBoolean("DaDuyet");
-					
-				ds.add(new QuangBa(maQuangBa, tieuDe, noiDungDaiDien, hinhAnhDaiDien, baiViet, daDuyet, maDoanhNghiep));
+				String phanHoi=rs.getNString("PhanHoi");
+				ds.add(new QuangBa(maQuangBa, tieuDe, noiDungDaiDien, hinhAnhDaiDien, baiViet, daDuyet, maDoanhNghiep,phanHoi));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return ds;
+	}
+	public ArrayList<QuangBa> getAllQuangDaDuyet() throws SQLException {
+		ArrayList<QuangBa> ds=new ArrayList<QuangBa>();
+		String query = "select * from QuangBa where DaDuyet=1";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				long maQuangBa = rs.getLong("MaQuangBa");
+				String tieuDe = rs.getNString("TieuDe");
+				String noiDungDaiDien = rs.getNString("NoiDungDaiDien");
+				String hinhAnhDaiDien = rs.getNString("HinhAnhDaiDien");
+				String baiViet = rs.getNString("BaiViet");
+				boolean daDuyet = rs.getBoolean("DaDuyet");
+				String phanHoi=rs.getNString("PhanHoi");
+				long maDoanhNghiep=rs.getLong("MaDoanhNghiep");
+				ds.add(new QuangBa(maQuangBa, tieuDe, noiDungDaiDien, hinhAnhDaiDien, baiViet, daDuyet, maDoanhNghiep,phanHoi));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return ds;
+	}
+	public ArrayList<QuangBa> getAllQuangChuaDuyet() throws SQLException {
+		ArrayList<QuangBa> ds=new ArrayList<QuangBa>();
+		String query = "select * from QuangBa where DaDuyet=0";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				long maQuangBa = rs.getLong("MaQuangBa");
+				String tieuDe = rs.getNString("TieuDe");
+				String noiDungDaiDien = rs.getNString("NoiDungDaiDien");
+				String hinhAnhDaiDien = rs.getNString("HinhAnhDaiDien");
+				String baiViet = rs.getNString("BaiViet");
+				boolean daDuyet = rs.getBoolean("DaDuyet");
+				String phanHoi=rs.getNString("PhanHoi");
+				long maDoanhNghiep=rs.getLong("MaDoanhNghiep");
+				ds.add(new QuangBa(maQuangBa, tieuDe, noiDungDaiDien, hinhAnhDaiDien, baiViet, daDuyet, maDoanhNghiep,phanHoi));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,8 +131,8 @@ public class QuangBaDAO {
 				String hinhAnhDaiDien = rs.getNString("HinhAnhDaiDien");
 				String baiViet = rs.getNString("BaiViet");
 				boolean daDuyet = rs.getBoolean("DaDuyet");
-					
-				ds.add(new QuangBa(maQuangBa, tieuDe, noiDungDaiDien, hinhAnhDaiDien, baiViet, daDuyet, maDoanhNghiep));
+				String phanHoi=rs.getNString("PhanHoi");
+				ds.add(new QuangBa(maQuangBa, tieuDe, noiDungDaiDien, hinhAnhDaiDien, baiViet, daDuyet, maDoanhNghiep,phanHoi));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,7 +165,8 @@ public class QuangBaDAO {
 				String baiViet = rs.getNString("BaiViet");
 				boolean daDuyet = rs.getBoolean("DaDuyet");
 				long maDoanhNghiep = rs.getLong("MaDoanhNghiep");	
-				return new QuangBa(maQuangBa, tieuDe, noiDungDaiDien, hinhAnhDaiDien, baiViet, daDuyet, maDoanhNghiep);
+				String phanHoi=rs.getNString("PhanHoi");
+				return new QuangBa(maQuangBa, tieuDe, noiDungDaiDien, hinhAnhDaiDien, baiViet, daDuyet, maDoanhNghiep,phanHoi);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -170,7 +240,7 @@ public class QuangBaDAO {
 		return flag;
 	}
 	public int updateQuangBa(long maQuangBa, String tieuDe, String noiDungDaiDien, String hinhAnhDaiDien, String baiViet) throws SQLException {
-		String query = "update QuangBa set TieuDe=?, NoiDungDaiDien=?, HinhAnhDaiDien=?, BaiViet=? where MaQuangBa=?";
+		String query = "update QuangBa set TieuDe=?, NoiDungDaiDien=?, HinhAnhDaiDien=?, BaiViet=?, PhanHoi=?, DaDuyet=0 where MaQuangBa=?";
 		int flag=-1;
 		try {
 			conn = new DBConnect().getConnection();
@@ -179,8 +249,59 @@ public class QuangBaDAO {
 			ps.setNString(2, noiDungDaiDien);
 			ps.setNString(3, hinhAnhDaiDien);
 			ps.setNString(4, baiViet);
-			ps.setLong(5, maQuangBa);
+			ps.setNull(5, Types.NVARCHAR);
+			ps.setLong(6, maQuangBa);
 			
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
+	public int updatePhanHoi(long maQuangBa, String phanHoi) throws SQLException {
+		String query = "update QuangBa set PhanHoi=? where MaQuangBa=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setNString(1, phanHoi);
+			ps.setLong(2, maQuangBa);
+			
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
+	public int duyetQuangBa(long maQuangBa) throws SQLException {
+		String query = "update QuangBa set DaDuyet=1 where MaQuangBa=?";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setLong(1, maQuangBa);
 			flag= ps.executeUpdate();	
 		} catch (Exception e) {
 			e.printStackTrace();

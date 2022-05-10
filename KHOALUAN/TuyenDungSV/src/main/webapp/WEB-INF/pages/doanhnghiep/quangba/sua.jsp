@@ -15,7 +15,7 @@
     <div style="height:70px;">
     </div>
     <div class="container">
-      <form class="row" method="post" action="/doanhnghiep/quangba/sua" enctype="multipart/form-data">
+      <form class="row" method="post" onsubmit="return confirm("Chỉnh sửa quảng bá sẽ tốn một khoảng thời gian để chờ duyệt. \n\nBạn có chắc chắn muốn chỉnh sửa ?");" action="/doanhnghiep/quangba/sua" enctype="multipart/form-data">
             <h3 style="color: rgb(6, 109, 70)" class="mb-5 mt-4">Sửa bài quảng bá</h3>
 
             <div class="row mb-3">
@@ -52,6 +52,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-sm-10 offset-sm-2">
+                	<a  class="btn btn-danger" href="/doanhnghiep/quangba/chitiet?id=${quangBa.getMaQuangBa() }">Huỷ</a>
                     <button type="submit" class="btn btn-primary">Sửa</button>
                 </div>
             </div>

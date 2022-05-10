@@ -43,7 +43,8 @@ public class TuyenDungDAO {
 				String quyenLoi = rs.getNString("QuyenLoi");
 				boolean daDuyet = rs.getBoolean("DaDuyet");
 				Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
-				ds.add(new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai));
+				String phanHoi=rs.getNString("PhanHoi");
+				ds.add(new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai,phanHoi));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,7 +88,8 @@ public class TuyenDungDAO {
 				String quyenLoi = rs.getNString("QuyenLoi");
 				boolean daDuyet = rs.getBoolean("DaDuyet");
 				Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
-				ds.add(new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai));
+				String phanHoi=rs.getNString("PhanHoi");
+				ds.add(new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai,phanHoi));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,7 +134,53 @@ public class TuyenDungDAO {
 				boolean daDuyet = rs.getBoolean("DaDuyet");
 				Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
 				long maDoanhNghiep=rs.getLong("MaDoanhNghiep");
-				ds.add(new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai));
+				String phanHoi=rs.getNString("PhanHoi");
+				ds.add(new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai,phanHoi));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return ds;
+	}
+	public ArrayList<TuyenDung> getAllTuyenDungChuaDuyet() throws SQLException {
+		ArrayList<TuyenDung> ds=new ArrayList<TuyenDung>();
+		String query = "select * from TuyenDung where DaDuyet=0  order by ThoiGianDangBai desc";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			rs= ps.executeQuery();	
+			while(rs.next()) {
+				long maTuyenDung = rs.getLong("MaTuyenDung");
+				long maNganhNghe = rs.getLong("MaNganhNghe"); 
+				long maHinhThuc = rs.getLong("MaHinhThuc");
+				int sinhVienNam = rs.getInt("SinhVienNam");
+				String khuVucTuyenDung = rs.getString("KhuVucTuyenDung");
+				String mucLuong = rs.getNString("MucLuong"); 
+				String tenCongViec = rs.getNString("TenCongViec");
+				String thoiGianThuViec = rs.getNString("ThoiGianThuViec");
+				String gioiTinh = rs.getNString("GioiTinh");
+				int soLuong = rs.getInt("SoLuong");
+				Date hanDangKy = rs.getDate("HanDangKy");
+				String tieuDe = rs.getNString("TieuDe");
+				String moTaCongViec = rs.getNString("MoTaCongViec");
+				String yeuCauCongViec = rs.getNString("YeuCauCongViec");
+				String quyenLoi = rs.getNString("QuyenLoi");
+				boolean daDuyet = rs.getBoolean("DaDuyet");
+				Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
+				long maDoanhNghiep=rs.getLong("MaDoanhNghiep");
+				String phanHoi=rs.getNString("PhanHoi");
+				ds.add(new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai,phanHoi));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -176,7 +224,8 @@ public class TuyenDungDAO {
 					boolean daDuyet = rs.getBoolean("DaDuyet");
 					long maDoanhNghiep = rs.getLong("MaDoanhNghiep");	
 					Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
-					return new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai);
+					String phanHoi=rs.getNString("PhanHoi");
+					return new TuyenDung(maTuyenDung, maNganhNghe, maHinhThuc, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai,phanHoi);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -268,7 +317,7 @@ public class TuyenDungDAO {
 		public int updateTuyenDung(long maTuyenDung, long maNganhNghe, long maHinhThuc, int sinhVienNam, String khuVucTuyenDung,
 				String mucLuong, String tenCongViec, String thoiGianThuViec, String gioiTinh, int soLuong, Date hanDangKy,
 				String tieuDe, String moTaCongViec, String yeuCauCongViec, String quyenLoi) throws SQLException {
-			String query = "update TuyenDung set MaNganhNghe=?, MaHinhThuc=?, SinhVienNam=?,KhuVucTuyenDung=?,MucLuong=?, TenCongViec=?, ThoiGianThuViec=?, GioiTinh=?, SoLuong=?, HanDangKy=?,TieuDe=?, MoTaCongViec=?, YeuCauCongViec=?, QuyenLoi=? where MaTuyenDung=?";
+			String query = "update TuyenDung set MaNganhNghe=?, MaHinhThuc=?, SinhVienNam=?,KhuVucTuyenDung=?,MucLuong=?, TenCongViec=?, ThoiGianThuViec=?, GioiTinh=?, SoLuong=?, HanDangKy=?,TieuDe=?, MoTaCongViec=?, YeuCauCongViec=?, QuyenLoi=?, PhanHoi=?, DaDuyet=0 where MaTuyenDung=?";
 			int flag=-1;
 			try {
 				conn = new DBConnect().getConnection();
@@ -290,7 +339,35 @@ public class TuyenDungDAO {
 				ps.setNString(12, moTaCongViec);
 				ps.setNString(13, yeuCauCongViec);
 				ps.setNString(14, quyenLoi);
-				ps.setLong(15, maTuyenDung);
+				ps.setNull(15, Types.NVARCHAR);
+				ps.setLong(16, maTuyenDung);
+				
+				
+				flag= ps.executeUpdate();	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				if(rs!=null) {
+					rs.close();
+				}
+				if(ps!=null) {
+					ps.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}	
+			}
+			return flag;
+		}
+		public int updatePhanHoi(long maTuyenDung, String phanHoi) throws SQLException {
+			String query = "update TuyenDung set PhanHoi=? where MaTuyenDung=?";
+			int flag=-1;
+			try {
+				conn = new DBConnect().getConnection();
+				ps = conn.prepareStatement(query);
+				ps.setNString(1, phanHoi);
+				ps.setLong(2, maTuyenDung);
 				
 				
 				flag= ps.executeUpdate();	
@@ -374,7 +451,8 @@ public class TuyenDungDAO {
 					long maDoanhNghiep = rs.getLong("MaDoanhNghiep");	
 					Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
 					long maTuyenDung=rs.getLong("MaTuyenDung");
-					ds.add(new TuyenDung(maTuyenDung, maNganhNghe1, maHinhThuc1, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai));
+					String phanHoi=rs.getNString("PhanHoi");
+					ds.add(new TuyenDung(maTuyenDung, maNganhNghe1, maHinhThuc1, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai,phanHoi));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -451,7 +529,8 @@ public class TuyenDungDAO {
 					boolean daDuyet = rs.getBoolean("DaDuyet");	
 					Date thoiGianDangBai=rs.getDate("ThoiGianDangBai");
 					long maTuyenDung=rs.getLong("MaTuyenDung");
-					ds.add(new TuyenDung(maTuyenDung, maNganhNghe1, maHinhThuc1, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai));
+					String phanHoi=rs.getNString("PhanHoi");
+					ds.add(new TuyenDung(maTuyenDung, maNganhNghe1, maHinhThuc1, sinhVienNam, khuVucTuyenDung, mucLuong, tenCongViec, thoiGianThuViec, gioiTinh, soLuong, hanDangKy, tieuDe, moTaCongViec, yeuCauCongViec, quyenLoi, daDuyet, maDoanhNghiep, thoiGianDangBai, phanHoi));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -531,4 +610,29 @@ public class TuyenDungDAO {
 			if(soPage%10==0) return soPage/10;
 			else return soPage/10+1;
 		}
+		public int duyetTuyenDung(long maTuyenDung) throws SQLException {
+			String query = "update TuyenDung set DaDuyet=1 where MaTuyenDung=?";
+			int flag=-1;
+			try {
+				conn = new DBConnect().getConnection();
+				ps = conn.prepareStatement(query);
+				ps.setLong(1, maTuyenDung);
+				flag= ps.executeUpdate();	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				if(rs!=null) {
+					rs.close();
+				}
+				if(ps!=null) {
+					ps.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}	
+			}
+			return flag;
+		}
+		
 }

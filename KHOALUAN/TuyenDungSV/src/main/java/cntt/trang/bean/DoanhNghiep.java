@@ -15,6 +15,7 @@ public class DoanhNghiep {
 	private long maLoaiHinhDoanhNghiep;
 	private String GiayChungNhan;
 	private boolean daDuyet;
+	private String phanHoi;
 	public long getMaDoanhNghiep() {
 		return maDoanhNghiep;
 	}
@@ -99,9 +100,16 @@ public class DoanhNghiep {
 	public void setDaDuyet(boolean daDuyet) {
 		this.daDuyet = daDuyet;
 	}
+	
+	public String getPhanHoi() {
+		return phanHoi;
+	}
+	public void setPhanHoi(String phanHoi) {
+		this.phanHoi = phanHoi;
+	}
 	public DoanhNghiep(long maDoanhNghiep, String emailDangNhap, String matKhau, String tenLienHe, String emailLienHe,
 			String soDienThoai, String tenDoanhNghiep, String maSoThue, String maXaPhuong, String diaChiDuong,
-			String maLinhVucHoatDong, long maLoaiHinhDoanhNghiep, String giayChungNhan, boolean daDuyet) {
+			String maLinhVucHoatDong, long maLoaiHinhDoanhNghiep, String giayChungNhan, boolean daDuyet, String phanHoi) {
 		super();
 		this.maDoanhNghiep = maDoanhNghiep;
 		this.emailDangNhap = emailDangNhap;
@@ -117,6 +125,7 @@ public class DoanhNghiep {
 		this.maLoaiHinhDoanhNghiep = maLoaiHinhDoanhNghiep;
 		GiayChungNhan = giayChungNhan;
 		this.daDuyet = daDuyet;
+		this.phanHoi=phanHoi;
 	}
 	public DoanhNghiep() {
 		super();

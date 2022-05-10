@@ -30,10 +30,11 @@
       				${msg2 } 
       			</div>
     	</c:if> 
-          <h3 style="color: rgb(6, 109, 70);" class="mb-5">Thông tin doanh nghiệp</h3>
+          <h3 style="color: rgb(6, 109, 70);" class="mb-5">Thông tin doanh nghiệp</h3> 
           <div style="margin-left: 40px;">
           <!-- thong tin lien he -->
-            <h5 style="color: green; border-left: 5px solid green;padding-left: 10px;" class="mb-3">Thông tin liên hệ</h5>
+            <h5 style="color: green; border-left: 5px solid green;padding-left: 10px;" class="mb-3">Thông tin liên hệ <a  style="margin-left: 20px;color: red;" href="/doanhnghiep/thongtinlienhe/sua"><i class="fas fa-edit"></i></a></h5>
+            
             <div style="margin-left: 50px;margin-bottom: 30px;">
 	            <div class="row mb-3">
 	              <div class="col-sm-2 " >Tên người liên hệ : </div>
@@ -50,7 +51,8 @@
             </div>
           <!-- thong tin doanh nghiep -->
       
-            <h5 style="color: green; border-left: 5px solid green; padding-left: 10px;" class="mb-3">Thông tin doanh nghiệp</h5>
+            <h5 style="color: green; border-left: 5px solid green; padding-left: 10px;" class="mb-3">Thông tin doanh nghiệp <a  style="margin-left: 20px;color: red;" href="/doanhnghiep/thongtinxacnhan/sua"><i class="fas fa-edit"></i></a></h5>
+            
             <div style="margin-left: 50px;margin-bottom: 30px;">
 	            <div class="row mb-3">
 	              <div class="col-sm-3 " >Tên pháp lý của doanh nghiệp : </div>
@@ -73,12 +75,24 @@
 	              <div class="col-sm-9">${loaiHinhDoanhNghiepDAO.getLoaiHinhDoanhNghiepById(dn.getMaLoaiHinhDoanhNghiep()).getTenLoaiHinhDoanhNghiep() }</div>
 	            </div>
 	          </div>
-            
-          
-            <div >
-              <a style="margin-left: 50px;" class="btn btn-primary" href="/doanhnghiep/thongtin/sua">Chỉnh sửa thông tin</a>
-            </div>
-          
+          <!-- thong tin xac nhan -->
+      
+            <h5 style="color: green; border-left: 5px solid green; padding-left: 10px;" class="mb-3">Giấy tờ chứng nhận doanh nghiệp</h5>
+            <div style="margin-left: 50px;margin-bottom: 30px;">
+            	<c:choose>
+            	
+	            <c:when test="${anh.isEmpty() }">
+	            	<h4 style="color: #c0c0c0;">Không có giấy tờ chứng nhận nào</h4>
+	            </c:when>
+	            <c:otherwise>
+	            	<c:forEach items="${anh }" var="a">
+	            		<div style="width: 900px; margin-bottom: 20px;">
+	            			<img style="width: 100%;" alt="" src="${contextPath }/${a}">
+	            		</div>
+	            	</c:forEach>
+	            </c:otherwise>
+	            </c:choose>
+	        </div>
        </div>
      
     </div>

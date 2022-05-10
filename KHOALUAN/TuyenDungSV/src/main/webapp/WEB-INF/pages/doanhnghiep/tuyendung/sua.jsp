@@ -19,7 +19,7 @@
     </div>
     <div class="container">
     <div style="height: 15px;"></div>
-    <form class="row" action="/doanhnghiep/tuyendung/sua" method="post">
+    <form class="row" action="/doanhnghiep/tuyendung/sua" method="post" onsubmit="return confirm("Chỉnh sửa tuyển dụng sẽ tốn một khoảng thời gian để chờ duyệt.\n\nBạn có chắc chắn muốn chỉnh sửa ?");">
             <h3 style="color: rgb(6, 109, 70)" class="mb-5">Sửa tuyển dụng</h3>
             <h5 class="mb-3">Các tiêu chí nổi bật</h5>
             <div class="row mb-3">
@@ -261,6 +261,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-sm-10 offset-sm-2">
+                	<a  class="btn btn-danger" href="/doanhnghiep/tuyendung/chitiet?id=${tuyenDung.getMaTuyenDung() }">Huỷ</a>
                     <button type="submit" class="btn btn-primary">Sửa bài tuyển dụng</button>
                 </div>
             </div>

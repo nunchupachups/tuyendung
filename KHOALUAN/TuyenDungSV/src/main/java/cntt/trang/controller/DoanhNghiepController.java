@@ -210,7 +210,7 @@ public class DoanhNghiepController {
 			int hihi=doanhNghiepDAO.insertDoanhNghiep(email, hashMD5.convertHashToString(matKhau), tenLienHe, emailLienHe, soDienThoai, tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong,Long.parseLong(maLoaiHinhDoanhNghiep) , anh, false);
 	 		DoanhNghiep doanhNghiep=doanhNghiepDAO.KiemTraDangNhap(email, hashMD5.convertHashToString(matKhau));
 			session.setAttribute("doanhnghiep", doanhNghiep);
-			redirectAttributes.addFlashAttribute("dktc", "Đăng ký tài khoản doanh nghiệp thành công!");
+			redirectAttributes.addFlashAttribute("msg1", "Đăng ký tài khoản doanh nghiệp thành công!");
 			return "redirect:/trangchu";
 	 		
 		} catch (Exception e) {
@@ -887,6 +887,13 @@ public class DoanhNghiepController {
 	 		LinhVucHoatDongCap1DAO linhVucHoatDongCap1DAO= new LinhVucHoatDongCap1DAO();
 	 		LinhVucHoatDongCap2DAO linhVucHoatDongCap2DAO= new LinhVucHoatDongCap2DAO();
 	 		LoaiHinhDoanhNghiepDAO loaiHinhDoanhNghiepDAO= new LoaiHinhDoanhNghiepDAO();
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+	 		
+	 		ArrayList<String> anh=new ArrayList<String>();
+	 		System.out.println(doanhNghiep.getGiayChungNhan());
+	 		if(doanhNghiep.getGiayChungNhan()!=null&&!doanhNghiep.getGiayChungNhan().equals(""))
+	 			for(String i:doanhNghiep.getGiayChungNhan().split(";"))
+	 				anh.add(i);
 	 		
 	 		model.addAttribute("title", "Thông Tin Doanh Nghiệp");
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
@@ -897,6 +904,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
 	 		model.addAttribute("dsLinhVuc", linhVucHoatDongCap1DAO.getAllLinhVucHoatDongCap1());
 	 		model.addAttribute("dsLoaiHinhDoanhNghiep", loaiHinhDoanhNghiepDAO.getAllLoaiHinhDoanhNghiep());
+	 		model.addAttribute("anh", anh);
 	 		return "doanhnghiep/thongtin/xem";
 
 	 		
@@ -904,7 +912,7 @@ public class DoanhNghiepController {
 			e.printStackTrace();return null;
 		}
     }
-	@RequestMapping(value= {"/thongtin/sua"}, method=RequestMethod.GET)
+	@RequestMapping(value= {"/thongtinxacnhan/sua"}, method=RequestMethod.GET)
     public String displaySuaThongTinDoanhNghiep(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
 		
 		try {
@@ -926,20 +934,89 @@ public class DoanhNghiepController {
 	 		model.addAttribute("xaPhuongDAO", xaPhuongDAO);
 	 		model.addAttribute("quanHuyenDAO", quanHuyenDAO);
 	 		model.addAttribute("linhVucHoatDongCap2DAO", linhVucHoatDongCap2DAO);
-	 		model.addAttribute("loaiHinhDoanhNghiepDAO", loaiHinhDoanhNghiepDAO);
 	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
 	 		model.addAttribute("dsLinhVuc", linhVucHoatDongCap1DAO.getAllLinhVucHoatDongCap1());
 	 		model.addAttribute("dsLoaiHinhDoanhNghiep", loaiHinhDoanhNghiepDAO.getAllLoaiHinhDoanhNghiep());
 	 		
-	 		
-	 		return "doanhnghiep/thongtin/sua";
+	 		return "doanhnghiep/thongtin/suattxacnhan";
 
 	 		
 		} catch (Exception e) {
 			e.printStackTrace();return null;
 		}
     }
-	@RequestMapping(value= {"/thongtin/sua"}, method=RequestMethod.POST)
+	@RequestMapping(value= {"/thongtinxacnhan/sua"}, method=RequestMethod.POST)
+    public String suaThongTinxacNhan(@RequestParam("txtTenDoanhNghiep") String tenDoanhNghiep,
+			@RequestParam("txtMaSoThue") String maSoThue,@RequestParam("cmbXaPhuong") String maXaPhuong,@RequestParam("txtDiaChiDuong") String diaChiDuong,
+			@RequestParam("cmbLinhVucHoatDong") String maLinhVucHoatDong, @RequestParam("cmbLoaiHinhDoanhNghiep") String maLoaiHinhDoanhNghiep,
+			@RequestParam("giayChungNhan") CommonsMultipartFile[] giayChungNhan, Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+	 		String anh="";
+			String absolutefilePath=request.getServletContext().getRealPath("/image");
+			File dir = new File(absolutefilePath);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+	 		for (CommonsMultipartFile file : giayChungNhan) {
+	 			if(!file.getOriginalFilename().equals("")) {
+					byte[] bytes=file.getBytes();
+					Date date=new Date();
+					String name="anh"+date.getTime()+file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+					
+					File uploadfile=new File(dir.getAbsolutePath()+"\\"+name);
+					BufferedOutputStream outputStream=new BufferedOutputStream(new FileOutputStream(uploadfile));
+					outputStream.write(bytes);
+					outputStream.close();
+					anh+="image/"+name+";";
+	 			}
+			}
+	 		
+	 		if(!anh.equals("")) anh.substring(0, anh.length()-2);
+	 		DoanhNghiepDAO doanhNghiepDAO= new DoanhNghiepDAO();
+			
+	 		int kq= doanhNghiepDAO.updateThongTinXacNhan(doanhNghiep.getMaDoanhNghiep(), tenDoanhNghiep, maSoThue, maXaPhuong, diaChiDuong, maLinhVucHoatDong, Long.parseLong(maLoaiHinhDoanhNghiep), anh, false);
+	 		DoanhNghiep dn=doanhNghiepDAO.getDoanhNghiepById(doanhNghiep.getMaDoanhNghiep());
+	 		session.removeAttribute("doanhnghiep");
+	 		session.setAttribute("doanhnghiep", dn);
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Chỉnh sửa thông tin xác nhận doanh nghiệp thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Chỉnh sửa thông tin xác nhận doanh nghiệp thất bại!");
+	 		
+	 		
+	 		return "redirect:/doanhnghiep/thongtin";
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/thongtinlienhe/sua"}, method=RequestMethod.GET)
+    public String displaySuaThongTinLienHe(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
+	 		
+	 		
+	 		model.addAttribute("title", "Sửa Thông Tin");
+	 		
+	 		return "doanhnghiep/thongtin/suattlienhe";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	@RequestMapping(value= {"/thongtinlienhe/sua"}, method=RequestMethod.POST)
     public String suaThongTinDoanhNghiep(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response,RedirectAttributes redirectAttributes) {
 		
 		try {
@@ -953,15 +1030,13 @@ public class DoanhNghiepController {
 	 		String tenLienHe=request.getParameter("txtTenLienHe"); 
 	 		String emailLienHe=request.getParameter("txtEmailLienHe"); 
 	 		String soDienThoai=request.getParameter("txtSoDienThoai");  
-	 		String maXaPhuong=request.getParameter("cmbXaPhuong"); 
-	 		String diaChiDuong=request.getParameter("txtDiaChiDuong"); 
-	 		int kq= doanhNghiepDAO.updateDoanhNghiep(doanhNghiep.getMaDoanhNghiep(), tenLienHe, emailLienHe, soDienThoai, maXaPhuong, diaChiDuong);
+	 		int kq= doanhNghiepDAO.updateThongTinLienHe(doanhNghiep.getMaDoanhNghiep(), tenLienHe, emailLienHe, soDienThoai);
 	 		
 	 		DoanhNghiep dn=doanhNghiepDAO.getDoanhNghiepById(doanhNghiep.getMaDoanhNghiep());
 	 		session.removeAttribute("doanhnghiep");
 	 		session.setAttribute("doanhnghiep", dn);
-	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Chỉnh sửa thông tin thành công!");
-			else redirectAttributes.addFlashAttribute("msg2", "Chỉnh sửa thông tin thất bại!");
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Chỉnh sửa thông tin liên hệ thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Chỉnh sửa thông tin liên hệ thất bại!");
 	 		
 	 		
 	 		return "redirect:/doanhnghiep/thongtin";

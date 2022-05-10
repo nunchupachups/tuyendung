@@ -8,6 +8,7 @@ public class QuangBa {
 	private String baiViet;
 	private boolean daDuyet;
 	private long maDoanhNghiep;
+	private String phanHoi;
 	public long getMaQuangBa() {
 		return maQuangBa;
 	}
@@ -50,8 +51,15 @@ public class QuangBa {
 	public void setMaDoanhNghiep(long maDoanhNghiep) {
 		this.maDoanhNghiep = maDoanhNghiep;
 	}
+	
+	public String getPhanHoi() {
+		return phanHoi;
+	}
+	public void setPhanHoi(String phanHoi) {
+		this.phanHoi = phanHoi;
+	}
 	public QuangBa(long maQuangBa, String tieuDe, String noiDungDaiDien, String hinhAnhDaiDien, String baiViet,
-			boolean daDuyet, long maDoanhNghiep) {
+			boolean daDuyet, long maDoanhNghiep, String phanHoi) {
 		super();
 		this.maQuangBa = maQuangBa;
 		this.tieuDe = tieuDe;
@@ -60,6 +68,7 @@ public class QuangBa {
 		this.baiViet = baiViet;
 		this.daDuyet = daDuyet;
 		this.maDoanhNghiep = maDoanhNghiep;
+		this.phanHoi=phanHoi;
 	}
 	public QuangBa() {
 		super();
