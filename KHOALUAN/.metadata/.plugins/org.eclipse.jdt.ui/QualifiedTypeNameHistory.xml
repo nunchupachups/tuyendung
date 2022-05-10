@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="cntt.trang.bean.KyNang"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.ChungChi"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.ViTri"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.DonVi"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.KetQuaHocTap"/>
 <fullyQualifiedTypeName name="java.lang.Float"/>
@@ -14,11 +11,7 @@
 <fullyQualifiedTypeName name="cntt.trang.dao.VNCharacterUtils"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.NganhDaoTao"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.QuangBaDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.TuyenDungDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.XaPhuongDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.XaPhuong"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.QuangBa"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
 <fullyQualifiedTypeName name="org.apache.http.client.methods.HttpPost"/>
 <fullyQualifiedTypeName name="org.apache.http.entity.StringEntity"/>
@@ -26,19 +19,10 @@
 <fullyQualifiedTypeName name="org.apache.http.impl.client.HttpClients"/>
 <fullyQualifiedTypeName name="org.apache.http.client.methods.CloseableHttpResponse"/>
 <fullyQualifiedTypeName name="org.apache.http.util.EntityUtils"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.TuyenDung"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.NganhNgheDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.HinhThucLamViecDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.TinhThanhDAO"/>
-<fullyQualifiedTypeName name="java.sql.Types"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.DangKyTuyenDungDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.DangKyTuyenDung"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.ThongBao"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.ThongBaoDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.LoaiHinhDoanhNghiep"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.DoanhNghiepDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.DoanhNghiep"/>
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
 <fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
 <fullyQualifiedTypeName name="java.nio.charset.StandardCharsets"/>
@@ -60,4 +44,20 @@
 <fullyQualifiedTypeName name="org.json.simple.JSONObject"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONArray"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.DoanhNghiepDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.XaPhuongDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.LinhVucHoatDongCap2DAO"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.ThongBaoDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.DoanhNghiep"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.TuyenDung"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.TuyenDungDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.LoaiHinhDoanhNghiepDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.NganhNgheDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.TinhThanhDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.HinhThucLamViecDAO"/>
+<fullyQualifiedTypeName name="java.sql.Types"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.QuangBa"/>
+<fullyQualifiedTypeName name="java.lang.Long"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.QuangBaDAO"/>
 </qualifiedTypeNameHistroy>
