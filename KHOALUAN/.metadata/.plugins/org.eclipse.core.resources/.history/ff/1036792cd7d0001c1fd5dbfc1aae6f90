@@ -1,0 +1,209 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>${title }</title>
+	<jsp:include page="/WEB-INF/pages/layout/header.jsp" />
+	<script>
+		$(document).ready(function(){
+			$('#myModal').modal('show');
+		
+			  $(".link").on('click', function(event) {
+				  console.log("hihi");
+			    if (this.hash !== "") {
+			      event.preventDefault();
+			      var hash = this.hash;
+			      $('html, body').animate({
+			        scrollTop: $(hash).offset().top
+			      }, 800, function(){
+			        window.location.hash = hash;
+			      });
+			    } 
+			  });
+			});
+	</script>
+</head>
+<body>
+
+
+	<c:if test="${sessionScope.sinhvien!=null }">
+		<c:if test="${!sessionScope.sinhvien.isDaDuyet() }">
+				<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Cho phép trang web sử dụng công khai thông tin cá nhân và kết quả học tập của bạn?
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      	<a class="btn btn-primary" href="/sinhvien/updatethongtin">OK</a>
+      	<!-- them thong tin ca nhan va diem cua sv, tao cv -->
+        <a class="btn btn-danger" href="/sinhvien/dangxuat">NO</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+					
+		</c:if>
+	</c:if>
+    <div class="bg">
+    <jsp:include page="/WEB-INF/pages/layout/navbar.jsp" />
+    <div style="height:70px;">
+    </div>
+    <div class="container">
+    	<c:if test="${msgCapNhat!=null }">
+      			<div class="alert alert-danger alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				<a href="/sinhvien/updatethongtin">${msgCapNhat } </a>
+      			</div>
+    	</c:if> 
+    	<c:if test="${msg1!=null }">
+      			<div class="alert alert-success alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				${msg1 } 
+      			</div>
+    	</c:if> 
+    	<c:if test="${msg2!=null }">
+      			<div class="alert alert-danger alert-dismissible mt-3">
+      			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      				${msg2 } 
+      			</div>
+    	</c:if> 
+    	
+    	<div style="height: 15px;"></div>
+    	
+        	<div style="position: relative;padding: 30px;" >
+        		<div style="height: 8px;width:100px;; margin-left: auto; margin-right: auto;margin-bottom:20px; background-color: green; border-radius: 10px;"></div>
+		       <h1 style="text-align: center;line-height: 45px; " >Website hỗ trợ kết nối sinh viên, nhà trường <br>và doanh nghiệp</h1>
+		       <div class="row mt-5" >
+			       	<div class="col row">
+			       		<div class="col-2" style="font-size: 70px; color: green; display: flex;align-items: center;">
+			       			<i class="fas fa-hourglass-half"></i>
+			       		</div>
+			       		<div class="col-10">
+			       			<h3>Tuyển dụng nhanh chóng</h3>
+			       			<p style="font-size: 19px;">Kết nối trực tiếp giữa doanh nghiệp, thông tin tuyển dụng và sinh viên nhà trường</p>
+			       		</div>
+			       	</div>
+			       	<div class="col row">
+			       		<div class="col-2" style="font-size: 70px; color: green; display: flex;align-items: center;">
+			       			<i class="fas fa-check-circle"></i>
+			       		</div>
+			       		<div class="col-10">
+			       			<h3>Thông tin chính xác</h3>
+			       			<p style="font-size: 19px;">Tiếp cận và kết nối với tất cả sinh viên nhà trường với thông tin và điểm số chính xác</p>
+			       		</div>
+			       	</div>
+		       </div>
+		     
+		        
+		    </div>
+		<div style=" background-color: #f0f5f8; padding: 50px 30px 20px 30px; width: 1200px; transform: translateX(-40px);">
+			
+			<ul class="nav nav-pills tab-chitiet" >
+				<li class="nav-item" onclick="tab(0)"><a href="#thong-tin-tuyen-dung" class="link active">Thông tin tuyển dụng</a></li>
+				<li class="nav-item" onclick="tab(1)"><a href="#doanh-nghiep"  class="link">Doanh nghiệp</a></li>
+			</ul>
+		
+		</div>
+		<div id="thong-tin-tuyen-dung" >   
+	<h5 style="margin: 30px 0;">Thông tin tuyển dụng</h5>
+	<div class="tuyendung" >
+		
+		        <div class="tuyendung-container">
+		            <h3>${tuyenDung.getTieuDe() }</h3>
+		            <b><i>Ngành nghề: </i></b>${nganhNgheDAO.getNganhNgheByID(tuyenDung.getMaNganhNghe()).getTenNganhNghe() }<br>
+		            <b><i>Tên công việc: </i></b>${tuyenDung.getTenCongViec() } <br>
+		            <b><i>Hình thức làm việc: </i></b>${hinhThucLamViecDAO.getHinhThucLamViecByID(tuyenDung.getMaHinhThuc()).getTenHinhThuc() }<br>
+		            <c:if test="${tuyenDung.getThoiGianThuViec()!=null }">
+		            	<b><i>Thời gian thử việc: </i></b>${tuyenDung.getThoiGianThuViec() }<br>
+		            </c:if>
+		            
+		            <c:if test="${tuyenDung.getSinhVienNam()!=0 }">
+		            	<b><i>Sinh viên năm: </i></b>${tuyenDung.getSinhVienNam() }<br>
+		            </c:if>
+		            <c:if test="${tuyenDung.getGioiTinh()!=null }">
+		            	<b><i>Giới tính: </i></b>${tuyenDung.getGioiTinh() }<br>
+		            </c:if> 
+		            <b><i>Khu vực tuyển: </i></b>
+		            <c:choose>
+		            	<c:when test="${tuyenDung.getKhuVucTuyenDung()=='00' }">
+		            		<span>Cả nước</span>
+		            	</c:when>
+		            	<c:otherwise>
+		            		<span>${tinhThanhDAO.getTinhThanhById(tuyenDung.getKhuVucTuyenDung()).getTenTinhThanh() }</span>
+		            		
+		            	</c:otherwise>
+		            </c:choose>
+		            <br>
+		            <b><i>Số lượng: </i></b>${tuyenDung.getSoLuong() }<br>
+		            <b><i>Mức lương: </i></b>${tuyenDung.getMucLuong() }<br>
+		            <b><i>Hạn đăng ký: </i></b>${tuyenDung.getHanDangKy() }<br>
+		            <b><i>MÔ TẢ CÔNG VIỆC</i></b> <br>
+		            ${tuyenDung.getMoTaCongViec() }
+		            <b><i>YÊU CẦU CÔNG VIỆC</i></b><br>
+		            ${tuyenDung.getYeuCauCongViec() }
+		            <b><i>QUYỀN LỢI</i></b><br>
+		            ${tuyenDung.getQuyenLoi() } 
+		        </div>
+		    </div>
+        
+      </div>
+      
+      <div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>
+    	<div id="thong-tin-tuyen-dung" >   
+	<h5 style="margin: 30px 0;">Thông tin tuyển dụng</h5>
+	<div class="tuyendung" >
+		
+		        <div class="tuyendung-container">
+		            <h3>${tuyenDung.getTieuDe() }</h3>
+		            <b><i>Ngành nghề: </i></b>${nganhNgheDAO.getNganhNgheByID(tuyenDung.getMaNganhNghe()).getTenNganhNghe() }<br>
+		            <b><i>Tên công việc: </i></b>${tuyenDung.getTenCongViec() } <br>
+		            <b><i>Hình thức làm việc: </i></b>${hinhThucLamViecDAO.getHinhThucLamViecByID(tuyenDung.getMaHinhThuc()).getTenHinhThuc() }<br>
+		            <c:if test="${tuyenDung.getThoiGianThuViec()!=null }">
+		            	<b><i>Thời gian thử việc: </i></b>${tuyenDung.getThoiGianThuViec() }<br>
+		            </c:if>
+		            
+		            <c:if test="${tuyenDung.getSinhVienNam()!=0 }">
+		            	<b><i>Sinh viên năm: </i></b>${tuyenDung.getSinhVienNam() }<br>
+		            </c:if>
+		            <c:if test="${tuyenDung.getGioiTinh()!=null }">
+		            	<b><i>Giới tính: </i></b>${tuyenDung.getGioiTinh() }<br>
+		            </c:if> 
+		            <b><i>Khu vực tuyển: </i></b>
+		            <c:choose>
+		            	<c:when test="${tuyenDung.getKhuVucTuyenDung()=='00' }">
+		            		<span>Cả nước</span>
+		            	</c:when>
+		            	<c:otherwise>
+		            		<span>${tinhThanhDAO.getTinhThanhById(tuyenDung.getKhuVucTuyenDung()).getTenTinhThanh() }</span>
+		            		
+		            	</c:otherwise>
+		            </c:choose>
+		            <br>
+		            <b><i>Số lượng: </i></b>${tuyenDung.getSoLuong() }<br>
+		            <b><i>Mức lương: </i></b>${tuyenDung.getMucLuong() }<br>
+		            <b><i>Hạn đăng ký: </i></b>${tuyenDung.getHanDangKy() }<br>
+		            <b><i>MÔ TẢ CÔNG VIỆC</i></b> <br>
+		            ${tuyenDung.getMoTaCongViec() }
+		            <b><i>YÊU CẦU CÔNG VIỆC</i></b><br>
+		            ${tuyenDung.getYeuCauCongViec() }
+		            <b><i>QUYỀN LỢI</i></b><br>
+		            ${tuyenDung.getQuyenLoi() } 
+		        </div>
+		    </div>
+        
+      </div>
+    </div>
+	
+	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
+    </div>
+</body>
+</html>
