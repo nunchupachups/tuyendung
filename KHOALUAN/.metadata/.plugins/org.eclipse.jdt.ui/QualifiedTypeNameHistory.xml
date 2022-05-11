@@ -44,20 +44,20 @@
 <fullyQualifiedTypeName name="org.json.simple.JSONObject"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONArray"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.DoanhNghiepDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.XaPhuongDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.LinhVucHoatDongCap2DAO"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.ThongBaoDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.DoanhNghiep"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.TuyenDung"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.TuyenDungDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.LoaiHinhDoanhNghiepDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.NganhNgheDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.dao.TinhThanhDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.HinhThucLamViecDAO"/>
 <fullyQualifiedTypeName name="java.sql.Types"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.QuangBa"/>
 <fullyQualifiedTypeName name="java.lang.Long"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.TuyenDungDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.TinhThanhDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.DoanhNghiepDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.QuangBa"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.QuangBaDAO"/>
 </qualifiedTypeNameHistroy>

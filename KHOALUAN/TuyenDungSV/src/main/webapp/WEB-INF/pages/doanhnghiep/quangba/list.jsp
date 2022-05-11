@@ -79,7 +79,7 @@
             <div class="row mb-3">
                 <label for="post" class="col-sm-2 col-form-label">Bài viết<span class="required"> *</span></label>
                 <div class="col-sm-10">
-                    <textarea id="post" class="form-control ckeditor"  name="txtBaiViet" required="required"></textarea>
+                    <textarea id="post" class="form-control"  name="txtBaiViet" required="required"></textarea>
                 </div>
             </div>
             <div class="row mb-3">
@@ -93,7 +93,9 @@
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
     <script>
-    	
+    CKEDITOR.replace ('post');
+    CKEDITOR.config.height = '1000px';
+	CKFinder.setupCKEditor(null,'/libraries/ckfinder/');
     
     
         //khai báo biến slideIndex đại diện cho slide hiện tại
