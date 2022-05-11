@@ -93,6 +93,9 @@
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
     <script>
+    	
+    
+    
         //khai báo biến slideIndex đại diện cho slide hiện tại
         var slideIndex;
         // KHai bào hàm hiển thị slide
@@ -128,6 +131,8 @@
         function currentSlide(n) {
           showSlides(slideIndex = n);
         }
+        
+       
       </script>
 
 </body>
