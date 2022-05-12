@@ -2,7 +2,7 @@ package cntt.trang.bean;
 
 import java.util.Date;
 
-public class TuyenDung {
+public class TuyenDung implements Comparable<TuyenDung>{
 	private long maTuyenDung;
 	private long maNganhNghe;
 	private long maHinhThuc;
@@ -166,5 +166,18 @@ public class TuyenDung {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof TuyenDung)
+			return maTuyenDung==((TuyenDung)obj).maTuyenDung;
+		else return false;
+	}
+	@Override
+	public int hashCode() {
+		return 0;
+	}
+	@Override
+	public int compareTo(TuyenDung o) {
+		return o.getThoiGianDangBai().compareTo(this.getThoiGianDangBai());
+	}
 }

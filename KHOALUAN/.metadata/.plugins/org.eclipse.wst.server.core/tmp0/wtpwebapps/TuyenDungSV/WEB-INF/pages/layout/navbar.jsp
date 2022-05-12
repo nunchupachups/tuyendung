@@ -22,7 +22,10 @@
 			        <a class="nav-link " href="/doanhnghiep">Doanh Nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="/tuyendung">Tuyển dụng</a>
+			        <a class="nav-link" href="/tuyendung">Tuyển Dụng</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="/blog">Blog Hướng Nghiệp</a>
 			      </li>
 			      <li class="nav-item">
 			        <a class="nav-link" href="/sinhvien/CV">CV</a>
@@ -80,13 +83,16 @@
 			      
 			      <c:if test="${sessionScope.doanhnghiep.isDaDuyet() }">
 				      <li class="nav-item">
-				        <a class="nav-link " href="/sinhvien/timkiem">Sinh viên</a>
+				        <a class="nav-link " href="/sinhvien/timkiem">Sinh Viên</a>
 				      </li>
 				      <li class="nav-item">
-				        <a class="nav-link" href="/doanhnghiep/quangba">Quảng bá</a>
+				        <a class="nav-link" href="/doanhnghiep/quangba">Quảng Bá</a>
 				      </li>
 				     <li class="nav-item">
-				        <a class="nav-link" href="/doanhnghiep/tuyendung">Tuyển dụng</a>
+				        <a class="nav-link" href="/doanhnghiep/tuyendung">Tuyển Dụng</a>
+				      </li>
+				      <li class="nav-item">
+				        <a class="nav-link" href="/doanhnghiep/blog/timkiem">Blog Hướng Nghiệp</a>
 				      </li>
 			      </c:if>
 			      <c:if test="${!sessionScope.doanhnghiep.isDaDuyet() }">
@@ -160,6 +166,9 @@
 			      <li class="nav-item">
 			        <a class="nav-link" href="/admin/quangba">QL Quảng bá</a>
 			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="/admin/blog">QL Blog hướng nghiệp</a>
+			      </li>
 			    </ul>
 			    </div>
 			    <div style="display: inline-block;float:right;">
@@ -187,10 +196,13 @@
 			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link " href="/doanhnghiep">Doanh nghiệp</a>
+			        <a class="nav-link " href="/doanhnghiep">Doanh Nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="/tuyendung">Tuyển dụng</a>
+			        <a class="nav-link" href="/tuyendung">Tuyển Dụng</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="/blog">Blog Hướng Nghiệp</a>
 			      </li>
 			      <li class="nav-item">
 			        <a class="nav-link" onclick="alert('Bạn cần phải đăng nhập trước!')">CV</a>

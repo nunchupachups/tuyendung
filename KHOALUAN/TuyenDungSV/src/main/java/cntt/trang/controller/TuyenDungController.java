@@ -2,7 +2,9 @@ package cntt.trang.controller;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import cntt.trang.bean.Blog;
 import cntt.trang.bean.SinhVien;
 import cntt.trang.bean.TimKiemSV;
 import cntt.trang.bean.TuyenDung;
@@ -42,6 +45,13 @@ public class TuyenDungController {
 	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
 	 		DangKyTuyenDungDAO dangKyTuyenDungDAO=new DangKyTuyenDungDAO();
 	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		
+	 		ArrayList<TuyenDung> tuyenDungs=tuyenDungDAO.timKiemTuyenDung("", -1, -1, "-1");
+	 		int soPage=tuyenDungs.size();
+	 		if(soPage%10==0) soPage=soPage/10; else soPage=soPage/10+1;
+	 		List<TuyenDung> a = null;
+	 		if(tuyenDungs.size()>10) a=tuyenDungs.subList(0, 10);
+	 		
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("dsNganhNghe", nganhNgheDAO.getAllNganhNghe());
 	 		model.addAttribute("dsHinhThuc",hinhThucLamViecDAO.getAllHinhThucLamViec());
@@ -51,119 +61,119 @@ public class TuyenDungController {
 	 		model.addAttribute("doanhNghiepDAO", doanhNghiepDAO);
 	 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);
 	 		model.addAttribute("dangKyTuyenDungDAO", dangKyTuyenDungDAO);
-	 		model.addAttribute("tuyenDungs",tuyenDungDAO.timKiemTuyenDung(1, "", -1, -1, "-1"));
-	 		model.addAttribute("soPage",tuyenDungDAO.getSoPage("", -1, -1, "-1"));
+	 		model.addAttribute("tuyenDungs",a);
+	 		model.addAttribute("soPage",soPage);
 	 		model.addAttribute("title", "Tuyển dụng");
 	 		model.addAttribute("tuyenDungDeXuat", tuyenDungDAO.getAllTuyenDungDaDuyet());
 	 		
 	    	return "tuyendung/timkiemtuyendung";
 		} catch (Exception e) {
-			e.getStackTrace();
+			e.printStackTrace();
 			return null;
 		}
        
     }
-	@RequestMapping(value= {"/timkiem"}, method=RequestMethod.POST)
-    public void timKiemTuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
-	 	try {
-	 		response.setContentType("text/html;charset=UTF-8");
-	 		request.setCharacterEncoding("UTF-8");
-	 		
-	 		String key= request.getParameter("key");
-	 		String maNganhNghe= request.getParameter("maNganhNghe");
-	 		String maHinhThuc= request.getParameter("maHinhThuc");
-	 		String maKhuVuc= request.getParameter("maKhuVuc");
-	 		SinhVien sinhVien=(SinhVien)session.getAttribute("sinhvien");
-	 		
-	 		
-	 		TinhThanhDAO tinhThanhDAO= new TinhThanhDAO();
-	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
-	 		TuyenDungDAO tuyenDungDAO= new TuyenDungDAO();
-	 		DangKyTuyenDungDAO dangKyTuyenDungDAO=new DangKyTuyenDungDAO();
-	 		
-	 		
-	 		ArrayList<TuyenDung> tuyenDungs;
-	 		Set<TuyenDung> ds=new HashSet<TuyenDung>();
-	 		if(!key.equals("")) {
-	 			String keys[] =key.split(" ");
-	 			for(int i=0; i< keys.length;i++) {
-	 				ds.addAll(tuyenDungDAO.timKiemTuyenDung(1,VNCharacterUtils.removeAccent(keys[i]) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc));
-	 			}
-	 			tuyenDungs=new ArrayList<TuyenDung>();
-	 			for (TuyenDung td : ds) {
-	 				tuyenDungs.add(td);
-				}
-	 		}
-	 		else tuyenDungs=tuyenDungDAO.timKiemTuyenDung(1,VNCharacterUtils.removeAccent(key) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc);
-	 		int soPage=tuyenDungDAO.getSoPage(VNCharacterUtils.removeAccent(key) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc);
-	 		
-	 		PrintWriter out=response.getWriter();
-	 		if(tuyenDungs.isEmpty()) 
-	 			out.print("<h4 style=\"color: #c0c0c0;\">Không tìm thấy công việc nào phù hợp với yêu cầu tìm kiếm của bạn</h4>");
-	 		else
-	 			for (TuyenDung td : tuyenDungs) {
-					out.print("<div class=\"tuyendung\" style=\"position: relative;\">\r\n" + 
-							"		        <div class=\"tuyendung-container\">\r\n" + 
-							"		        	<a href=\"/tuyendung/chitiet?id="+td.getMaTuyenDung() +"\" style=\"text-decoration: none; \">\r\n" + 
-							"		            	<h4>"+td.getTieuDe() +"</h4>\r\n" + 
-							"		            </a>\r\n" + 
-							"		            <a href=\"/doanhnghiep/chitiet?id="+td.getMaDoanhNghiep() +"\"  style=\"text-decoration: none; color: black;\">\r\n" + 
-							"		            	<span style=\"margin-bottom:20px;\">"+doanhNghiepDAO.getDoanhNghiepById(td.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase()  +"</span>\r\n" + 
-							"		            </a>\r\n" + 
-							"		            <div style=\"margin: 5px 0;\">\r\n" + 
-							"		            	<b><i>Tên công việc : </i></b>"+td.getTenCongViec() +" \r\n" + 
-							"		            </div>\r\n" + 
-							"		            \r\n" + 
-							"		            <div class=\"tuyendung-item\">\r\n"); 
-					if(td.getKhuVucTuyenDung().equals("00"))
-						out.print("<span>Cả nước</span>");
-					else out.print("<span>"+tinhThanhDAO.getTinhThanhById(td.getKhuVucTuyenDung()).getTenTinhThanh() +"</span>");
-					out.print("		            	<span>"+td.getMucLuong() +"</span>\r\n" + 
-							"		            	<span>Hạn đăng ký : "+td.getHanDangKy() +"</span>\r\n" + 
-							"		            </div>\r\n" + 
-							"		            \r\n" + 
-							"		        </div>\r\n" + 
-							"		        \r\n" + 
-							"				<div id=\"btn-dangky\" style=\"position: absolute;bottom: 15px;right: 50px;\">\r\n");
-							if(sinhVien==null) {
-								out.print("<button class=\"btn btn-success\" onclick=\"alert('Bạn cần phải đăng nhập trước!')\">Đăng ký</button>\r\n");
-							}else {
-								if(dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sinhVien.getMaSinhVien(), td.getMaTuyenDung())==null) {
-									out.print("<button class=\"btn btn-success\" onclick=\"dangKyTuyenDung("+td.getMaTuyenDung()+")\">Đăng ký</button>\r\n");
-								}else if (dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sinhVien.getMaSinhVien(), td.getMaTuyenDung())!=null&&dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sinhVien.getMaSinhVien(), td.getMaTuyenDung()).isDaDuyet()) {
-									out.print("<button class=\"btn btn-primary\">Đã duyệt</button>\r\n");
-								}else out.print("<button class=\"btn btn-danger\" onclick=\"huyDangKy("+td.getMaTuyenDung()+")\">Huỷ đăng ký</button>\r\n");
-							}
-						
-							out.print("		        </div>" + 
-							"		    </div>");
-				}
-	 		if(soPage>1) {
-	 			out.print("<nav aria-label=\"Page navigation example\">\r\n" + 
-	 					"  <ul class=\"pagination justify-content-center\">\r\n" + 
-	 					"    <li class=\"page-item disabled\">\r\n" + 
-	 					"      <a class=\"page-link\" aria-label=\"Previous\">\r\n" + 
-	 					"        <span aria-hidden=\"true\">&laquo;</span>\r\n" + 
-	 					"      </a>\r\n" + 
-	 					"    </li>\r\n" + 
-	 					"    <li class=\"page-item active\" onclick=\"timKiemTuyenDung()\"><a class=\"page-link\" >1</a></li>\r\n");
-	 		for(int i=2;i<=soPage;i++)
-	 			if(i<4) out.print("<li class=\"page-item\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
-	 					
-	 			out.print("    <li class=\"page-item\">\r\n" + 
-	 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDung(2)\" aria-label=\"Next\">\r\n" + 
-	 					"        <span aria-hidden=\"true\">&raquo;</span>\r\n" + 
-	 					"      </a>\r\n" + 
-	 					"    </li>\r\n" + 
-	 					"  </ul>\r\n" + 
-	 					"</nav>");
-	 		}
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}
-       
-    }
+//	@RequestMapping(value= {"/timkiem"}, method=RequestMethod.POST)
+//    public void timKiemTuyenDung(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+//	 	try {
+//	 		response.setContentType("text/html;charset=UTF-8");
+//	 		request.setCharacterEncoding("UTF-8");
+//	 		
+//	 		String key= request.getParameter("key");
+//	 		String maNganhNghe= request.getParameter("maNganhNghe");
+//	 		String maHinhThuc= request.getParameter("maHinhThuc");
+//	 		String maKhuVuc= request.getParameter("maKhuVuc");
+//	 		SinhVien sinhVien=(SinhVien)session.getAttribute("sinhvien");
+//	 		
+//	 		
+//	 		TinhThanhDAO tinhThanhDAO= new TinhThanhDAO();
+//	 		DoanhNghiepDAO doanhNghiepDAO=new DoanhNghiepDAO();
+//	 		TuyenDungDAO tuyenDungDAO= new TuyenDungDAO();
+//	 		DangKyTuyenDungDAO dangKyTuyenDungDAO=new DangKyTuyenDungDAO();
+//	 		
+//	 		
+//	 		ArrayList<TuyenDung> tuyenDungs;
+//	 		Set<TuyenDung> ds=new HashSet<TuyenDung>();
+//	 		if(!key.equals("")) {
+//	 			String keys[] =key.split(" ");
+//	 			for(int i=0; i< keys.length;i++) {
+//	 				ds.addAll(tuyenDungDAO.timKiemTuyenDung(VNCharacterUtils.removeAccent(keys[i]) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc));
+//	 			}
+//	 			tuyenDungs=new ArrayList<TuyenDung>();
+//	 			for (TuyenDung td : ds) {
+//	 				tuyenDungs.add(td);
+//				}
+//	 		}
+//	 		else tuyenDungs=tuyenDungDAO.timKiemTuyenDung(1,VNCharacterUtils.removeAccent(key) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc);
+//	 		int soPage=tuyenDungDAO.getSoPage(VNCharacterUtils.removeAccent(key) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc);
+//	 		
+//	 		PrintWriter out=response.getWriter();
+//	 		if(tuyenDungs.isEmpty()) 
+//	 			out.print("<h4 style=\"color: #c0c0c0;\">Không tìm thấy công việc nào phù hợp với yêu cầu tìm kiếm của bạn</h4>");
+//	 		else
+//	 			for (TuyenDung td : tuyenDungs) {
+//					out.print("<div class=\"tuyendung\" style=\"position: relative;\">\r\n" + 
+//							"		        <div class=\"tuyendung-container\">\r\n" + 
+//							"		        	<a href=\"/tuyendung/chitiet?id="+td.getMaTuyenDung() +"\" style=\"text-decoration: none; \">\r\n" + 
+//							"		            	<h4>"+td.getTieuDe() +"</h4>\r\n" + 
+//							"		            </a>\r\n" + 
+//							"		            <a href=\"/doanhnghiep/chitiet?id="+td.getMaDoanhNghiep() +"\"  style=\"text-decoration: none; color: black;\">\r\n" + 
+//							"		            	<span style=\"margin-bottom:20px;\">"+doanhNghiepDAO.getDoanhNghiepById(td.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase()  +"</span>\r\n" + 
+//							"		            </a>\r\n" + 
+//							"		            <div style=\"margin: 5px 0;\">\r\n" + 
+//							"		            	<b><i>Tên công việc : </i></b>"+td.getTenCongViec() +" \r\n" + 
+//							"		            </div>\r\n" + 
+//							"		            \r\n" + 
+//							"		            <div class=\"tuyendung-item\">\r\n"); 
+//					if(td.getKhuVucTuyenDung().equals("00"))
+//						out.print("<span>Cả nước</span>");
+//					else out.print("<span>"+tinhThanhDAO.getTinhThanhById(td.getKhuVucTuyenDung()).getTenTinhThanh() +"</span>");
+//					out.print("		            	<span>"+td.getMucLuong() +"</span>\r\n" + 
+//							"		            	<span>Hạn đăng ký : "+td.getHanDangKy() +"</span>\r\n" + 
+//							"		            </div>\r\n" + 
+//							"		            \r\n" + 
+//							"		        </div>\r\n" + 
+//							"		        \r\n" + 
+//							"				<div id=\"btn-dangky\" style=\"position: absolute;bottom: 15px;right: 50px;\">\r\n");
+//							if(sinhVien==null) {
+//								out.print("<button class=\"btn btn-success\" onclick=\"alert('Bạn cần phải đăng nhập trước!')\">Đăng ký</button>\r\n");
+//							}else {
+//								if(dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sinhVien.getMaSinhVien(), td.getMaTuyenDung())==null) {
+//									out.print("<button class=\"btn btn-success\" onclick=\"dangKyTuyenDung("+td.getMaTuyenDung()+")\">Đăng ký</button>\r\n");
+//								}else if (dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sinhVien.getMaSinhVien(), td.getMaTuyenDung())!=null&&dangKyTuyenDungDAO.getDangKyByMaSinhVienAndMaTuyenDung(sinhVien.getMaSinhVien(), td.getMaTuyenDung()).isDaDuyet()) {
+//									out.print("<button class=\"btn btn-primary\">Đã duyệt</button>\r\n");
+//								}else out.print("<button class=\"btn btn-danger\" onclick=\"huyDangKy("+td.getMaTuyenDung()+")\">Huỷ đăng ký</button>\r\n");
+//							}
+//						
+//							out.print("		        </div>" + 
+//							"		    </div>");
+//				}
+//	 		if(soPage>1) {
+//	 			out.print("<nav aria-label=\"Page navigation example\">\r\n" + 
+//	 					"  <ul class=\"pagination justify-content-center\">\r\n" + 
+//	 					"    <li class=\"page-item disabled\">\r\n" + 
+//	 					"      <a class=\"page-link\" aria-label=\"Previous\">\r\n" + 
+//	 					"        <span aria-hidden=\"true\">&laquo;</span>\r\n" + 
+//	 					"      </a>\r\n" + 
+//	 					"    </li>\r\n" + 
+//	 					"    <li class=\"page-item active\" onclick=\"timKiemTuyenDung()\"><a class=\"page-link\" >1</a></li>\r\n");
+//	 		for(int i=2;i<=soPage;i++)
+//	 			if(i<4) out.print("<li class=\"page-item\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+//	 					
+//	 			out.print("    <li class=\"page-item\">\r\n" + 
+//	 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDung(2)\" aria-label=\"Next\">\r\n" + 
+//	 					"        <span aria-hidden=\"true\">&raquo;</span>\r\n" + 
+//	 					"      </a>\r\n" + 
+//	 					"    </li>\r\n" + 
+//	 					"  </ul>\r\n" + 
+//	 					"</nav>");
+//	 		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			
+//		}
+//       
+//    }
 	@RequestMapping(value= {"/timkiem/page"}, method=RequestMethod.POST)
     public void timKiemTuyenDungByPage(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
 	 	try {
@@ -174,7 +184,7 @@ public class TuyenDungController {
 	 		String maNganhNghe= request.getParameter("maNganhNghe");
 	 		String maHinhThuc= request.getParameter("maHinhThuc");
 	 		String maKhuVuc= request.getParameter("maKhuVuc");
-	 		int page= Integer.parseInt(request.getParameter("page"));
+	 		String p=request.getParameter("page");
 	 		SinhVien sinhVien=(SinhVien)session.getAttribute("sinhvien");
 	 		
 	 		TinhThanhDAO tinhThanhDAO= new TinhThanhDAO();
@@ -182,27 +192,39 @@ public class TuyenDungController {
 	 		TuyenDungDAO tuyenDungDAO= new TuyenDungDAO();
 	 		DangKyTuyenDungDAO dangKyTuyenDungDAO=new DangKyTuyenDungDAO();
 	 		
+	 		int page=1;
+	 		if(p!=null) page= Integer.parseInt(p);
 	 		
 	 		ArrayList<TuyenDung> tuyenDungs;
 	 		Set<TuyenDung> ds=new HashSet<TuyenDung>();
 	 		if(!key.equals("")) {
 	 			String keys[] =key.split(" ");
 	 			for(int i=0; i< keys.length;i++) {
-	 				ds.addAll(tuyenDungDAO.timKiemTuyenDung(page,VNCharacterUtils.removeAccent(keys[i]) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc));
+	 				ds.addAll(tuyenDungDAO.timKiemTuyenDung(VNCharacterUtils.removeAccent(keys[i]) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc));
 	 			}
 	 			tuyenDungs=new ArrayList<TuyenDung>();
 	 			for (TuyenDung td : ds) {
 	 				tuyenDungs.add(td);
 				}
 	 		}
-	 		else tuyenDungs=tuyenDungDAO.timKiemTuyenDung(page,VNCharacterUtils.removeAccent(key) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc);
-	 		int soPage=tuyenDungDAO.getSoPage(VNCharacterUtils.removeAccent(key) ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc);
+	 		else tuyenDungs=tuyenDungDAO.timKiemTuyenDung("" ,Long.parseLong(maNganhNghe), Long.parseLong(maHinhThuc), maKhuVuc);
+	 		Collections.sort(tuyenDungs);
+	 		
+	 		
+	 		int soPage=tuyenDungs.size();
+	 		if(soPage%10==0) soPage=soPage/10; else soPage=soPage/10+1;
+	 		
+	 		System.out.println(page);
+	 		System.out.println(soPage);
+	 		List<TuyenDung> a=null;
+	 		if(page*10>tuyenDungs.size()) a= tuyenDungs.subList((page-1)*10, tuyenDungs.size());
+	 		else a= tuyenDungs.subList((page-1)*10, page*10);
 	 		
 	 		PrintWriter out=response.getWriter();
 	 		if(tuyenDungs.isEmpty()) 
 	 			out.print("<h4 style=\"color: #c0c0c0;\">Không tìm thấy công việc nào phù hợp với yêu cầu tìm kiếm của bạn</h4>");
 	 		else
-	 			for (TuyenDung td : tuyenDungs) {
+	 			for (TuyenDung td : a) {
 					out.print("<div class=\"tuyendung\" style=\"position: relative;\">\r\n" + 
 							"		        <div class=\"tuyendung-container\">\r\n" + 
 							"		        	<a href=\"/tuyendung/chitiet?id="+td.getMaTuyenDung() +"\" style=\"text-decoration: none; \">\r\n" + 
@@ -334,7 +356,7 @@ public class TuyenDungController {
 	 		model.addAttribute("dangKyTuyenDungDAO", dangKyTuyenDungDAO);
 	 		model.addAttribute("tuyenDungCungCongTy", tuyenDungDAO.getAllTuyenDungDaDuyetByMaDoanhNghiep(tuyenDung.getMaDoanhNghiep()));
 	 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);
-	 		model.addAttribute("tuyenDungLienQuan",tuyenDungDAO.timKiemTuyenDung(1, "", tuyenDung.getMaNganhNghe(), -1, "-1"));
+	 		model.addAttribute("tuyenDungLienQuan",tuyenDungDAO.timKiemTuyenDung("", tuyenDung.getMaNganhNghe(), -1, "-1"));
 	 		model.addAttribute("title", "Tuyển dụng");
 	 		
 	    	return "tuyendung/chitiet";

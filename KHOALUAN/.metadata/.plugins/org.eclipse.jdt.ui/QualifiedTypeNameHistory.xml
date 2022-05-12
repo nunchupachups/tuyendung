@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="cntt.trang.bean.DonVi"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.KetQuaHocTap"/>
-<fullyQualifiedTypeName name="java.lang.Float"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.GPA"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.TimKiemSV"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.VNCharacterUtils"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.NganhDaoTao"/>
@@ -34,7 +27,6 @@
 <fullyQualifiedTypeName name="org.apache.http.client.methods.HttpGet"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.HashMD5"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.SinhVienDAO"/>
-<fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.DonViDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.ViTriDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.NganhDaoTaoDAO"/>
@@ -46,18 +38,26 @@
 <fullyQualifiedTypeName name="java.util.Calendar"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.XaPhuongDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.LinhVucHoatDongCap2DAO"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.ThongBaoDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.DoanhNghiep"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.TuyenDung"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.LoaiHinhDoanhNghiepDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.NganhNgheDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.HinhThucLamViecDAO"/>
 <fullyQualifiedTypeName name="java.sql.Types"/>
-<fullyQualifiedTypeName name="java.lang.Long"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.TuyenDungDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.TinhThanhDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.DoanhNghiepDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.QuangBa"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.QuangBaDAO"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.sql.Blob"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.DoanhNghiep"/>
+<fullyQualifiedTypeName name="java.lang.Long"/>
+<fullyQualifiedTypeName name="cntt.trang.dao.BlogDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.Blog"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.lang.Comparable"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.TuyenDung"/>
+<fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

@@ -19,7 +19,7 @@
     </div>
     <div class="container">
     <div style="height: 15px;"></div>
-    <form class="row" action="/doanhnghiep/tuyendung/sua" method="post" onsubmit="return confirm("Chỉnh sửa tuyển dụng sẽ tốn một khoảng thời gian để chờ duyệt.\n\nBạn có chắc chắn muốn chỉnh sửa ?");">
+    <form class="row" action="/doanhnghiep/tuyendung/sua" method="post" onsubmit="return validate();">
             <h3 style="color: rgb(6, 109, 70)" class="mb-5">Sửa tuyển dụng</h3>
             <h5 class="mb-3">Các tiêu chí nổi bật</h5>
             <div class="row mb-3">
@@ -275,7 +275,10 @@
     <script >  
 
         CKEDITOR.config.toolbar = [];
-        
+        function validate(){
+        	var kt = confirm("Chỉnh sửa tin tuyển dụng sẽ tốn một khoảng thời gian để duyệt. \n\nBạn có chắc chắn muốn chỉnh sửa?");
+        	return kt;
+        };
     </script>
 </body>
 </html>

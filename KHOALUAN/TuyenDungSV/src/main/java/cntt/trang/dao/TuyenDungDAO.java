@@ -7,9 +7,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
-
-import cntt.trang.bean.QuangBa;
-import cntt.trang.bean.TimKiemSV;
 import cntt.trang.bean.TuyenDung;
 
 public class TuyenDungDAO {
@@ -387,8 +384,8 @@ public class TuyenDungDAO {
 			}
 			return flag;
 		}
-		public ArrayList<TuyenDung> timKiemTuyenDung(int page, String key, long maNganhNghe, long maHinhThuc, String maKhuVuc) throws SQLException {
-			int startItem= (page-1)*10;
+		public ArrayList<TuyenDung> timKiemTuyenDung(String key, long maNganhNghe, long maHinhThuc, String maKhuVuc) throws SQLException {
+			
 			String query= "select td.* from TuyenDung as td join DoanhNghiep as dn on dn.MaDoanhNghiep=td.MaDoanhNghiep ";
 			if(!key.equals("")||maNganhNghe!=-1||maHinhThuc!=-1||!maKhuVuc.equals("-1")) query+="where ";
 			int dem=0;
@@ -413,7 +410,7 @@ public class TuyenDungDAO {
 				dem++;
 			}
 			
-			query+=" and td.DaDuyet=1 and HanDangKy>= ? order by ThoiGianDangBai desc OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+			query+=" and td.DaDuyet=1 and HanDangKy>= ? order by ThoiGianDangBai desc ";
 			System.out.println(query);
 			ArrayList<TuyenDung> ds= new ArrayList<TuyenDung>();
 			try {
@@ -430,7 +427,6 @@ public class TuyenDungDAO {
 				if(maHinhThuc!=-1) ps.setLong(++dem, maHinhThuc);
 				if(!maKhuVuc.equals("-1")) ps.setString(++dem, maKhuVuc);
 				ps.setDate(++dem, new java.sql.Date(new Date().getTime()));
-				ps.setInt(++dem, startItem);
 				rs= ps.executeQuery();	
 				while(rs.next()) {
 					long maNganhNghe1 = rs.getLong("MaNganhNghe"); 
@@ -548,68 +544,7 @@ public class TuyenDungDAO {
 			}
 			return ds;
 		}
-		public int getSoPage(String key, long maNganhNghe, long maHinhThuc, String maKhuVuc) throws SQLException {
-			int soPage=0;
-			String query= "select count(1) from TuyenDung as td join DoanhNghiep as dn on dn.MaDoanhNghiep=td.MaDoanhNghiep ";
-			if(!key.equals("")||maNganhNghe!=-1||maHinhThuc!=-1||!maKhuVuc.equals("-1")) query+="where ";
-			int dem=0;
-			if(!key.equals("")) {
-				if(dem==0) query+="(TenCongViec like ? or TieuDe like ? or TenDoanhNghiep like ?) ";
-				else query+="and (TenCongViec like ? or TieuDe like ? or TenDoanhNghiep like ?) ";
-				dem++;
-			}
-			if(maNganhNghe!=-1) {
-				if(dem==0) query+="MaNganhNghe=? ";
-				else query+="and MaNganhNghe=? ";
-				dem++;
-			}
-			if(maHinhThuc!=-1) {
-				if(dem==0) query+="MaHinhThuc=? ";
-				else query+="and MaHinhThuc=? ";
-				dem++;
-			}
-			if(!maKhuVuc.equals("-1")) {
-				if(dem==0) query+="KhuVucTuyenDung=? ";
-				else query+="and KhuVucTuyenDung=? ";
-				dem++;
-			}
-			query+=" and td.DaDuyet=1 and HanDangKy>= ?";
-			try {
-				conn = new DBConnect().getConnection();
-				ps = conn.prepareStatement(query);
-				dem=0;
-				if(!key.equals("")) {
-					ps.setNString(++dem, "%"+key+"%");
-					ps.setNString(++dem, "%"+key+"%");
-					ps.setNString(++dem, "%"+key+"%");
-				}
-				
-				if(maNganhNghe!=-1) ps.setLong(++dem, maNganhNghe);
-				if(maHinhThuc!=-1) ps.setLong(++dem, maHinhThuc);
-				if(!maKhuVuc.equals("-1")) ps.setString(++dem, maKhuVuc);
-				ps.setDate(++dem, new java.sql.Date(new Date().getTime()));
-				rs= ps.executeQuery();	
-				while(rs.next()) {
-					soPage = rs.getInt(1);
-					
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			finally {
-				if(rs!=null) {
-					rs.close();
-				}
-				if(ps!=null) {
-					ps.close();
-				}
-				if(conn!=null) {
-					conn.close();
-				}	
-			}
-			if(soPage%10==0) return soPage/10;
-			else return soPage/10+1;
-		}
+		
 		public int duyetTuyenDung(long maTuyenDung) throws SQLException {
 			String query = "update TuyenDung set DaDuyet=1 where MaTuyenDung=?";
 			int flag=-1;

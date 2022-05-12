@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import cntt.trang.bean.Blog;
 import cntt.trang.bean.DoanhNghiep;
 import cntt.trang.bean.QuangBa;
 import cntt.trang.bean.TuyenDung;
 import cntt.trang.dao.AdminDAO;
+import cntt.trang.dao.BlogDAO;
 import cntt.trang.dao.DoanhNghiepDAO;
 import cntt.trang.dao.HashMD5;
 import cntt.trang.dao.HinhThucLamViecDAO;
@@ -145,6 +147,26 @@ public class AdminController {
 		}
        
     }
+	@RequestMapping(value= {"/blog"}, method=RequestMethod.GET)
+    public String blog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		
+	 		ArrayList<Blog> blogChuaDuyets=blogDAO.getAllBlogChuaDuyet();
+	 		ArrayList<Blog> blogDaDuyets=blogDAO.getAllBlogDaDuyet();
+	 		model.addAttribute("blogChuaDuyets",blogChuaDuyets);
+	 		model.addAttribute("blogDaDuyets",blogDaDuyets);
+	 		model.addAttribute("title", "Blog");
+	    	return "admin/blog/list";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
+    }
 	@RequestMapping(value= {"/doanhnghiep/chitiet"}, method=RequestMethod.GET)
     public String chiTietDoanhNghiep(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
 	 	try {
@@ -220,6 +242,24 @@ public class AdminController {
 		}
        
     }
+	@RequestMapping(value= {"/blog/chitiet"}, method=RequestMethod.GET)
+    public String chiTietBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String maBlog=request.getParameter("id");
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		
+	 		model.addAttribute("blog", blogDAO.getBlogById(Long.parseLong(maBlog)));
+	 		model.addAttribute("title", "Chi Tiết Blog");
+	    	return "admin/blog/chitiet";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
+    }
 	@RequestMapping(value= {"/doanhnghiep/duyet"}, method=RequestMethod.GET)
     public String duyetDoanhNghiep(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
 	 	try {
@@ -277,6 +317,27 @@ public class AdminController {
 	 		thongBaoDAO.insertThongBao(quangBaDAO.getQuangBaByID(Long.parseLong(maQuangBa)).getMaDoanhNghiep(), null, "Bài quảng bá của bạn đã được duyệt !", "/doanhnghiep/quangba/chitiet?id="+maQuangBa);
 	 		
 	    	return "redirect:/admin/quangba";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/blog/duyet"}, method=RequestMethod.GET)
+    public String duyetBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		
+	 		String maBlog=request.getParameter("id");
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		
+	 		blogDAO.duyetBlog(Long.parseLong(maBlog));
+	 		thongBaoDAO.insertThongBao(blogDAO.getBlogById(Long.parseLong(maBlog)).getMaDoanhNghiep(), null, "Blog của bạn đã được duyệt !", "/doanhnghiep/blog/chitiet?id="+maBlog);
+	 		
+	    	return "redirect:/admin/blog";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -343,6 +404,28 @@ public class AdminController {
 	 		thongBaoDAO.insertThongBao(quangBaDAO.getQuangBaByID(Long.parseLong(maQuangBa)).getMaDoanhNghiep(), null, "Bài quảng bá của bạn chưa được duyệt: "+phanHoi, "/doanhnghiep/quangba/chitiet?id="+maQuangBa);
 	 		
 	    	return "redirect:/admin/quangba";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/blog/phanhoi"}, method=RequestMethod.POST)
+    public String phanHoiBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		
+	 		String maBlog=request.getParameter("txtMaBlog");
+	 		String phanHoi=request.getParameter("txtPhanHoi");
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		
+	 		blogDAO.updatePhanHoi(Long.parseLong(maBlog), phanHoi);
+	 		thongBaoDAO.insertThongBao(blogDAO.getBlogById(Long.parseLong(maBlog)).getMaDoanhNghiep(), null, "Blog của bạn chưa được duyệt: "+phanHoi, "/doanhnghiep/blog/chitiet?id="+maBlog);
+	 		
+	    	return "redirect:/admin/blog";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

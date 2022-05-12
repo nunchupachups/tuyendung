@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,12 +24,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cntt.trang.bean.Blog;
 import cntt.trang.bean.DangKyTuyenDung;
 import cntt.trang.bean.DoanhNghiep;
 import cntt.trang.bean.QuanHuyen;
 import cntt.trang.bean.QuangBa;
+import cntt.trang.bean.SinhVien;
 import cntt.trang.bean.TuyenDung;
 import cntt.trang.bean.XaPhuong;
+import cntt.trang.dao.BlogDAO;
 import cntt.trang.dao.DangKyTuyenDungDAO;
 import cntt.trang.dao.DoanhNghiepDAO;
 import cntt.trang.dao.HashMD5;
@@ -1045,5 +1050,319 @@ public class DoanhNghiepController {
 		} catch (Exception e) {
 			e.printStackTrace();return null;
 		}
+    }
+	@RequestMapping(value= {"/blog/timkiem"}, method=RequestMethod.GET)
+    public String displayTimkiemBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+	 		ArrayList<Blog> blogs=blogDAO.timKiemBlogByMaDoanhNghiep("", doanhNghiep.getMaDoanhNghiep());
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
+	 		if(blogs.size()<=10) model.addAttribute("blogs", blogs);
+	 		else model.addAttribute("blogs", blogs.subList(0, 10));
+	 		model.addAttribute("soPage", blogDAO.getSoPage("", doanhNghiep.getMaDoanhNghiep()));
+	 		model.addAttribute("title", "Sửa Thông Tin");
+	 		
+	 		return "doanhnghiep/blog/list";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	@RequestMapping(value= {"/blog/tao"}, method=RequestMethod.GET)
+    public String displayTaoBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		
+	 		
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
+	 		model.addAttribute("title", "Tạo Blog");
+	 		
+	 		return "doanhnghiep/blog/tao";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	@RequestMapping(value= {"/blog/tao"}, method=RequestMethod.POST)
+    public String themBlog(@RequestParam("txtTieuDe") String tieuDe,@RequestParam("txtTacGia") String tacGia,
+    		@RequestParam("imgAnh") CommonsMultipartFile anh, @RequestParam("txtNoiDung") String noiDung, 
+    		Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+			String absolutefilePath=request.getServletContext().getRealPath("/image");
+			File dir = new File(absolutefilePath);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+	 		byte[] bytes=anh.getBytes();
+			Date date=new Date();
+			String name="anh"+date.getTime()+anh.getOriginalFilename().substring(anh.getOriginalFilename().indexOf("."));
+			File uploadfile=new File(dir.getAbsolutePath()+"\\"+name);
+			BufferedOutputStream outputStream=new BufferedOutputStream(new FileOutputStream(uploadfile));
+			outputStream.write(bytes);
+			outputStream.close();
+			
+			DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+			BlogDAO blogDAO=new BlogDAO();
+			int kq=blogDAO.insertBlog(doanhNghiep.getMaDoanhNghiep(), tieuDe, noiDung, tacGia, "image/"+name);
+			
+			if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Thêm blog thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Thêm blog thất bại!");
+			return "redirect:/doanhnghiep/blog/timkiem";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
+    }
+	@RequestMapping(value= {"/blog/timkiem/page"}, method=RequestMethod.POST)
+    public void timKiemTuyenDungByPage(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String key= request.getParameter("key");
+	 		String p = request.getParameter("page");
+	 		int page=1;
+	 		if(p!=null) page= Integer.parseInt(p);
+	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		
+	 		ArrayList<Blog> blogs;
+	 		Set<Blog> ds=new HashSet<Blog>();
+	 		
+	 			String keys[] =key.split(" ");
+	 			for(int i=0; i< keys.length;i++) {
+	 				ds.addAll(blogDAO.timKiemBlogByMaDoanhNghiep(VNCharacterUtils.removeAccent(keys[i]), doanhNghiep.getMaDoanhNghiep()));
+	 			}
+	 			blogs=new ArrayList<Blog>();
+	 			for (Blog b : ds) {
+	 				blogs.add(b);
+				}
+	 			Collections.sort(blogs);
+	 			
+	 		int soPage=blogs.size();
+	 		if(soPage%10==0) soPage=soPage/10; else soPage=soPage/10+1;
+	 		
+	 		if(page*10>blogs.size()) blogs=(ArrayList<Blog>) blogs.subList((page-1)*10, blogs.size());
+	 		else blogs=(ArrayList<Blog>) blogs.subList((page-1)*10, page*10);
+	 		
+	 		PrintWriter out=response.getWriter();
+	 		if(blogs.isEmpty()) 
+	 			out.print("<h4 style=\"color: #c0c0c0;\">Không tìm thấy bài viết nào phù hợp với yêu cầu tìm kiếm của bạn</h4>");
+	 		else {
+	 			out.print("<div class=\"row\">");
+	 			for (Blog b : blogs) {
+	 				out.print("<div style=\"height:500px;width: 33%; margin-bottom: 20px;position: relative;\">\r\n" + 
+	 						"			  <a href=\"/doanhnghiep/blog/chitiet?id="+b.getMaBlog() +"\" style=\"color: black;text-decoration: none;\">\r\n" + 
+	 						"			  	<div style=\"height: 500px;width:100%; display: flex;flex-direction: column;box-shadow: 5px 5px 6px #00000029;	\">\r\n" + 
+	 						"					   <div style=\"height: 320px;\">\r\n" + 
+	 						"					   	<img style=\"width: 100%; height: 100%;\" src=\"/"+b.getAnh()+"\">\r\n" + 
+	 						"					   </div>\r\n" + 
+	 						"					   <div style=\"padding: 15px;\">\r\n" + 
+	 						"					   		<h4>"+b.getTieuDe() +"</h4>\r\n" + 
+	 						"					   </div>\r\n"); 
+	 				if(b.isDaDuyet()) out.print("<div style=\"position: absolute; background-color: #00B14F; bottom: 10px; right: 20px; color: white;padding: 5px;\">Đã Duyệt</div>\r\n");
+	 				else out.print("<div style=\"position: absolute; background-color: #E7747D; bottom: 10px; right: 20px;color: white;padding: 5px;\">Chưa Duyệt</div>\r\n");
+	 						
+	 									
+	 						out.print("				</div>\r\n" + 
+	 						"				</a>\r\n" + 
+	 						"			  </div>");
+				}
+	 			out.print("</div>");
+	 		}
+	 		if(soPage!=1) {
+	 			if(page==1) {
+	 				out.print("<nav aria-label=\"Page navigation example\">\r\n" + 
+		 					"  <ul class=\"pagination justify-content-center\">\r\n" + 
+		 					"    <li class=\"page-item disabled\">\r\n" + 
+		 					"      <a class=\"page-link\" aria-label=\"Previous\">\r\n" + 
+		 					"        <span aria-hidden=\"true\">&laquo;</span>\r\n" + 
+		 					"      </a>\r\n" + 
+		 					"    </li>\r\n"); 	
+	 				for(int i=page;i<=page+2;i++) {
+	 					if(i>soPage) break;
+	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					else out.print("<li class=\"page-item\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 				}
+	 					out.print("    <li class=\"page-item\">\r\n" + 
+		 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDungByPage(2)\" aria-label=\"Next\">\r\n" + 
+		 					"        <span aria-hidden=\"true\">&raquo;</span>\r\n" + 
+		 					"      </a>\r\n" + 
+		 					"    </li>\r\n" + 
+		 					"  </ul>\r\n" + 
+		 					"</nav>");
+	 				
+	 			}else
+	 			if(page==soPage) {
+	 				out.print("<nav aria-label=\"Page navigation example\">\r\n" + 
+		 					"  <ul class=\"pagination justify-content-center\">\r\n" + 
+		 					"    <li class=\"page-item \">\r\n" + 
+		 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDungByPage("+(page-1)+")\" aria-label=\"Previous\">\r\n" + 
+		 					"        <span aria-hidden=\"true\">&laquo;</span>\r\n" + 
+		 					"      </a>\r\n" + 
+		 					"    </li>\r\n"); 	
+	 				for(int i=page-2;i<=page;i++) {
+	 					if(i<1) continue;
+	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					else out.print("<li class=\"page-item\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 				}
+	 					out.print("    <li class=\"page-item\">\r\n" + 
+		 					"      <a class=\"page-link disabled\" aria-label=\"Next\">\r\n" + 
+		 					"        <span aria-hidden=\"true\">&raquo;</span>\r\n" + 
+		 					"      </a>\r\n" + 
+		 					"    </li>\r\n" + 
+		 					"  </ul>\r\n" + 
+		 					"</nav>");
+	 			}else
+	 			{
+	 				out.print("<nav aria-label=\"Page navigation example\">\r\n" + 
+		 					"  <ul class=\"pagination justify-content-center\">\r\n" + 
+		 					"    <li class=\"page-item \">\r\n" + 
+		 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDungByPage("+(page-1)+")\" aria-label=\"Previous\">\r\n" + 
+		 					"        <span aria-hidden=\"true\">&laquo;</span>\r\n" + 
+		 					"      </a>\r\n" + 
+		 					"    </li>\r\n"); 	
+	 				for(int i=page-1;i<=page+1;i++) {
+	 					if(i<1) continue;
+	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					else out.print("<li class=\"page-item\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 				}
+	 					out.print("    <li class=\"page-item\">\r\n" + 
+		 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDungByPage("+(page+1)+")\" aria-label=\"Next\">\r\n" + 
+		 					"        <span aria-hidden=\"true\">&raquo;</span>\r\n" + 
+		 					"      </a>\r\n" + 
+		 					"    </li>\r\n" + 
+		 					"  </ul>\r\n" + 
+		 					"</nav>");
+	 			}
+	 		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+       
+    }
+	@RequestMapping(value= {"/blog/chitiet"}, method=RequestMethod.GET)
+    public String chiTietBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String maBlog=request.getParameter("id");
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		
+	 		
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
+	 		model.addAttribute("blog",blogDAO.getBlogById(Long.parseLong(maBlog)));
+	 		model.addAttribute("title", "Chi Tiết Blog");
+	 		
+	 		return "doanhnghiep/blog/chitiet";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	@RequestMapping(value= {"/blog/xoa"}, method=RequestMethod.GET)
+    public String xoaBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response,RedirectAttributes redirectAttributes) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String maBlog=request.getParameter("id");
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		
+	 		int kq= blogDAO.deleteBlog(Long.parseLong(maBlog));
+	 		
+	 		
+	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Xoá blog thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Xoá blog thất bại!");
+			return "redirect:/doanhnghiep/blog/timkiem";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	
+	@RequestMapping(value= {"/blog/sua"}, method=RequestMethod.GET)
+    public String displaySuaBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+		
+		try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+	 		String maBlog=request.getParameter("id");
+	 		BlogDAO blogDAO=new BlogDAO();
+	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
+	 		
+	 		
+	 		model.addAttribute("blog", blogDAO.getBlogById(Long.parseLong(maBlog)));
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
+	 		
+			return "doanhnghiep/blog/sua";
+
+	 		
+		} catch (Exception e) {
+			e.printStackTrace();return null;
+		}
+    }
+	@RequestMapping(value= {"/blog/sua"}, method=RequestMethod.POST)
+    public String suaBlog(@RequestParam("txtTieuDe") String tieuDe,@RequestParam("txtTacGia") String tacGia,
+    		@RequestParam("imgAnh") CommonsMultipartFile anh, @RequestParam("txtNoiDung") String noiDung, @RequestParam("id") String maBlog,@RequestParam("anh") String anhCu,
+    		Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	 	try {
+	 		response.setContentType("text/html;charset=UTF-8");
+	 		request.setCharacterEncoding("UTF-8");
+	 		
+			String absolutefilePath=request.getServletContext().getRealPath("/image");
+			File dir = new File(absolutefilePath);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			String name="";
+			if(!anh.getOriginalFilename().equals("")) {
+		 		byte[] bytes=anh.getBytes();
+				Date date=new Date();
+				name="anh"+date.getTime()+anh.getOriginalFilename().substring(anh.getOriginalFilename().indexOf("."));
+				File uploadfile=new File(dir.getAbsolutePath()+"\\"+name);
+				BufferedOutputStream outputStream=new BufferedOutputStream(new FileOutputStream(uploadfile));
+				outputStream.write(bytes);
+				outputStream.close();
+			}
+			
+			BlogDAO blogDAO=new BlogDAO();
+			int kq;
+			if(name.equals(""))  
+				kq=blogDAO.updateBlog(Long.parseLong(maBlog), tieuDe, noiDung, tacGia, anhCu);
+			else kq=blogDAO.updateBlog(Long.parseLong(maBlog), tieuDe, noiDung, tacGia, "image/"+name);
+			if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Sửa blog thành công!");
+			else redirectAttributes.addFlashAttribute("msg2", "Sửa blog thất bại!");
+			return "redirect:/doanhnghiep/blog/chitiet?id="+maBlog;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+       
     }
 }

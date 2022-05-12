@@ -15,7 +15,7 @@
     <div style="height:70px;">
     </div>
     <div class="container">
-      <form class="row" method="post" onsubmit="return confirm("Chỉnh sửa quảng bá sẽ tốn một khoảng thời gian để chờ duyệt. \n\nBạn có chắc chắn muốn chỉnh sửa ?");" action="/doanhnghiep/quangba/sua" enctype="multipart/form-data">
+      <form class="row" method="post" onsubmit="return validate();" action="/doanhnghiep/quangba/sua" enctype="multipart/form-data">
             <h3 style="color: rgb(6, 109, 70)" class="mb-5 mt-4">Sửa bài quảng bá</h3>
 
             <div class="row mb-3">
@@ -54,6 +54,7 @@
                     <button type="submit" class="btn btn-primary">Sửa</button>
                 </div>
             </div>
+            
         </form>
     </div>
     
@@ -65,6 +66,10 @@
 				CKEDITOR.replace ('post');
 		        CKEDITOR.config.height = '1000px';
 				CKFinder.setupCKEditor(null,'/libraries/ckfinder/');
+				function validate(){
+		        	var kt = confirm("Chỉnh sửa quảng bá sẽ tốn một khoảng thời gian để duyệt. \n\nBạn có chắc chắn muốn chỉnh sửa?");
+		        	return kt;
+		        };
 			    </script>
 </body>
 </html>

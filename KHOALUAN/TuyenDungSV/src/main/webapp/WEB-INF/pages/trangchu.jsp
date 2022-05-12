@@ -122,6 +122,7 @@
 			<ul class="nav nav-pills tab-chitiet" >
 				<li class="nav-item" onclick="tab(0)"><a href="#thong-tin-tuyen-dung" class="link active">Thông tin tuyển dụng</a></li>
 				<li class="nav-item" onclick="tab(1)"><a href="#doanh-nghiep"  class="link">Doanh nghiệp</a></li>
+				<li class="nav-item" onclick="tab(2)"><a href="#blog-huong-nghiep"  class="link">Blog hướng nghiệp</a></li>
 			</ul>
 		
 		</div>
@@ -193,6 +194,32 @@
 	  </c:forEach>
 	</div>
     </div>
+    <div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>
+    	<div id="blog-huong-nghiep" >   
+		<h5 style="margin: 30px 0;border-left: green solid 5px; padding-left: 10px; color: green;">Blog hướng nghiệp</h5>
+				<div class="carousel" data-flickity data-flickity-options='{ "wrapAround": true, "pageDots": false, "cellAlign": "left" }' >
+			  <c:forEach items="${blogs }" var="b" >
+			  
+			
+		
+			  <div class="carousel-cell" style="height:500px;width: 33%; margin-bottom: 20px;position: relative;" onclick="chiTietBlog(${b.getMaBlog()})">
+			  <a href="/doanhnghiep/blog/chitiet?id=${b.getMaBlog() }" style="color: black;text-decoration: none;">
+			  	<div style="height: 450px;width:100%; display: flex;flex-direction: column;box-shadow: 5px 5px 6px #00000029;	">
+					   <div style="height: 320px;">
+					   	<img style="width: 100%; height: 100%;" src="${contextPath }/${b.getAnh()}">
+					   </div>
+					   <div style="padding: 15px;">
+					   		<h4>${b.getTieuDe() }</h4>
+					   </div>
+					   
+				</div>
+				</a>
+			  </div>
+			  
+		
+			  </c:forEach>
+			</div>
+    </div>
 	</div>
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
@@ -201,6 +228,12 @@
 		$.ajax({ 
 		    type:"get", 
 		    url: "/doanhnghiep/chitiet?id="+id, 
+		})
+	};
+	function chiTietBlog(id){
+		$.ajax({ 
+		    type:"get", 
+		    url: "/doanhnghiep/blog/chitiet?id="+id, 
 		})
 	};
     </script>
