@@ -56,44 +56,11 @@ public class BlogDAO {
 		}
 		return ds;
 	}
-	public int getSoPage(String key, long maDoanhNghiep) throws SQLException {
-		int soPage=0;
-		String query= "select count(1) from Blog as b join DoanhNghiep as dn on dn.MaDoanhNghiep=b.MaDoanhNghiep ";
-		if(!key.equals("")) query+="where TacGia like ? or TieuDe like ?";
-		
-		try {
-			conn = new DBConnect().getConnection();
-			ps = conn.prepareStatement(query);
-			if(!key.equals("")) {
-				ps.setNString(1, "%"+key+"%");
-				ps.setNString(2, "%"+key+"%");}
-			
-			rs= ps.executeQuery();	
-			if(rs.next()) {
-				soPage = rs.getInt(1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(rs!=null) {
-				rs.close();
-			}
-			if(ps!=null) {
-				ps.close();
-			}
-			if(conn!=null) {
-				conn.close();
-			}	
-		}
-		if(soPage%10==0) return soPage/10;
-		else return soPage/10+1;
-	}
-	public ArrayList<Blog> timKiemBlogDaDuyetByKey(int page, String key) throws SQLException {
-		int startItem= (page-1)*10;
+	
+	public ArrayList<Blog> timKiemBlogDaDuyetByKey(String key) throws SQLException {
 		String query= "select * from Blog where DaDuyet=1";
 		if(!key.equals("")) query+="and TacGia like ? or TieuDe like ?";
-		query+=" order by NgayDang desc OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+		query+=" order by NgayDang desc ";
 		ArrayList<Blog> ds= new ArrayList<Blog>();
 		try {
 			conn = new DBConnect().getConnection();
@@ -101,9 +68,7 @@ public class BlogDAO {
 			if(!key.equals("")) {
 				ps.setNString(1, "%"+key+"%");
 				ps.setNString(2, "%"+key+"%");
-				ps.setInt(3, startItem);
-			}else ps.setInt(1, startItem);
-			
+			}
 			rs= ps.executeQuery();	
 			while(rs.next()) {
 				long maBlog =rs.getLong("MaBlog");

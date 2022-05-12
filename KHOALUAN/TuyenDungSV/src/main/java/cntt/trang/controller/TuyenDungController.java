@@ -221,7 +221,7 @@ public class TuyenDungController {
 	 		else a= tuyenDungs.subList((page-1)*10, page*10);
 	 		
 	 		PrintWriter out=response.getWriter();
-	 		if(tuyenDungs.isEmpty()) 
+	 		if(a.isEmpty()) 
 	 			out.print("<h4 style=\"color: #c0c0c0;\">Không tìm thấy công việc nào phù hợp với yêu cầu tìm kiếm của bạn</h4>");
 	 		else
 	 			for (TuyenDung td : a) {

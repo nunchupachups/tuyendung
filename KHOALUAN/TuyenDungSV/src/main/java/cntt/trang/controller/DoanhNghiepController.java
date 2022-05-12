@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -1062,11 +1063,14 @@ public class DoanhNghiepController {
 	 		BlogDAO blogDAO=new BlogDAO();
 	 		DoanhNghiep doanhNghiep=(DoanhNghiep)session.getAttribute("doanhnghiep");
 	 		ArrayList<Blog> blogs=blogDAO.timKiemBlogByMaDoanhNghiep("", doanhNghiep.getMaDoanhNghiep());
+	 		int soPage=blogs.size();
+	 		if(soPage%10==0) soPage=soPage/10;
+	 		else soPage=soPage/10+1;
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		if(blogs.size()<=10) model.addAttribute("blogs", blogs);
 	 		else model.addAttribute("blogs", blogs.subList(0, 10));
-	 		model.addAttribute("soPage", blogDAO.getSoPage("", doanhNghiep.getMaDoanhNghiep()));
-	 		model.addAttribute("title", "Sửa Thông Tin");
+	 		model.addAttribute("soPage", soPage);
+	 		model.addAttribute("title", "Blog");
 	 		
 	 		return "doanhnghiep/blog/list";
 
@@ -1131,7 +1135,7 @@ public class DoanhNghiepController {
        
     }
 	@RequestMapping(value= {"/blog/timkiem/page"}, method=RequestMethod.POST)
-    public void timKiemTuyenDungByPage(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
+    public void timKiemBlog(Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response) {
 	 	try {
 	 		response.setContentType("text/html;charset=UTF-8");
 	 		request.setCharacterEncoding("UTF-8");
@@ -1159,15 +1163,16 @@ public class DoanhNghiepController {
 	 		int soPage=blogs.size();
 	 		if(soPage%10==0) soPage=soPage/10; else soPage=soPage/10+1;
 	 		
-	 		if(page*10>blogs.size()) blogs=(ArrayList<Blog>) blogs.subList((page-1)*10, blogs.size());
-	 		else blogs=(ArrayList<Blog>) blogs.subList((page-1)*10, page*10);
+	 		List<Blog> a=null;
+	 		if(page*10>blogs.size()) a= blogs.subList((page-1)*10, blogs.size());
+	 		else a=blogs.subList((page-1)*10, page*10);
 	 		
 	 		PrintWriter out=response.getWriter();
-	 		if(blogs.isEmpty()) 
+	 		if(a.isEmpty()) 
 	 			out.print("<h4 style=\"color: #c0c0c0;\">Không tìm thấy bài viết nào phù hợp với yêu cầu tìm kiếm của bạn</h4>");
 	 		else {
 	 			out.print("<div class=\"row\">");
-	 			for (Blog b : blogs) {
+	 			for (Blog b : a) {
 	 				out.print("<div style=\"height:500px;width: 33%; margin-bottom: 20px;position: relative;\">\r\n" + 
 	 						"			  <a href=\"/doanhnghiep/blog/chitiet?id="+b.getMaBlog() +"\" style=\"color: black;text-decoration: none;\">\r\n" + 
 	 						"			  	<div style=\"height: 500px;width:100%; display: flex;flex-direction: column;box-shadow: 5px 5px 6px #00000029;	\">\r\n" + 
@@ -1198,11 +1203,11 @@ public class DoanhNghiepController {
 		 					"    </li>\r\n"); 	
 	 				for(int i=page;i<=page+2;i++) {
 	 					if(i>soPage) break;
-	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
-	 					else out.print("<li class=\"page-item\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemBlog("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					else out.print("<li class=\"page-item\" onclick=\"timKiemBlog("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
 	 				}
 	 					out.print("    <li class=\"page-item\">\r\n" + 
-		 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDungByPage(2)\" aria-label=\"Next\">\r\n" + 
+		 					"      <a class=\"page-link\" onclick=\"timKiemBlog(2)\" aria-label=\"Next\">\r\n" + 
 		 					"        <span aria-hidden=\"true\">&raquo;</span>\r\n" + 
 		 					"      </a>\r\n" + 
 		 					"    </li>\r\n" + 
@@ -1214,14 +1219,14 @@ public class DoanhNghiepController {
 	 				out.print("<nav aria-label=\"Page navigation example\">\r\n" + 
 		 					"  <ul class=\"pagination justify-content-center\">\r\n" + 
 		 					"    <li class=\"page-item \">\r\n" + 
-		 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDungByPage("+(page-1)+")\" aria-label=\"Previous\">\r\n" + 
+		 					"      <a class=\"page-link\" onclick=\"timKiemBlog("+(page-1)+")\" aria-label=\"Previous\">\r\n" + 
 		 					"        <span aria-hidden=\"true\">&laquo;</span>\r\n" + 
 		 					"      </a>\r\n" + 
 		 					"    </li>\r\n"); 	
 	 				for(int i=page-2;i<=page;i++) {
 	 					if(i<1) continue;
-	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
-	 					else out.print("<li class=\"page-item\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemBlog("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					else out.print("<li class=\"page-item\" onclick=\"timKiemBlog("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
 	 				}
 	 					out.print("    <li class=\"page-item\">\r\n" + 
 		 					"      <a class=\"page-link disabled\" aria-label=\"Next\">\r\n" + 
@@ -1235,17 +1240,17 @@ public class DoanhNghiepController {
 	 				out.print("<nav aria-label=\"Page navigation example\">\r\n" + 
 		 					"  <ul class=\"pagination justify-content-center\">\r\n" + 
 		 					"    <li class=\"page-item \">\r\n" + 
-		 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDungByPage("+(page-1)+")\" aria-label=\"Previous\">\r\n" + 
+		 					"      <a class=\"page-link\" onclick=\"timKiemBlog("+(page-1)+")\" aria-label=\"Previous\">\r\n" + 
 		 					"        <span aria-hidden=\"true\">&laquo;</span>\r\n" + 
 		 					"      </a>\r\n" + 
 		 					"    </li>\r\n"); 	
 	 				for(int i=page-1;i<=page+1;i++) {
 	 					if(i<1) continue;
-	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
-	 					else out.print("<li class=\"page-item\" onclick=\"timKiemTuyenDungByPage("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					if(i==page) out.print("<li class=\"page-item active\" onclick=\"timKiemBlog("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
+	 					else out.print("<li class=\"page-item\" onclick=\"timKiemBlog("+i+")\"><a class=\"page-link\" >"+i+"</a></li>");
 	 				}
 	 					out.print("    <li class=\"page-item\">\r\n" + 
-		 					"      <a class=\"page-link\" onclick=\"timKiemTuyenDungByPage("+(page+1)+")\" aria-label=\"Next\">\r\n" + 
+		 					"      <a class=\"page-link\" onclick=\"timKiemBlog("+(page+1)+")\" aria-label=\"Next\">\r\n" + 
 		 					"        <span aria-hidden=\"true\">&raquo;</span>\r\n" + 
 		 					"      </a>\r\n" + 
 		 					"    </li>\r\n" + 
