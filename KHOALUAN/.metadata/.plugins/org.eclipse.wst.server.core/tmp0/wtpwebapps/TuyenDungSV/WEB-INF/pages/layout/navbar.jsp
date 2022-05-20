@@ -16,19 +16,19 @@
     		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
     			<li class="nav-item">
-			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
+			        <a class="nav-link " href="/trangchu"  id="trangchu">Trang Chủ</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link " href="/doanhnghiep">Doanh Nghiệp</a>
+			        <a class="nav-link " href="/doanhnghiep" id="doanhnghiep">Doanh Nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="/tuyendung">Tuyển Dụng</a>
+			        <a class="nav-link" href="/tuyendung" id="tuyendung">Tuyển Dụng</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/blog">Blog Hướng Nghiệp</a>
+			        <a class="nav-link" href="/blog" id="blog">Blog Hướng Nghiệp</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/sinhvien/CV">CV</a>
+			        <a class="nav-link" href="/sinhvien/CV" id="CV">CV</a>
 			      </li>
 			    </ul>
 			    </div>
@@ -77,33 +77,33 @@
     		<div style="display: inline-block;">
     			<ul class="navbar-nav " >
     			<li class="nav-item">
-			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
+			        <a class="nav-link " href="/trangchu" id="trangchu">Trang Chủ</a>
 			      </li>
 			      
 			      
 			      <c:if test="${sessionScope.doanhnghiep.isDaDuyet() }">
 				      <li class="nav-item">
-				        <a class="nav-link " href="/sinhvien/timkiem">Sinh Viên</a>
+				        <a class="nav-link " href="/sinhvien/timkiem" id="CV">Sinh Viên</a>
 				      </li>
 				      <li class="nav-item">
-				        <a class="nav-link" href="/doanhnghiep/quangba">Quảng Bá</a>
+				        <a class="nav-link" href="/doanhnghiep/quangba" id="quangba">Quảng Bá</a>
 				      </li>
 				     <li class="nav-item">
-				        <a class="nav-link" href="/doanhnghiep/tuyendung">Tuyển Dụng</a>
+				        <a class="nav-link" href="/doanhnghiep/tuyendung" id="tuyendung">Tuyển Dụng</a>
 				      </li>
 				      <li class="nav-item">
-				        <a class="nav-link" href="/doanhnghiep/blog/timkiem">Blog Hướng Nghiệp</a>
+				        <a class="nav-link" href="/doanhnghiep/blog/timkiem" id="blog">Blog Hướng Nghiệp</a>
 				      </li>
 			      </c:if>
 			      <c:if test="${!sessionScope.doanhnghiep.isDaDuyet() }">
 				      <li class="nav-item">
-				        <a class="nav-link " onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')">Sinh viên</a>
+				        <a class="nav-link " onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')" id="sinhvien">Sinh viên</a>
 				      </li>
 				      <li class="nav-item">
-				        <a class="nav-link" onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')">Quảng bá</a>
+				        <a class="nav-link" onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')" id="quangba">Quảng bá</a>
 				      </li>
 				     <li class="nav-item">
-				        <a class="nav-link" onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')">Tuyển dụng</a>
+				        <a class="nav-link" onclick="alert('Tài khoản của bạn chưa được duyệt. \nKhông có quyền truy cập!')" id="tuyendung">Tuyển dụng</a>
 				      </li>
 			      </c:if>
 			      
@@ -143,7 +143,7 @@
 			            
 			            <i class="fas fa-sort-down"></i>
 			          </button>
-			          <ul class="dropdown-menu dropdown-account">
+			          <ul class="dropdown-menu dropdown-account" style="right: 0; left: auto ;">
 			            <li><a class="dropdown-item" href="/doanhnghiep/thongtin">Thông tin doanh nghiệp</a></li>
 			            <li><a class="dropdown-item" href="/doanhnghiep/doimatkhau">Đổi mật khẩu</a></li>
 			            <li><a class="dropdown-item" href="/doanhnghiep/dangxuat">Đăng xuất <i class="fas fa-sign-out-alt"></i></a></li>
@@ -158,16 +158,16 @@
     			<ul class="navbar-nav " >
     			
 			      <li class="nav-item">
-			        <a class="nav-link " href="/admin/doanhnghiep">QL Doanh nghiệp</a>
+			        <a class="nav-link " href="/admin/doanhnghiep" id="qldoanhnghiep">QL Doanh nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="/admin/tuyendung">QL Tuyển dụng</a>
+			        <a class="nav-link" href="/admin/tuyendung" id="qltuyendung">QL Tuyển dụng</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/admin/quangba">QL Quảng bá</a>
+			        <a class="nav-link" href="/admin/quangba" id="qlquangba">QL Quảng bá</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/admin/blog">QL Blog hướng nghiệp</a>
+			        <a class="nav-link" href="/admin/blog" id="qlblog">QL Blog hướng nghiệp</a>
 			      </li>
 			    </ul>
 			    </div>
@@ -193,19 +193,19 @@
     	<div style="display: inline-block;">
     		<ul class="navbar-nav " >
     		<li class="nav-item">
-			        <a class="nav-link " href="/trangchu">Trang Chủ</a>
+			        <a class="nav-link " href="/trangchu" id="trangchu">Trang Chủ</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link " href="/doanhnghiep">Doanh Nghiệp</a>
+			        <a class="nav-link " href="/doanhnghiep" id="doanhnghiep">Doanh Nghiệp</a>
 			      </li>
 			     <li class="nav-item">
-			        <a class="nav-link" href="/tuyendung">Tuyển Dụng</a>
+			        <a class="nav-link" href="/tuyendung" id="tuyendung">Tuyển Dụng</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/blog">Blog Hướng Nghiệp</a>
+			        <a class="nav-link" href="/blog" id="blog">Blog Hướng Nghiệp</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" onclick="alert('Bạn cần phải đăng nhập trước!')">CV</a>
+			        <a class="nav-link" onclick="alert('Bạn cần phải đăng nhập trước!')" id="CV">CV</a>
 			      </li>
 			    </ul>
 			    </div>
@@ -225,7 +225,11 @@
     
   </div>  
 </nav>
+<input value="${active }" type="hidden" id="active"/>
 <script>
+var x=document.getElementById("active").value;
+console.log(x);
+document.getElementById(x).style.color="blue";
 function daXem(id){
 	console.log(id);
 	$.ajax({ 

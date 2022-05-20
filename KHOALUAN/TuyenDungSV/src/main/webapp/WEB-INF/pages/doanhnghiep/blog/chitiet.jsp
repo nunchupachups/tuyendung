@@ -27,13 +27,18 @@
       				${msg2 } 
       			</div>
     </c:if>
-    <c:if test="${sessionScope.doanhnghiep!=null }">
+    <c:if test="${sessionScope.doanhnghiep!=null&&sessionScope.doanhnghiep.getMaDoanhNghiep()==blog.getMaDoanhNghiep() }">
     <div class="dropdown" style="position: absolute; top:0; right:60px;">
           <button style="padding-top: 0;" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
             <h1>...</h1>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/doanhnghiep/blog/xoa?id=${blog.getMaBlog() }">Xoá</a></li>
+          	<li>
+			      <form action="/doanhnghiep/blog/xoa" onsubmit="return xoa()" method="get">
+			            <input type="hidden" value="${blog.getMaBlog() }" name="id"/>
+			            <input class="dropdown-item" type="submit" value="Xoá"/>
+			      </form>
+			</li>
             <li><a class="dropdown-item" href="/doanhnghiep/blog/sua?id=${blog.getMaBlog() }">Sửa</a></li>
           </ul>
         </div>
@@ -51,5 +56,12 @@
     
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <script>
+    function xoa(){
+		var kt = confirm("Bạn có chắc chắn muốn xoá bài tuyển dụng này?");
+    	return kt;
+    	
+	};
+    </script>
 </body>
 </html>

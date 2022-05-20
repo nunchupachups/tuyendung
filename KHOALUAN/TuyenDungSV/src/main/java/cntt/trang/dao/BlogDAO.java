@@ -16,15 +16,16 @@ public class BlogDAO {
 	static ResultSet rs= null;
 	
 	public ArrayList<Blog> timKiemBlogByMaDoanhNghiep(String key, long maDoanhNghiep) throws SQLException {
-		String query= "select b.* from Blog as b join DoanhNghiep as dn on dn.MaDoanhNghiep=b.MaDoanhNghiep ";
-		if(!key.equals("")) query+="where TacGia like ? or TieuDe like ?";
+		String query= "select * from Blog where MaDoanhNghiep=?";
+		if(!key.equals("")) query+="and (TacGia like ? or TieuDe like ?)";
 		ArrayList<Blog> ds= new ArrayList<Blog>();
 		try {
 			conn = new DBConnect().getConnection();
 			ps = conn.prepareStatement(query);
+			ps.setLong(1,maDoanhNghiep);
 			if(!key.equals("")) {
-				ps.setNString(1, "%"+key+"%");
 				ps.setNString(2, "%"+key+"%");
+				ps.setNString(3, "%"+key+"%");
 			}
 			
 			rs= ps.executeQuery();	

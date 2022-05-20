@@ -98,6 +98,7 @@ public class AdminController {
 	 		model.addAttribute("doanhNghiepChuaDuyets",doanhNghiepChuaDuyets);
 	 		model.addAttribute("doanhNghiepDaDuyets",doanhNghiepDaDuyets);
 	 		model.addAttribute("title", "Doanh Nghiệp");
+	 		model.addAttribute("active","qldoanhnghiep");
 	    	return "admin/doanhnghiep/list";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,6 +121,7 @@ public class AdminController {
 	 		model.addAttribute("tuyenDungDaDuyets",tuyenDungDaDuyets);
 	 		model.addAttribute("doanhNghiepDAO", doanhNghiepDAO);
 	 		model.addAttribute("title", "Tuyển Dụng");
+	 		model.addAttribute("active","qltuyendung");
 	    	return "admin/tuyendung/list";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,6 +142,7 @@ public class AdminController {
 	 		model.addAttribute("quangBaDaDuyets",quangBaDaDuyets);
 	 		model.addAttribute("quangBaChuaDuyets",quangBaChuaDuyets);
 	 		model.addAttribute("title", "Quảng Bá");
+	 		model.addAttribute("active","qlquangba");
 	    	return "admin/quangba/list";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -160,6 +163,7 @@ public class AdminController {
 	 		model.addAttribute("blogChuaDuyets",blogChuaDuyets);
 	 		model.addAttribute("blogDaDuyets",blogDaDuyets);
 	 		model.addAttribute("title", "Blog");
+	 		model.addAttribute("active","qlblog");
 	    	return "admin/blog/list";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,6 +196,7 @@ public class AdminController {
 	 		model.addAttribute("loaiHinhDoanhNghiepDAO",loaiHinhDoanhNghiepDAO);
 	 		model.addAttribute("anh",anh);
 	 		model.addAttribute("title", "Chi Tiết Doanh Nghiệp");
+	 		model.addAttribute("active","qldoanhnghiep");
 	    	return "admin/doanhnghiep/chitiet";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -217,6 +222,7 @@ public class AdminController {
 	 		model.addAttribute("nganhNgheDAO", nganhNgheDAO);
 	 		model.addAttribute("hinhThucLamViecDAO", hinhThucLamViecDAO);
 	 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);
+	 		model.addAttribute("active","qltuyendung");
 	    	return "admin/tuyendung/chitiet";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -235,6 +241,7 @@ public class AdminController {
 	 		
 	 		model.addAttribute("quangBa", quangBaDAO.getQuangBaByID(Long.parseLong(maQuangBa)));
 	 		model.addAttribute("title", "Chi Tiết Quảng Bá");
+	 		model.addAttribute("active","qlquangba");
 	    	return "admin/quangba/chitiet";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -253,6 +260,7 @@ public class AdminController {
 	 		
 	 		model.addAttribute("blog", blogDAO.getBlogById(Long.parseLong(maBlog)));
 	 		model.addAttribute("title", "Chi Tiết Blog");
+	 		model.addAttribute("active","qlblog");
 	    	return "admin/blog/chitiet";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -273,7 +281,7 @@ public class AdminController {
 	 		
 	 		doanhNghiepDAO.duyetDoanhNghiep(Long.parseLong(maDoanhNghiep));
 	 		thongBaoDAO.insertThongBao(Long.parseLong(maDoanhNghiep), null, "Tài khoản đã được duyệt, hãy bắt đầu với các chức năng của website.", "");
-	 		
+	 	
 	    	return "redirect:/admin/doanhnghiep";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -315,7 +323,7 @@ public class AdminController {
 	 		
 	 		quangBaDAO.duyetQuangBa(Long.parseLong(maQuangBa));
 	 		thongBaoDAO.insertThongBao(quangBaDAO.getQuangBaByID(Long.parseLong(maQuangBa)).getMaDoanhNghiep(), null, "Bài quảng bá của bạn đã được duyệt !", "/doanhnghiep/quangba/chitiet?id="+maQuangBa);
-	 		
+
 	    	return "redirect:/admin/quangba";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -336,7 +344,6 @@ public class AdminController {
 	 		
 	 		blogDAO.duyetBlog(Long.parseLong(maBlog));
 	 		thongBaoDAO.insertThongBao(blogDAO.getBlogById(Long.parseLong(maBlog)).getMaDoanhNghiep(), null, "Blog của bạn đã được duyệt !", "/doanhnghiep/blog/chitiet?id="+maBlog);
-	 		
 	    	return "redirect:/admin/blog";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -358,7 +365,6 @@ public class AdminController {
 	 		
 	 		doanhNghiepDAO.updatePhanHoi(Long.parseLong(maDoanhNghiep), phanHoi);
 	 		thongBaoDAO.insertThongBao(Long.parseLong(maDoanhNghiep), null, "Tài khoản chưa được duyệt: "+phanHoi, "");
-	 		
 	    	return "redirect:/admin/doanhnghiep";
 		} catch (Exception e) {
 			e.printStackTrace();

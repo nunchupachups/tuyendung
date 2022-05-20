@@ -41,7 +41,7 @@
                 <label for="post" class="col-sm-2 col-form-label">Bài viết<span class="required"> *</span></label>
                 <div class="col-sm-10">
                     <textarea id="post" class="form-control"  name="txtBaiViet" required="required" >${quangBa.getBaiViet() }</textarea>
-                	
+                	<div><u><b>Chú ý: </b></u> Nên để chiều rộng hình ảnh trong bài viết thành 745px.</div>
                 </div>
                 
             </div>

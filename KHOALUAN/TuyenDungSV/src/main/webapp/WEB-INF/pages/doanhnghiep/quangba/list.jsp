@@ -15,16 +15,19 @@
     <div style="height:70px;">
     </div>
     <div class="container">
-    	
+    	<c:if test="${!dsQuangBa.isEmpty() }">
         <div class="slideshow-container" >
-        <c:if test="${!dsQuangBa.isEmpty() }">
+        
 	        <div class="mySlide row" >
 	        
 	        	<c:forEach items="${dsQuangBa}" var="qb">
 	        		<div class="col-6 slide-left ">
 		                <h1>${qb.getTieuDe() }</h1>
+		                <div style="max-height: 220px;overflow: hidden;">
 		                <p>${qb.getNoiDungDaiDien() }</p>
-		                <button class="btn btn-primary btn-lg">
+		                </div>
+		                
+		                <button class="btn btn-primary btn-lg" style="margin-top: 20px;">
 		                    <a href="/doanhnghiep/quangba/chitiet?id=${qb.getMaQuangBa() }" style="color: white; text-decoration: none;">Xem thêm</a>
 		                </button>
 		            </div>
@@ -39,8 +42,13 @@
 	        	</c:forEach>
 	        	</div>
 	        </div>
-        </c:if>
+        
       </div>
+      </c:if>
+      <c:if test="${dsQuangBa.isEmpty() }">
+      	<h4 style="color: #c0c0c0;">Chưa có bài quảng bá nào</h4>
+      	<hr>
+      </c:if>
        <c:if test="${msg1!=null }">
       			<div class="alert alert-success alert-dismissible mt-3">
       			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -80,7 +88,9 @@
                 <label for="post" class="col-sm-2 col-form-label">Bài viết<span class="required"> *</span></label>
                 <div class="col-sm-10">
                     <textarea id="post" class="form-control"  name="txtBaiViet" required="required"></textarea>
+                    <div><u><b>Chú ý: </b></u> Nên để chiều rộng hình ảnh trong bài viết thành 745px.</div>
                 </div>
+                
             </div>
             <div class="row mb-3">
                 <div class="col-sm-10 offset-sm-2">

@@ -65,7 +65,7 @@ public class TuyenDungController {
 	 		model.addAttribute("soPage",soPage);
 	 		model.addAttribute("title", "Tuyển dụng");
 	 		model.addAttribute("tuyenDungDeXuat", tuyenDungDAO.getAllTuyenDungDaDuyet());
-	 		
+	 		model.addAttribute("active","tuyendung");
 	    	return "tuyendung/timkiemtuyendung";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -358,7 +358,7 @@ public class TuyenDungController {
 	 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);
 	 		model.addAttribute("tuyenDungLienQuan",tuyenDungDAO.timKiemTuyenDung("", tuyenDung.getMaNganhNghe(), -1, "-1"));
 	 		model.addAttribute("title", "Tuyển dụng");
-	 		
+	 		model.addAttribute("active","tuyendung");
 	    	return "tuyendung/chitiet";
 		} catch (Exception e) {
 			e.getStackTrace();

@@ -36,13 +36,18 @@
 			        	<h5><a style="text-decoration: none;" href="/admin/tuyendung/chitiet?id=${td.getMaTuyenDung() }">${td.getTieuDe() }</a></h5>
 			        <h6><a style="text-decoration: none; color: black;" href="/admin/doanhnghiep/chitiet?id=${td.getMaDoanhNghiep() }">${doanhNghiepDAO.getDoanhNghiepById(td.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase() }</a></h6>
 			        	</div>
+			        	<c:if test="${td.getPhanHoi()==null||td.getPhanHoi().equals('') }">
 			            <div class="col-3 d-flex">
-			            	<div><a style="margin-right: 10px;" class="btn btn-primary" href="/admin/tuyendung/duyet?id=${td.getMaTuyenDung() }">Duyệt</a></div>
-				        	<c:if test="${td.getPhanHoi()==null||td.getPhanHoi().equals('') }">
+			            	<div >
+				            	<form action="/admin/tuyendung/duyet" onsubmit="return duyet()" method="get">
+								     <input type="hidden" value="${td.getMaTuyenDung() }" name="id"/>
+								     <input style="margin-right: 10px;" class="btn btn-primary" type="submit" value="Duyệt"/>
+								</form>
+							</div>
 				        		<div><a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal${td.getMaTuyenDung() }">Phản hồi</a></div>
-				        	</c:if>
+				        	
 			        	</div>
-			            
+			            </c:if>
 		        	</div>
 		        	<hr>
 		        	<!-- The Modal -->
@@ -93,5 +98,12 @@
 	
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <script>
+    	function duyet(){
+    		var kt = confirm("Duyệt bài tuyển dụng này?");
+        	return kt;
+        	
+    	};
+    </script>
 </body>
 </html>

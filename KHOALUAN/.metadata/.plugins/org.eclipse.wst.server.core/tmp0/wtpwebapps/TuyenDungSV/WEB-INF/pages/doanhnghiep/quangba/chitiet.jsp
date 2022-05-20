@@ -27,13 +27,19 @@
       				${msg2 } 
       			</div>
     </c:if>
-    <c:if test="${sessionScope.doanhnghiep!=null }">
+    <c:if test="${sessionScope.doanhnghiep!=null&&sessionScope.doanhnghiep.getMaDoanhNghiep()==quangBa.getMaDoanhNghiep() }">
     <div class="dropdown" style="position: absolute; top:0; right:60px;">
           <button style="padding-top: 0;" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
             <h1>...</h1>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/doanhnghiep/quangba/xoa?id=${quangBa.getMaQuangBa() }">Xoá</a></li>
+            <li>
+            	<form action="/doanhnghiep/quangba/xoa" onsubmit="return xoa()" method="get">
+            		<input type="hidden" value="${quangBa.getMaQuangBa() }" name="id"/>
+            		<input class="dropdown-item" type="submit" value="Xoá"/>
+            		
+            	</form>
+            </li>
             <li><a class="dropdown-item" href="/doanhnghiep/quangba/sua?id=${quangBa.getMaQuangBa() }">Sửa</a></li>
           </ul>
         </div>
@@ -49,5 +55,13 @@
     
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <script>
+    	function xoa(){
+    		var kt = confirm("Bạn có chắc chắn muốn xoá bài quảng bá này?");
+    		console.log(kt);
+        	return kt;
+        	
+    	};
+    </script>
 </body>
 </html>

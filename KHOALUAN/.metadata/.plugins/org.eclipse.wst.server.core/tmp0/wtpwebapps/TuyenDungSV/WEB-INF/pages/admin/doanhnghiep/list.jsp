@@ -35,13 +35,17 @@
 			        	<div class="col-9">
 			        	<h5><a style="text-decoration: none;" href="/admin/doanhnghiep/chitiet?id=${dn.getMaDoanhNghiep() }">${dn.getTenDoanhNghiep() }</a></h5>
 			        	</div>
+			        	<c:if test="${dn.getPhanHoi()==null||dn.getPhanHoi().equals('') }">
 			            <div class="col-3 d-flex">
-			            	<div><a style="margin-right: 10px;" class="btn btn-primary" href="/admin/doanhnghiep/duyet?id=${dn.getMaDoanhNghiep() }">Duyệt</a></div>
-				        	<c:if test="${dn.getPhanHoi()==null||dn.getPhanHoi().equals('') }">
+			            	<div >
+				            	<form action="/admin/doanhnghiep/duyet" onsubmit="return duyet()" method="get">
+								     <input type="hidden" value="${dn.getMaDoanhNghiep() }" name="id"/>
+								     <input style="margin-right: 10px;" class="btn btn-primary" type="submit" value="Duyệt"/>
+								</form>
+							</div>
 				        		<div><a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal${dn.getMaDoanhNghiep() }">Phản hồi</a></div>
-				        	</c:if>
 			        	</div>
-			            
+			            </c:if>
 		        	</div>
 		        	<hr>
 		        	<!-- The Modal -->
@@ -91,5 +95,12 @@
 	
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <script>
+    	function duyet(){
+    		var kt = confirm("Duyệt doanh nghiệp này?");
+        	return kt;
+        	
+    	};
+    </script>
 </body>
 </html>

@@ -78,7 +78,7 @@ public class SinhVienController {
 	 		model.addAttribute("dssinhvien", sinhVienDAO.timKiemAllSinhVien());
 	 		model.addAttribute("nganhDaoTaoDAO", nganhDaoTaoDAO);
 	 		
-	 		
+	 		model.addAttribute("active","CV");
 	    	return "sinhvien/timkiemsinhvien";
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -194,8 +194,8 @@ public class SinhVienController {
 	        	session.removeAttribute("token");
 	        	session.setAttribute("token", token);
 	        	System.out.println(token);
-	        	if(sinhVienDAO.getSinhVienById(maSinhVien)==null) sinhVienDAO.insertSinhVien(maSinhVien);
-	        	session.setAttribute("sinhvien",sinhVienDAO.getSinhVienById(maSinhVien));
+	        	if(sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien)==null) sinhVienDAO.insertSinhVien(maSinhVien);
+	        	session.setAttribute("sinhvien",sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien));
 	        	Calendar c=Calendar.getInstance();
 	        	c.add(Calendar.MONTH, -6);
 	        	if(sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien).getNgayCapNhat()!=null&&sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien).getNgayCapNhat().getTime()<=c.getTimeInMillis()) 
@@ -370,7 +370,7 @@ public class SinhVienController {
 	 		model.addAttribute("hoatDongs", hoatDongs);
 	 		model.addAttribute("viTriDAO", viTriDAO);
 	 		model.addAttribute("chungChis", chungChis);
-	 		
+	 		model.addAttribute("active","CV");
 	 		return "sinhvien/CV/show";
 	 		
 		} catch (Exception e) {
@@ -410,7 +410,7 @@ public class SinhVienController {
 	 		model.addAttribute("hoatDongs", hoatDongs);
 	 		model.addAttribute("viTriDAO", viTriDAO);
 	 		model.addAttribute("chungChis", chungChis);
-	 		
+	 		model.addAttribute("active","CV");
 	 		return "sinhvien/CV/xem";
 	 		
 		} catch (Exception e) {
@@ -441,6 +441,7 @@ public class SinhVienController {
 	 		model.addAttribute("nganh", nganhDaoTao.getTenNganh().toUpperCase());
 	 		model.addAttribute("soTinChi", ketQuaHocTapDAO.getSumSoTinChiByMaSinhVien(maSinhVien));
 	 		model.addAttribute("GPA", ketQuaHocTapDAO.getGPAByMaSinhVien(maSinhVien));
+	 		model.addAttribute("active","CV");
 	 		return "sinhvien/diem";
 	 		
 		} catch (Exception e) {
@@ -512,7 +513,7 @@ public class SinhVienController {
 	 		model.addAttribute("sinhVien", sinhVien);
 	 		model.addAttribute("viTriDAO", viTriDAO);
 	 		
-	 		
+	 		model.addAttribute("active","CV");
 	 		return "sinhvien/CV/sua";
 	 		
 		} catch (Exception e) {

@@ -41,7 +41,7 @@ public class BlogController {
 	 		model.addAttribute("soPage", soPage);
 	 		model.addAttribute("top10Blog", blogDAO.getTop10BlogByLuotXem());
 	 		model.addAttribute("title", "Blog");
-	 		
+	 		model.addAttribute("active","blog");
 	    	return "blog/timkiem";
 		} catch (Exception e) {
 			e.printStackTrace();

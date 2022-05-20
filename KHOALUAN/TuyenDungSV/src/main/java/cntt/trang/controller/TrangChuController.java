@@ -34,6 +34,7 @@ public class TrangChuController {
 	 		model.addAttribute("tuyenDungs",tuyenDungDAO.getAllTuyenDungDaDuyet() );
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("title","Trang Chủ");
+	 		model.addAttribute("active","trangchu");
 	    	return "trangchu";
 		} catch (Exception e) {
 			e.getStackTrace();

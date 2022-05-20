@@ -35,13 +35,18 @@
 			        	<div class="col-9">
 			        	<h5><a style="text-decoration: none;" href="/admin/blog/chitiet?id=${b.getMaBlog() }">${b.getTieuDe() }</a></h5>
 			        	</div>
+			        	<c:if test="${b.getPhanHoi()==null||b.getPhanHoi().equals('') }">
 			            <div class="col-3 d-flex">
-			            	<div><a style="margin-right: 10px;" class="btn btn-primary" href="/admin/blog/duyet?id=${b.getMaBlog() }">Duyệt</a></div>
-				        	<c:if test="${b.getPhanHoi()==null||b.getPhanHoi().equals('') }">
-				        		<div><a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal${b.getMaBlog() }">Phản hồi</a></div>
-				        	</c:if>
+			            	<div >
+				            	<form action="/admin/blog/duyet" onsubmit="return duyet()" method="get">
+								     <input type="hidden" value="${b.getMaBlog() }" name="id"/>
+								     <input style="margin-right: 10px;" class="btn btn-primary" type="submit" value="Duyệt"/>
+								</form>
+							</div>
+				        	<div><a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal${b.getMaBlog() }">Phản hồi</a></div>
+				        	
 			        	</div>
-			            
+			            </c:if>
 		        	</div>
 		        	<hr>
 		        	<!-- The Modal -->
@@ -91,5 +96,12 @@
 	
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <script>
+    	function duyet(){
+    		var kt = confirm("Duyệt blog này?");
+        	return kt;
+        	
+    	};
+    </script>
 </body>
 </html>

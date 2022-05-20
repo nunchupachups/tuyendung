@@ -61,6 +61,7 @@
             
             <div class="row mb-3">
                 <div class="col-sm-10 offset-sm-2">
+                	<a href="/doanhnghiep/blog/timkiem"  class="btn btn-danger">Huỷ</a>
                     <button type="submit" class="btn btn-primary">Thêm</button>
                 </div>
             </div>

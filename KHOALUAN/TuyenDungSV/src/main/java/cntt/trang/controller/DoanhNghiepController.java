@@ -86,7 +86,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
 	 		model.addAttribute("dsLinhVuc", linhVucHoatDongCap1DAO.getAllLinhVucHoatDongCap1());
 	 		model.addAttribute("dsLoaiHinhDoanhNghiep", loaiHinhDoanhNghiepDAO.getAllLoaiHinhDoanhNghiep());
-	 		
+	 		model.addAttribute("active","doanhnghiep");
 	    	return "doanhnghiep/timkiemdoanhnghiep";
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -295,7 +295,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("title", "Quảng Bá");
 	 		model.addAttribute("dsQuangBa", quangBaDAO.getAllQuangBaByMaDoanhNghiep(doanhnghiep.getMaDoanhNghiep()));
-	 		
+	 		model.addAttribute("active","quangba");
 	 		return "doanhnghiep/quangba/list";
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -356,7 +356,7 @@ public class DoanhNghiepController {
 
 	 		model.addAttribute("title", "Chi Tiết Quảng Bá");
 	 		model.addAttribute("quangBa", quangBa);
-	 		
+	 		model.addAttribute("active","quangba");
 	 		return "doanhnghiep/quangba/chitiet";
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -373,12 +373,12 @@ public class DoanhNghiepController {
 	 		long maQuangBa = Long.parseLong(request.getParameter("id")) ;
 	 		QuangBaDAO quangBaDAO= new QuangBaDAO();
 	 		int kq= quangBaDAO.deleteQuangBa(maQuangBa);
-	 		
+	 		System.out.println("xoa roi");
 	 		if(kq!=-1) redirectAttributes.addFlashAttribute("msg1", "Xoá bài quảng bá thành công!");
 			else redirectAttributes.addFlashAttribute("msg2", "Xoá bài quảng bá thất bại!");
 	 		return "redirect:/doanhnghiep/quangba";
 		} catch (Exception e) {
-			e.getStackTrace();
+			e.printStackTrace();
 			return null;
 		}
        
@@ -396,6 +396,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("quangBa", quangBa);
 	 		model.addAttribute("title", "Sửa Quảng Bá");
+	 		model.addAttribute("active","quangba");
 	 		return "doanhnghiep/quangba/sua";
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -414,7 +415,7 @@ public class DoanhNghiepController {
 	 		
 	 		QuangBaDAO quangBaDAO=new QuangBaDAO();
 	 		String anh;
-	 		if(hinhAnhDaiDien!= null) anh=quangBaDAO.getQuangBaByID(Long.parseLong(maQuangBa)).getHinhAnhDaiDien();
+	 		if(hinhAnhDaiDien.getOriginalFilename().equals("")) anh=quangBaDAO.getQuangBaByID(Long.parseLong(maQuangBa)).getHinhAnhDaiDien();
 	 		else {
 	 			String absolutefilePath=request.getServletContext().getRealPath("/image");
 				File dir = new File(absolutefilePath);
@@ -470,7 +471,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("sinhVienDAO",sinhVienDAO);
 	 		model.addAttribute("tinhThanhDAO",tinhThanhDAO);
 	 		model.addAttribute("hinhThucLamViecDAO",hinhThucLamViecDAO);
-	 		
+	 		model.addAttribute("active","tuyendung");
 	 		model.addAttribute("title", "Tuyển Dụng");
 	 		
 	    	return "doanhnghiep/tuyendung/list";
@@ -502,7 +503,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("hinhThucLamViecDAO",hinhThucLamViecDAO);
 	 		model.addAttribute("tuyenDung", tuyenDungDAO.getTuyenDungByID(maTuyenDung));
 	 		model.addAttribute("title", "Chi Tiết Tuyển Dụng");
-	 		
+	 		model.addAttribute("active","tuyendung");
 	    	return "doanhnghiep/tuyendung/chitiet";
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -655,7 +656,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("dsHinhThuc",hinhThucLamViecDAO.getAllHinhThucLamViec());
 	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
 	 		model.addAttribute("title", "Tạo Tuyển Dụng");
-	 		
+	 		model.addAttribute("active","tuyendung");
 	    	return "doanhnghiep/tuyendung/tao";
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -738,6 +739,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("dsTinhThanh", tinhThanhDAO.getAllTinhThanh());
 	 		model.addAttribute("tuyenDung", tuyenDung);
 	 		model.addAttribute("title", "Sửa Tuyển Dụng");
+	 		model.addAttribute("active","tuyendung");
 	 		return "doanhnghiep/tuyendung/sua";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -807,6 +809,7 @@ public class DoanhNghiepController {
 	 		for (QuangBa a : quangBaDAO.getAllQuangBaDaDuyetByMaDoanhNghiep(maDoanhNghiep)) {
 				System.out.println(a.getTieuDe());
 			}
+	 		model.addAttribute("active","doanhnghiep");
 	    	return "doanhnghiep/chitiet";
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -911,6 +914,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("dsLinhVuc", linhVucHoatDongCap1DAO.getAllLinhVucHoatDongCap1());
 	 		model.addAttribute("dsLoaiHinhDoanhNghiep", loaiHinhDoanhNghiepDAO.getAllLoaiHinhDoanhNghiep());
 	 		model.addAttribute("anh", anh);
+	 		
 	 		return "doanhnghiep/thongtin/xem";
 
 	 		
@@ -1071,7 +1075,7 @@ public class DoanhNghiepController {
 	 		else model.addAttribute("blogs", blogs.subList(0, 10));
 	 		model.addAttribute("soPage", soPage);
 	 		model.addAttribute("title", "Blog");
-	 		
+	 		model.addAttribute("active","blog");
 	 		return "doanhnghiep/blog/list";
 
 	 		
@@ -1091,7 +1095,7 @@ public class DoanhNghiepController {
 	 		
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("title", "Tạo Blog");
-	 		
+	 		model.addAttribute("active","blog");
 	 		return "doanhnghiep/blog/tao";
 
 	 		
@@ -1279,7 +1283,7 @@ public class DoanhNghiepController {
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("blog",blogDAO.getBlogById(Long.parseLong(maBlog)));
 	 		model.addAttribute("title", "Chi Tiết Blog");
-	 		
+	 		model.addAttribute("active","blog");
 	 		return "doanhnghiep/blog/chitiet";
 
 	 		
@@ -1324,7 +1328,7 @@ public class DoanhNghiepController {
 	 		
 	 		model.addAttribute("blog", blogDAO.getBlogById(Long.parseLong(maBlog)));
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
-	 		
+	 		model.addAttribute("active","blog");
 			return "doanhnghiep/blog/sua";
 
 	 		

@@ -36,13 +36,18 @@
 			        	<h5><a style="text-decoration: none;" href="/admin/quangba/chitiet?id=${qb.getMaQuangBa() }">${qb.getTieuDe() }</a></h5>
 			        <h6><a style="text-decoration: none; color: black;" href="/admin/doanhnghiep/chitiet?id=${qb.getMaDoanhNghiep() }">${doanhNghiepDAO.getDoanhNghiepById(qb.getMaDoanhNghiep()).getTenDoanhNghiep().toUpperCase() }</a></h6>
 			        	</div>
+			        	<c:if test="${qb.getPhanHoi()==null||qb.getPhanHoi().equals('') }">
 			            <div class="col-3 d-flex">
-			            	<div><a style="margin-right: 10px;" class="btn btn-primary" href="/admin/quangba/duyet?id=${qb.getMaQuangBa() }">Duyệt</a></div>
-				        	<c:if test="${qb.getPhanHoi()==null||qb.getPhanHoi().equals('') }">
+			            	<div >
+				            	<form action="/admin/quangba/duyet" onsubmit="return duyet()" method="get">
+								     <input type="hidden" value="${qb.getMaQuangBa() }" name="id"/>
+								     <input style="margin-right: 10px;" class="btn btn-primary" type="submit" value="Duyệt"/>
+								</form>
+							</div>
 				        		<div><a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal${qb.getMaQuangBa() }">Phản hồi</a></div>
-				        	</c:if>
+				        	
 			        	</div>
-			            
+			            </c:if>
 		        	</div>
 		        	<hr>
 		        	<!-- The Modal -->
@@ -93,5 +98,12 @@
 	
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
     </div>
+    <script>
+    	function duyet(){
+    		var kt = confirm("Duyệt bài quảng bá này?");
+        	return kt;
+        	
+    	};
+    </script>
 </body>
 </html>

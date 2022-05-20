@@ -24,7 +24,7 @@
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
               <form method="post" action="/sinhvien/dangnhap" >
                 <!-- Email input -->
-                <h3 style="color: rgb(6, 109, 70);margin-left: 150px;" class="mb-5 ">Đăng nhập tài khoản sinh vien	</h3>
+                <h3 style="color: rgb(6, 109, 70);margin-left: 50px;" class="mb-5 ">Đăng nhập tài khoản sinh viên	</h3>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="email">Mã Sinh Viên</label>
                     <input type="text" id="maSinhVien" name="txtMaSinhVien" class="form-control" placeholder="Mã sinh viên" />
@@ -37,16 +37,7 @@
                   
                 </div>
       
-                <div class="d-flex justify-content-between align-items-center">
-                  <!-- Checkbox -->
-                  <div class="form-check mb-0">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                    <label class="form-check-label" for="form2Example3">
-                      Remember me
-                    </label>
-                  </div>
-                  <a href="#!" class="text-body">Forgot password?</a>
-                </div>
+                
       		<c:if test="${msg!=null }">
       			<div class="alert alert-danger alert-dismissible mt-3">
       			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>

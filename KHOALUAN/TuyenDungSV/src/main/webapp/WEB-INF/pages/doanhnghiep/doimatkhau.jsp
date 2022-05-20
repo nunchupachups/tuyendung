@@ -45,7 +45,8 @@
        
           <div class="row mb-3">
             <div class="col-sm-10 offset-sm-2">
-              <button type="submit"  class="btn btn-primary">Đăng ký</button>
+            	<a href="/trangchu"  class="btn btn-danger">Huỷ</a>
+              <button type="submit"  class="btn btn-primary">Đổi mật khẩu</button>
             </div>
           </div>
        

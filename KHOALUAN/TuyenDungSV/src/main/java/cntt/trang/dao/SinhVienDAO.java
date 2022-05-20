@@ -15,87 +15,87 @@ public class SinhVienDAO {
 	static PreparedStatement ps = null;
 	static ResultSet rs= null;
 	
-	public ArrayList<SinhVien> getAllSinhVien() throws SQLException {
-		ArrayList<SinhVien> ds=new ArrayList<SinhVien>();
-		String query = "select * from SinhVien";
-		try {
-			conn = new DBConnect().getConnection();
-			ps = conn.prepareStatement(query);
-			rs= ps.executeQuery();	
-			while(rs.next()) {
-				String maSinhVien=rs.getString("MaSinhVien");
-				String hoVaTen=rs.getNString("HoVaTen");
-				boolean gioiTinh=rs.getBoolean("GioiTinh");
-				String ngaySinh=rs.getString("NgaySinh");
-				String diaChi=rs.getNString("DiaChi");
-				String dienThoai=rs.getString("DienThoai");
-				String diDong=rs.getString("DiDong");
-				String email=rs.getNString("Email");
-				String maNganhDaoTao=rs.getString("MaNganhDaoTao");
-				boolean daDuyet=rs.getBoolean("DaDuyet");
-				int khoa=rs.getInt("Khoa");
-				String anhDaiDien=rs.getNString("AnhDaiDien");
-				Date ngayCapNhat=rs.getDate("NgayCapNhat");
-				
-				ds.add( new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien, ngayCapNhat));
-				
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(rs!=null) {
-				rs.close();
-			}
-			if(ps!=null) {
-				ps.close();
-			}
-			if(conn!=null) {
-				conn.close();
-			}	
-		}
-		return ds;
-	}
-	public SinhVien getSinhVienById(String maSinhVien) throws SQLException {
-		String query = "select * from SinhVien where lower(MaSinhVien)=?";
-		try {
-			conn = new DBConnect().getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setString(1,maSinhVien.toLowerCase());
-			rs= ps.executeQuery();	
-			if(rs.next()) {
-				String hoVaTen=rs.getNString("HoVaTen");
-				boolean gioiTinh=rs.getBoolean("GioiTinh");
-				String ngaySinh=rs.getString("NgaySinh");
-				String diaChi=rs.getNString("DiaChi");
-				String dienThoai=rs.getString("DienThoai");
-				String diDong=rs.getString("DiDong");
-				String email=rs.getNString("Email");
-				String maNganhDaoTao=rs.getString("MaNganhDaoTao");
-				boolean daDuyet=rs.getBoolean("DaDuyet");
-				int khoa=rs.getInt("Khoa");
-				String anhDaiDien=rs.getNString("AnhDaiDien");
-				Date ngayCapNhat=rs.getDate("NgayCapNhat");
-				
-				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien, ngayCapNhat);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(rs!=null) {
-				rs.close();
-			}
-			if(ps!=null) {
-				ps.close();
-			}
-			if(conn!=null) {
-				conn.close();
-			}	
-		}
-		return null;
-	}
+//	public ArrayList<SinhVien> getAllSinhVien() throws SQLException {
+//		ArrayList<SinhVien> ds=new ArrayList<SinhVien>();
+//		String query = "select * from SinhVien";
+//		try {
+//			conn = new DBConnect().getConnection();
+//			ps = conn.prepareStatement(query);
+//			rs= ps.executeQuery();	
+//			while(rs.next()) {
+//				String maSinhVien=rs.getString("MaSinhVien");
+//				String hoVaTen=rs.getNString("HoVaTen");
+//				boolean gioiTinh=rs.getBoolean("GioiTinh");
+//				String ngaySinh=rs.getString("NgaySinh");
+//				String diaChi=rs.getNString("DiaChi");
+//				String dienThoai=rs.getString("DienThoai");
+//				String diDong=rs.getString("DiDong");
+//				String email=rs.getNString("Email");
+//				String maNganhDaoTao=rs.getString("MaNganhDaoTao");
+//				boolean daDuyet=rs.getBoolean("DaDuyet");
+//				int khoa=rs.getInt("Khoa");
+//				String anhDaiDien=rs.getNString("AnhDaiDien");
+//				Date ngayCapNhat=rs.getDate("NgayCapNhat");
+//				
+//				ds.add( new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien, ngayCapNhat));
+//				
+//				
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		finally {
+//			if(rs!=null) {
+//				rs.close();
+//			}
+//			if(ps!=null) {
+//				ps.close();
+//			}
+//			if(conn!=null) {
+//				conn.close();
+//			}	
+//		}
+//		return ds;
+//	}
+//	public SinhVien getSinhVienById(String maSinhVien) throws SQLException {
+//		String query = "select * from SinhVien where lower(MaSinhVien)=?";
+//		try {
+//			conn = new DBConnect().getConnection();
+//			ps = conn.prepareStatement(query);
+//			ps.setString(1,maSinhVien.toLowerCase());
+//			rs= ps.executeQuery();	
+//			if(rs.next()) {
+//				String hoVaTen=rs.getNString("HoVaTen");
+//				boolean gioiTinh=rs.getBoolean("GioiTinh");
+//				String ngaySinh=rs.getString("NgaySinh");
+//				String diaChi=rs.getNString("DiaChi");
+//				String dienThoai=rs.getString("DienThoai");
+//				String diDong=rs.getString("DiDong");
+//				String email=rs.getNString("Email");
+//				String maNganhDaoTao=rs.getString("MaNganhDaoTao");
+//				boolean daDuyet=rs.getBoolean("DaDuyet");
+//				int khoa=rs.getInt("Khoa");
+//				String anhDaiDien=rs.getNString("AnhDaiDien");
+//				Date ngayCapNhat=rs.getDate("NgayCapNhat");
+//				
+//				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien, ngayCapNhat);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		finally {
+//			if(rs!=null) {
+//				rs.close();
+//			}
+//			if(ps!=null) {
+//				ps.close();
+//			}
+//			if(conn!=null) {
+//				conn.close();
+//			}	
+//		}
+//		return null;
+//	}
 	public SinhVien getSinhVienByMaSinhVien(String maSinhVien) throws SQLException {
 		String query = "select * from SinhVien where lower(MaSinhVien)=?";
 		try {
@@ -166,7 +166,7 @@ public class SinhVienDAO {
 				"    WHEN round(Sum(kq.SoTinChi*DiemHe4)/sum(kq.SoTinChi),2) is null THEN 0 \r\n" + 
 				"    ELSE round(Sum(kq.SoTinChi*DiemHe4)/sum(kq.SoTinChi),2)\r\n" + 
 				"END) as GPA \r\n" + 
-				"from KetQuaHocTap as kq right join SinhVien as sv on sv.MaSinhVien=kq.MaSinhVien join NganhDaoTao as ndt on ndt.MaNganh=sv.MaNganhDaoTao\r\n" + 
+				"from KetQuaHocTap as kq right join SinhVien as sv on sv.MaSinhVien=kq.MaSinhVien join NganhDaoTao as ndt on ndt.MaNganh=sv.MaNganhDaoTao where DaDuyet=1\r\n" + 
 				"group by TenNganh ,HoVaTen,sv.MaSinhVien order by GPA desc";
 		ArrayList<TimKiemSV> ds= new ArrayList<TimKiemSV>();
 		try {
@@ -221,7 +221,7 @@ public class SinhVienDAO {
 				"							END) as GPA \r\n" + 
 				"		from KetQuaHocTap as kq right join SinhVien as sv on sv.MaSinhVien=kq.MaSinhVien \r\n" + 
 				"								left join NganhDaoTao as ndt on ndt.MaNganh=sv.MaNganhDaoTao\r\n" + 
-				"								left join KyNang as kn on kn.MaCV=sv.MaSinhVien\r\n" + 
+				"								left join KyNang as kn on kn.MaCV=sv.MaSinhVien where DaDuyet=1\r\n" + 
 				"		group by MaNganh ,TenNganh,HoVaTen,sv.MaSinhVien,TenKyNang, NamDaoTao\r\n" + 
 				"		) as a\r\n";
 		if(!key.equals("")) {

@@ -110,7 +110,14 @@
 		                <h1>...</h1>
 		            </button>
 		            <ul class="dropdown-menu">
-		                <li><a class="dropdown-item" href="/doanhnghiep/tuyendung/xoa?id=${td.getMaTuyenDung() }">Xoá</a></li>
+		            	<li>
+			            	<form action="/doanhnghiep/tuyendung/xoa" onsubmit="return xoa()" method="get">
+			            		<input type="hidden" value="${td.getMaTuyenDung() }" name="id"/>
+			            		<input class="dropdown-item" type="submit" value="Xoá"/>
+			            		
+			            	</form>
+			            </li>
+		                
 		                <li><a class="dropdown-item" href="/doanhnghiep/tuyendung/sua?id=${td.getMaTuyenDung() }">Sửa</a></li>
 		            </ul>
 		        </div>
@@ -210,6 +217,11 @@
 		    	row.innerHTML = data;
 		    },
 		})
+	};
+	function xoa(){
+		var kt = confirm("Bạn có chắc chắn muốn xoá bài tuyển dụng này?");
+    	return kt;
+    	
 	};
 	</script>
 </body>

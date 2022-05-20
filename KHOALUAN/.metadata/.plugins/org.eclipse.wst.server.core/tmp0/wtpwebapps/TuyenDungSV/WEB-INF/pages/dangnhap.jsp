@@ -28,7 +28,7 @@
                   <a class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" href="/doanhnghiep/dangnhap">Tài khoản doanh nghiệp</a>
                   <a class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" href="/sinhvien/dangnhap">Tài khoản sinh viên</a>
                   <a class="btn btn-primary btn-lg mb-3" style="padding-left: 2.5rem; padding-right: 2.5rem;width: 70%;" href="/admin/dangnhap">Tài khoản quản trị</a>
-                  <p class="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản? <a href="#!" class="link-danger">Đăng ký tài khoản doanh nghiệp</a></p>
+                  <p class="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản? <a href="/doanhnghiep/dangky" class="link-danger">Đăng ký tài khoản doanh nghiệp</a></p>
                 </div>
       
             </div>
