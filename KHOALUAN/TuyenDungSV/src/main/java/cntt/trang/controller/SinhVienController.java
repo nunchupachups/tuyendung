@@ -267,6 +267,16 @@ public class SinhVienController {
 	        get2.addHeader("ums-time", time);
 	        get2.addHeader("ums-signature", hashMD5.convertHashToString(applicationID+secretKey+time));
 	        get2.addHeader("ums-token", token);
+//	 		khoa nganh
+	        String result3 = "";
+	        HttpGet get3 = new HttpGet("https://ums-dev.husc.edu.vn/ApiGateway/student-services/v1/get-admission-files");
+	        
+	        get3.addHeader("Content-Type", "application/json");
+	        get3.addHeader("ums-application", applicationID);
+	        get3.addHeader("ums-time", time);
+	        get3.addHeader("ums-signature", hashMD5.convertHashToString(applicationID+secretKey+time));
+	        get3.addHeader("ums-token", token);
+	        
 	        
 	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
 	                CloseableHttpResponse res1 = httpClient.execute(get1)) {
@@ -276,25 +286,38 @@ public class SinhVienController {
 	                CloseableHttpResponse res2 = httpClient.execute(get2)) {
 	               result2 = EntityUtils.toString(res2.getEntity());
 	           }
-
-	           System.out.println(result1);
-	           System.out.println(result2);
+	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+	                CloseableHttpResponse res3 = httpClient.execute(get3)) {
+	               result3 = EntityUtils.toString(res3.getEntity());
+	           }
+	           
 	           JSONParser jsonParser= new JSONParser();
 	           JSONObject jsonRes1= (JSONObject) jsonParser.parse(result1);
 	           JSONObject jsonRes2= (JSONObject) jsonParser.parse(result2);
+	           JSONObject jsonRes3= (JSONObject) jsonParser.parse(result3);
+	           System.out.println(result1);
+	           System.out.println(result2);
+	           System.out.println(result3);
+	           String maNganh=null;
+	           String tenKhoaHoc=null;
 	           boolean kt=true;
-			        if((long)jsonRes2.get("Code")==1) {
-			        	JSONObject data=(JSONObject) jsonRes2.get("Data");
-			        	String maSinhVien = (String)data.get("MaSinhVien");
-			        	String hoVaTen = (String)data.get("HoVaTen");
-		            	boolean gioiTinh = (boolean)data.get("GioiTinh");
-		            	String ngaySinh = (String)data.get("NgaySinh");
-		            	String TTru_ThongTin = (String)data.get("TTru_ThongTin");
-		            	String dienThoai = (String)data.get("DienThoai");
-		            	String diDong = (String)data.get("DiDong");
-		            	String email = (String)data.get("Email");
+		           if((long)jsonRes3.get("Code")==1&&(long)jsonRes2.get("Code")==1) {
+		        	   	JSONArray data3=(JSONArray) jsonRes3.get("Data");
+		        	   	JSONObject obj=(JSONObject)data3.get(0);
+			        	String maKhoaHoc = (String)obj.get("MaKhoaHoc");
+			        	tenKhoaHoc = (String)obj.get("TenKhoaHoc");
+		            	maNganh = (String)obj.get("MaNganh");
+			        	JSONObject data2=(JSONObject) jsonRes2.get("Data");
+			        	String maSinhVien = (String)data2.get("MaSinhVien");
+			        	String hoVaTen = (String)data2.get("HoVaTen");
+		            	boolean gioiTinh = (boolean)data2.get("GioiTinh");
+		            	String ngaySinh = (String)data2.get("NgaySinh");
+		            	String TTru_ThongTin = (String)data2.get("TTru_ThongTin");
+		            	String dienThoai = (String)data2.get("DienThoai");
+		            	String diDong = (String)data2.get("DiDong");
+		            	String email = (String)data2.get("Email");
 			        	
-		            	int kq=sinhVienDAO.updateThongTinSinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, TTru_ThongTin, dienThoai, diDong, email, "7480201", true, 42, new Date());
+		            	int kq=sinhVienDAO.updateThongTinSinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, TTru_ThongTin, dienThoai, diDong, email, maNganh, true, maKhoaHoc, tenKhoaHoc, new Date());
 		            	
 			        	if(kq==-1) kt=false;
 			        	
@@ -304,7 +327,6 @@ public class SinhVienController {
 			        
 			        if((long)jsonRes1.get("Code")==1) {
 			        	JSONArray data=(JSONArray) jsonRes1.get("Data");
-			        	System.out.println(sinhVien.getMaSinhVien());
 			        	ketQuaHocTapDAO.deleteDiemByMaSinhVien(sinhVien.getMaSinhVien());
 			        	for (Object object : data) {
 			        		JSONObject obj=(JSONObject)object;
@@ -329,7 +351,7 @@ public class SinhVienController {
 			        	if(!sinhVien.isDaDuyet()) {
 			        	donViDAO.insertDonVi("Trường Đại học Khoa học Huế", sinhVien.getMaSinhVien(), "hocvan");
 			    		DonVi truong= donViDAO.getDonViByTenDonViAndMucCVAndMaCV("hocvan", sinhVien.getMaSinhVien(), "Trường Đại học Khoa học Huế");
-			    		viTriDAO.insertViTri("Sinh viên ngành "+nganhDaoTaoDAO.getNganhDaoTaoById("7480201").getTenNganh(), (1976+42)+" - "+(1976+42+nganhDaoTaoDAO.getNganhDaoTaoById("7480201").getNamDaoTao()>=new Date().getYear() ? "Nay" : 1976+42+nganhDaoTaoDAO.getNganhDaoTaoById("7480201").getNamDaoTao()), truong.getMaDonVi(), "- GPA: "+ketQuaHocTapDAO.getGPAByMaSinhVien(sinhVien.getMaSinhVien()));
+			    		viTriDAO.insertViTri("Sinh viên ngành "+nganhDaoTaoDAO.getNganhDaoTaoById(maNganh).getTenNganh(),tenKhoaHoc , truong.getMaDonVi(), "- GPA: "+ketQuaHocTapDAO.getGPAByMaSinhVien(sinhVien.getMaSinhVien()));
 			        	}
 			    		redirectAttributes.addFlashAttribute("msg1", "Cập nhật thông tin thành công!");
 			        }else redirectAttributes.addFlashAttribute("msg2", "Cập nhật thông tin không thành công!");
@@ -430,14 +452,14 @@ public class SinhVienController {
 	 		
 	 		String maSinhVien=request.getParameter("id");
 	 		SinhVien sinhVien=sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien);
-	 		int khoa=sinhVien.getKhoa();
-	 		NganhDaoTao nganhDaoTao=nganhDaoTaoDAO.getNganhDaoTaoById(sinhVien.getMaNganhDaoTao());
+	 		String tenKhoaHoc=sinhVien.getTenKhoaHoc();
+	 		NganhDaoTao nganhDaoTao=nganhDaoTaoDAO.getNganhDaoTaoById(sinhVien.getMaNganh());
 	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		
 	 		model.addAttribute("ketQuas", ketQuaHocTapDAO.getAllKetQuaHocTapByMaSinhVien(maSinhVien));
 	 		model.addAttribute("maSinhVien",maSinhVien);
-	 		model.addAttribute("khoa", "Khoa "+khoa+" ("+(khoa+1976)+"-"+(khoa+1976+nganhDaoTao.getNamDaoTao())+")");
+	 		model.addAttribute("khoa", tenKhoaHoc);
 	 		model.addAttribute("nganh", nganhDaoTao.getTenNganh().toUpperCase());
 	 		model.addAttribute("soTinChi", ketQuaHocTapDAO.getSumSoTinChiByMaSinhVien(maSinhVien));
 	 		model.addAttribute("GPA", ketQuaHocTapDAO.getGPAByMaSinhVien(maSinhVien));

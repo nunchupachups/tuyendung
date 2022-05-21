@@ -103,7 +103,7 @@ public class ThongBaoDAO {
 		return ds;
 	}
 	public ArrayList<ThongBao> getAllThongBaoByMaSinhVien(String maSinhVien) throws SQLException {
-		String query = "select * from ThongBao where MaSinhVien=?";
+		String query = "select * from ThongBao where MaSinhVien=? order by MaThongBao desc";
 		ArrayList<ThongBao> ds= new ArrayList<ThongBao>();
 		try {
 			conn = new DBConnect().getConnection();

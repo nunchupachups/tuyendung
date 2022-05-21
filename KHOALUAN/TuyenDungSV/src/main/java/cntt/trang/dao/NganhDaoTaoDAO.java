@@ -75,4 +75,30 @@ public class NganhDaoTaoDAO {
 		}
 		return null;
 	}
+	public int insertNganhDaoTao(String maNganh, String tenNganh) throws SQLException {
+		String query = "insert into NganhDaoTao(MaNganh, TenNganh) values(?,?)";
+		int flag=-1;
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, maNganh);
+			ps.setNString(2, tenNganh);
+			
+			flag= ps.executeUpdate();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(ps!=null) {
+				ps.close();
+			}
+			if(conn!=null) {
+				conn.close();
+			}	
+		}
+		return flag;
+	}
 }

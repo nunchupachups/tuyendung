@@ -128,7 +128,9 @@
 		</div>
 		<div id="thong-tin-tuyen-dung" >   
 	<h5 style="margin: 30px 0;border-left: green solid 5px; padding-left: 10px; color: green;">Thông tin tuyển dụng</h5>
+	<c:if test="${!tuyenDungs.isEmpty() }">
 		<div class="carousel" data-flickity data-flickity-options='{ "wrapAround": true, "pageDots": false, "cellAlign": "left" }'>
+		
 	  <c:forEach items="${tuyenDungs }" var="td" >
 	  <div class="carousel-cell">
 	  	<div class="tuyendung">
@@ -164,13 +166,15 @@
 	  </div>
 	
 	  </c:forEach>
+	  
 	</div>
-        
+        </c:if>
       </div>
       
       <div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>
     	<div id="doanh-nghiep" >   
 	<h5 style="margin: 30px 0;border-left: green solid 5px; padding-left: 10px; color: green;">Doanh nghiệp</h5>
+	<c:if test="${!doanhNghieps.isEmpty() }">
 		<div class="carousel" data-flickity data-flickity-options='{ "wrapAround": true, "pageDots": false, "cellAlign": "left" }' >
 	  <c:forEach items="${doanhNghieps }" var="dn" >
 	  <c:if test="${quangBaDAO.getAllQuangBaDaDuyetByMaDoanhNghiep(dn.getMaDoanhNghiep()).size()!=0 }">
@@ -193,10 +197,12 @@
 	</c:if>
 	  </c:forEach>
 	</div>
+	</c:if>
     </div>
     <div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>
     	<div id="blog-huong-nghiep" >   
 		<h5 style="margin: 30px 0;border-left: green solid 5px; padding-left: 10px; color: green;">Blog hướng nghiệp</h5>
+		<c:if test="${!blogs.isEmpty() }">
 				<div class="carousel" data-flickity data-flickity-options='{ "wrapAround": true, "pageDots": false, "cellAlign": "left" }' >
 			  <c:forEach items="${blogs }" var="b" >
 			  
@@ -219,6 +225,7 @@
 		
 			  </c:forEach>
 			</div>
+			</c:if>
     </div>
 	</div>
 	<jsp:include page="/WEB-INF/pages/layout/footer.jsp" />
@@ -235,6 +242,13 @@
 		    type:"get", 
 		    url: "/doanhnghiep/blog/chitiet?id="+id, 
 		})
+	};
+	function tab(n){
+		var tablinks = document.getElementsByClassName("link");
+		for (i = 0; i < tablinks.length; i++) {
+		    tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		tablinks[n].className +=" active";
 	};
     </script>
 </body>

@@ -64,8 +64,8 @@
     <hr>
     <div id="tuyendung">
     
-    	<c:if test="${tuyenDungs.isEmpty() }">
-    	<h4 style="color: #c0c0c0;">Không tìm thấy công việc nào phù hợp với yêu cầu tìm kiếm của bạn</h4>
+    	<c:if test="${tuyenDungs.isEmpty()||tuyenDungs==null }">
+    	<h4 style="color: #c0c0c0;">Không có bài tuyển dụng nào</h4>
     	</c:if>
     	
         <c:forEach items="${tuyenDungs }" var="td">
@@ -146,9 +146,12 @@
 </nav>
        </c:if>
        </div>
+       <c:if test="${!tuyenDungDeXuat.isEmpty() }">
        <div style=" background-color: #f0f5f8; height: 20px; width: 1200px; transform: translateX(-20px);"></div>
        <h5 style="margin: 30px 0;">Việc làm có thể phù hợp</h5>
+        
        <div class="carousel" data-flickity data-flickity-options='{ "wrapAround": true, "pageDots": false, "cellAlign": "left" }'>
+      
   <c:forEach items="${tuyenDungDeXuat }" var="td" varStatus="i">
   <c:if test="${i.count<=10 }">
   <div class="carousel-cell">
@@ -185,6 +188,7 @@
   </div>
   </c:if>
   </c:forEach>
+  </c:if>
 </div>
        
     </div>

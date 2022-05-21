@@ -3,17 +3,24 @@ package cntt.trang.dao;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
 import org.json.simple.JSONObject;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -114,79 +121,7 @@ public class DocJSON {
 		}
 		return flag;
 	}
-	public static int insertSinhVien(String maSinhVien,String hoVaTen, Boolean gioiTinh, String ngaySinh, String TTru_ThongTin, 
-			String dienThoai, String diDong, String email, String maNganhDaoTao) throws SQLException {
-		int flag= -1;
-		String query = "insert into SinhVien(MaSinhVien,MatKhau,HoVaTen,GioiTinh, NgaySinh, DiaChi,DienThoai, DiDong, Email, MaNganhDaoTao,  DaDuyet) values(?,?,?,?,?,?,?,?,?,?,?)";
-		try {
-			conn = new DBConnect().getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setString(1, maSinhVien);
-			ps.setNString(2, "123");
-			ps.setNString(3, hoVaTen);
-			ps.setBoolean(4, gioiTinh);
-			ps.setString(5, ngaySinh);
-			if(!TTru_ThongTin.equals("")) ps.setNString(6, TTru_ThongTin);
-			else ps.setNull(6, Types.NVARCHAR);
-			if(!dienThoai.equals("")) ps.setString(7, dienThoai);
-			else ps.setNull(7, Types.CHAR);
-			if(!diDong.equals("")) ps.setString(8, diDong);
-			else ps.setNull(8, Types.CHAR);
-			if(!email.equals("")) ps.setNString(9, email);
-			else ps.setNull(9, Types.NVARCHAR);
-			ps.setString(10, maNganhDaoTao);
-			ps.setBoolean(11, false);
-			
-			flag= ps.executeUpdate();	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(rs!=null) {
-				rs.close();
-			}
-			if(ps!=null) {
-				ps.close();
-			}
-			if(conn!=null) {
-				conn.close();
-			}	
-		}
-		return flag;
-	}
-	public static int insertDiem(String maHocPhan,String maSinhVien, String tenHocPhan, int soTinChi, int hocKy, String namHoc, float diemHe10, float diemHe4, String diemChu) throws SQLException {
-		int flag= -1;
-		String query = "insert into KetQuaHocTap(MaHocPhan,MaSinhVien, TenHocPhan, SoTinChi, HocKy, NamHoc, DiemHe10, DiemHe4, DiemChu) values(?,?,?,?,?,?,?,?,?)";
-		try {
-			conn = new DBConnect().getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setString(1, maHocPhan);
-			ps.setString(2, maSinhVien);
-			ps.setNString(3, tenHocPhan);
-			ps.setInt(4, soTinChi);
-			ps.setInt(5, hocKy);
-			ps.setString(6, namHoc);
-			ps.setFloat(7, diemHe10);
-			ps.setFloat(8, diemHe4);
-			ps.setString(9, diemChu);
-			
-			flag= ps.executeUpdate();	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(rs!=null) {
-				rs.close();
-			}
-			if(ps!=null) {
-				ps.close();
-			}
-			if(conn!=null) {
-				conn.close();
-			}	
-		}
-		return flag;
-	}
+	
 	
 	public static void main(String[] args) throws SQLException {
 		JSONParser jsonParser = new JSONParser();
@@ -269,63 +204,52 @@ public class DocJSON {
 //                      System.out.println("ok");
 //                  }
 //              }
-//              SinhVien
-              
-//              try {
-//              	FileReader reader1 = new FileReader("C:\\Users\\Admin\\Desktop\\TuyenDung\\KHOALUAN\\TuyenDungSV\\src\\main\\webapp\\json\\profile.json");
-//                    // Read JSON file
-//                    Object obj1 = jsonParser.parse(reader1);
-//
-//                    JSONArray listSinhVien = (JSONArray) obj1;
-//                    for (Object object : listSinhVien) {
-//                    	JSONObject sv=(JSONObject)object;
-//                    	String maSinhVien = (String)sv.get("MaSinhVien");
-//                    	String hoVaTen = (String)sv.get("HoVaTen");
-//                    	boolean gioiTinh = (boolean)sv.get("GioiTinh");
-//                    	String ngaySinh = (String)sv.get("NgaySinh");
-//                    	String TTru_ThongTin = (String)sv.get("TTru_ThongTin");
-//                    	String dienThoai = (String)sv.get("DienThoai");
-//                    	String diDong = (String)sv.get("DiDong");
-//                    	String email = (String)sv.get("Email");
-//                    	String maNganhDaoTao = (String)sv.get("MaNganhDaoTao");
-//                    	insertSinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, TTru_ThongTin, dienThoai, diDong, email, maNganhDaoTao);
-//                        System.out.println("ok");
-//					}
-//                    
-//            	
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//	}	
-//		diem
-		try {
-          	FileReader reader1 = new FileReader("C:\\Users\\Admin\\Desktop\\TuyenDung\\KHOALUAN\\TuyenDungSV\\src\\main\\webapp\\json\\learning_result.json");
-                // Read JSON file
-                Object obj1 = jsonParser.parse(reader1);
 
-                JSONObject list = (JSONObject) obj1;
-                Iterator<String> listMaSV=list.keySet().iterator();
-                while(listMaSV.hasNext()) {
-                	String maSinhVien=listMaSV.next();
-                	JSONArray listDiem = (JSONArray)list.get(maSinhVien);
-                	for (Object object : listDiem) {
-                		JSONObject kq=(JSONObject)object;
-                    	String maHocPhan = (String)kq.get("MaHocPhan");
-                    	String tenHocPhan = (String)kq.get("TenHocPhan");
-                    	long soTinChi = (long) kq.get("SoTinChi");
-                    	String hocKy = (String)kq.get("HocKy");
-                    	String namHoc = (String)kq.get("NamHoc");
-                    	double diemHe10 = (double)kq.get("DiemHe10");
-                    	double diemHe4 = (double)kq.get("DiemHe4");
-                    	String diemChu = (String)kq.get("DiemChu");
-                    	insertDiem(maHocPhan, maSinhVien, tenHocPhan, (int)soTinChi, Integer.parseInt(hocKy) , namHoc, (float)diemHe10, (float)diemHe4, diemChu);
-                        System.out.println("ok");
-					}
-                }
+		try {
+			String token="1H0o1M3j1k1T0I1y211H2Q393M0P2O1O1-0m2h2R1q273I1U383F1g0Y392u1F3u343P2j1i2Q3W3M3J380E1U1x261s0I2B1X0m052L1V2p3j043f0b2k2e2-1j3S1D1E2l140R262A3V3N2g3f2I1I3M2r0d2X";
+	 		HashMD5 hashMD5= new HashMD5();
+	 		NganhDaoTaoDAO nganhDaoTaoDAO=new NganhDaoTaoDAO();
+	 		
+	 		String applicationID="TestApp";
+	        String secretKey="1234567890";
+	 		Date date=new Date();
+	        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddhhmmss");
+	        String time=sdf.format(date);
+
+	        String result1 = "";
+	        HttpGet get1 = new HttpGet("https://ums-dev.husc.edu.vn/ApiGateway/common/v1/training-industry/list");
+	        
+	        get1.addHeader("Content-Type", "application/json");
+	        get1.addHeader("ums-application", applicationID);
+	        get1.addHeader("ums-time", time);
+	        try {
+				get1.addHeader("ums-signature", hashMD5.convertHashToString(applicationID+secretKey+time));
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        get1.addHeader("ums-token", token);
+
+	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+	                CloseableHttpResponse res1 = httpClient.execute(get1)) {
+	               result1 = EntityUtils.toString(res1.getEntity());
+	           }
+	        
+	           JSONObject jsonRes1= (JSONObject) jsonParser.parse(result1);
+	           
+			        if((long)jsonRes1.get("Code")==1) {
+			        	JSONArray data=(JSONArray) jsonRes1.get("Data");
+			        	for (Object object : data) {
+			        		JSONObject obj=(JSONObject)object;
+			        		
+				        	String maNganh = (String)obj.get("MaNganh");
+				        	String tenNganh = (String)obj.get("TenNganh");
+			            	int kq=nganhDaoTaoDAO.insertNganhDaoTao(maNganh, tenNganh);
+			                
+				        	
+				        	
+			        	}
+			        }
         	
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -334,19 +258,7 @@ public class DocJSON {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-		//them truong hoc
-//		SinhVienDAO sinhVienDAO= new SinhVienDAO();
-//		ArrayList<SinhVien> sinhvien=sinhVienDAO.getAllSinhVien();
-//		NganhDaoTaoDAO nganhDaoTaoDAO= new NganhDaoTaoDAO();
-//		DonViDAO donViDAO=new DonViDAO();
-//		ViTriDAO viTriDAO= new ViTriDAO();
-//		KetQuaHocTapDAO ketQuaHocTapDAO=new KetQuaHocTapDAO();
-//		
-//		for (SinhVien sv : sinhvien) {
-//			donViDAO.insertDonVi("Trường Đại học Khoa học Huế", sv.getMaSinhVien(), "hocvan");
-//			DonVi truong= donViDAO.getDonViByTenDonViAndMucCVAndMaCV("hocvan", sv.getMaSinhVien(), "Trường Đại học Khoa học Huế");
-//			viTriDAO.insertViTri("Sinh viên ngành "+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getTenNganh(), (1976+sv.getKhoa())+" - "+(1976+sv.getKhoa()+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getNamDaoTao()>=new Date().getYear() ? "Nay" : 1976+sv.getKhoa()+nganhDaoTaoDAO.getNganhDaoTaoById(sv.getMaNganhDaoTao()).getNamDaoTao()), truong.getMaDonVi(), "- GPA: "+ketQuaHocTapDAO.getGPAByMaSinhVien(sv.getMaSinhVien()));
-//		}
+		
 }
 
 }

@@ -30,7 +30,6 @@ import cntt.trang.bean.DangKyTuyenDung;
 import cntt.trang.bean.DoanhNghiep;
 import cntt.trang.bean.QuanHuyen;
 import cntt.trang.bean.QuangBa;
-import cntt.trang.bean.SinhVien;
 import cntt.trang.bean.TuyenDung;
 import cntt.trang.bean.XaPhuong;
 import cntt.trang.dao.BlogDAO;

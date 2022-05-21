@@ -31,7 +31,6 @@
 <fullyQualifiedTypeName name="cntt.trang.dao.ViTriDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.NganhDaoTaoDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.KetQuaHocTapDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.SinhVien"/>
 <fullyQualifiedTypeName name="org.json.JSONArray"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONObject"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONArray"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="java.lang.Comparable"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.TuyenDung"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.SinhVien"/>
 </qualifiedTypeNameHistroy>

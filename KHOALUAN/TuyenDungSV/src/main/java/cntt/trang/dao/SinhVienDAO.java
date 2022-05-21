@@ -111,12 +111,13 @@ public class SinhVienDAO {
 				String dienThoai=rs.getString("DienThoai");
 				String diDong=rs.getString("DiDong");
 				String email=rs.getNString("Email");
-				String maNganhDaoTao=rs.getString("MaNganhDaoTao");
+				String maNganh=rs.getString("MaNganh");
 				boolean daDuyet=rs.getBoolean("DaDuyet");
-				int khoa=rs.getInt("Khoa");
+				String maKhoaHoc=rs.getString("MaKhoaHoc");
+				String tenKhoaHoc=rs.getString("TenKhoaHoc");
 				String anhDaiDien=rs.getNString("AnhDaiDien");
 				Date ngayCapNhat=rs.getDate("NgayCapNhat");
-				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganhDaoTao, daDuyet, khoa,anhDaiDien, ngayCapNhat);
+				return new SinhVien(maSinhVien, hoVaTen, gioiTinh, ngaySinh, diaChi, dienThoai, diDong, email, maNganh, daDuyet, maKhoaHoc, tenKhoaHoc, anhDaiDien, ngayCapNhat);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -166,7 +167,7 @@ public class SinhVienDAO {
 				"    WHEN round(Sum(kq.SoTinChi*DiemHe4)/sum(kq.SoTinChi),2) is null THEN 0 \r\n" + 
 				"    ELSE round(Sum(kq.SoTinChi*DiemHe4)/sum(kq.SoTinChi),2)\r\n" + 
 				"END) as GPA \r\n" + 
-				"from KetQuaHocTap as kq right join SinhVien as sv on sv.MaSinhVien=kq.MaSinhVien join NganhDaoTao as ndt on ndt.MaNganh=sv.MaNganhDaoTao where DaDuyet=1\r\n" + 
+				"from KetQuaHocTap as kq right join SinhVien as sv on sv.MaSinhVien=kq.MaSinhVien join NganhDaoTao as ndt on ndt.MaNganh=sv.MaNganh where DaDuyet=1\r\n" + 
 				"group by TenNganh ,HoVaTen,sv.MaSinhVien order by GPA desc";
 		ArrayList<TimKiemSV> ds= new ArrayList<TimKiemSV>();
 		try {
@@ -196,7 +197,7 @@ public class SinhVienDAO {
 		}
 		return ds;
 	}
-	public ArrayList<TimKiemSV> timKiemSinhVien(String key, int nam, String maNganhDaoTao, int loaiGPA) throws SQLException {
+	public ArrayList<TimKiemSV> timKiemSinhVien(String key, int nam, String maNganh, int loaiGPA) throws SQLException {
 		String query= "select distinct TenNganh,MaSinhVien,HoVaTen,GPA\r\n" + 
 				"from(\r\n" + 
 				"	select  MaNganh ,TenNganh,MaSinhVien,TenKyNang,(case \r\n" + 
@@ -220,7 +221,7 @@ public class SinhVienDAO {
 				"							ELSE round(Sum(kq.SoTinChi*DiemHe4)/sum(kq.SoTinChi),2)\r\n" + 
 				"							END) as GPA \r\n" + 
 				"		from KetQuaHocTap as kq right join SinhVien as sv on sv.MaSinhVien=kq.MaSinhVien \r\n" + 
-				"								left join NganhDaoTao as ndt on ndt.MaNganh=sv.MaNganhDaoTao\r\n" + 
+				"								left join NganhDaoTao as ndt on ndt.MaNganh=sv.MaNganh\r\n" + 
 				"								left join KyNang as kn on kn.MaCV=sv.MaSinhVien where DaDuyet=1\r\n" + 
 				"		group by MaNganh ,TenNganh,HoVaTen,sv.MaSinhVien,TenKyNang, NamDaoTao\r\n" + 
 				"		) as a\r\n";
@@ -229,7 +230,7 @@ public class SinhVienDAO {
 			
 		}
 		query+=") as a " ; 
-		if(nam!=-1||loaiGPA!=-1||!maNganhDaoTao.equals("-1")) query+="where ";
+		if(nam!=-1||loaiGPA!=-1||!maNganh.equals("-1")) query+="where ";
 		
 		
 		int dem=0;
@@ -243,7 +244,7 @@ public class SinhVienDAO {
 			else query+="and LoaiGPA=? ";
 			dem++;
 		}
-		if(!maNganhDaoTao.equals("-1")) {
+		if(!maNganh.equals("-1")) {
 			if(dem==0) query+="MaNganh=? ";
 			else query+="and MaNganh=? ";
 			dem++;
@@ -259,7 +260,7 @@ public class SinhVienDAO {
 			
 			if(nam!=-1) ps.setInt(++dem, nam);
 			if(loaiGPA!=-1) ps.setInt(++dem, loaiGPA);
-			if(!maNganhDaoTao.equals("-1")) ps.setString(++dem, maNganhDaoTao);
+			if(!maNganh.equals("-1")) ps.setString(++dem, maNganh);
 			rs= ps.executeQuery();	
 			while(rs.next()) {
 				String maSinhVien=rs.getString("MaSinhVien");
@@ -285,8 +286,8 @@ public class SinhVienDAO {
 		return ds;
 	}
 	public int updateThongTinSinhVien(String maSinhVien, String hoVaTen, boolean gioiTinh, String ngaySinh, String diaChi,
-			String dienThoai, String diDong, String email, String maNganhDaoTao, boolean daDuyet, int khoa, Date ngayCapNhat) throws SQLException {
-		String query = "update SinhVien set HoVaTen=?, GioiTinh=?, NgaySinh=?, DiaChi=?,DienThoai=?, DiDong=?, Email=?, MaNganhDaoTao=?, DaDuyet=?, Khoa=?, NgayCapNhat=? where MaSinhVien=?";
+			String dienThoai, String diDong, String email, String maNganh, boolean daDuyet, String maKhoaHoc,String tenKhoaHoc, Date ngayCapNhat) throws SQLException {
+		String query = "update SinhVien set HoVaTen=?, GioiTinh=?, NgaySinh=?, DiaChi=?,DienThoai=?, DiDong=?, Email=?, MaNganh=?, DaDuyet=?, MaKhoaHoc=?,TenKhoaHoc=?, NgayCapNhat=? where MaSinhVien=?";
 		int flag=-1;
 		try {
 			conn = new DBConnect().getConnection();
@@ -298,11 +299,12 @@ public class SinhVienDAO {
 			ps.setString(5, dienThoai);
 			ps.setString(6, diDong);
 			ps.setNString(7, email);
-			ps.setString(8, maNganhDaoTao);
+			ps.setString(8, maNganh);
 			ps.setBoolean(9, daDuyet);
-			ps.setInt(10, khoa);
-			ps.setDate(11, new java.sql.Date(ngayCapNhat.getTime()));
-			ps.setString(12, maSinhVien);
+			ps.setString(10, maKhoaHoc);
+			ps.setNString(11, tenKhoaHoc);
+			ps.setDate(12, new java.sql.Date(ngayCapNhat.getTime()));
+			ps.setString(13, maSinhVien);
 			flag= ps.executeUpdate();	
 		} catch (Exception e) {
 			e.printStackTrace();

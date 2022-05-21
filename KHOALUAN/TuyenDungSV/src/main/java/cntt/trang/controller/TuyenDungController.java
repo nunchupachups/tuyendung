@@ -348,18 +348,27 @@ public class TuyenDungController {
 	 		DangKyTuyenDungDAO dangKyTuyenDungDAO=new DangKyTuyenDungDAO();
 	 		TuyenDung tuyenDung=tuyenDungDAO.getTuyenDungByID(maTuyenDung);
 	 		ThongBaoDAO thongBaoDAO=new ThongBaoDAO();
-	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
-	 		model.addAttribute("tuyenDung", tuyenDung);
-	 		model.addAttribute("nganhNgheDAO", nganhNgheDAO);
-	 		model.addAttribute("doanhNghiepDAO", doanhNghiepDAO);
-	 		model.addAttribute("hinhThucLamViecDAO", hinhThucLamViecDAO);
-	 		model.addAttribute("dangKyTuyenDungDAO", dangKyTuyenDungDAO);
-	 		model.addAttribute("tuyenDungCungCongTy", tuyenDungDAO.getAllTuyenDungDaDuyetByMaDoanhNghiep(tuyenDung.getMaDoanhNghiep()));
-	 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);
-	 		model.addAttribute("tuyenDungLienQuan",tuyenDungDAO.timKiemTuyenDung("", tuyenDung.getMaNganhNghe(), -1, "-1"));
+	 		
 	 		model.addAttribute("title", "Tuyển dụng");
+	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("active","tuyendung");
-	    	return "tuyendung/chitiet";
+	 		if(tuyenDung!=null) {
+	 			
+		 		model.addAttribute("tuyenDung", tuyenDung);
+		 		model.addAttribute("nganhNgheDAO", nganhNgheDAO);
+		 		model.addAttribute("doanhNghiepDAO", doanhNghiepDAO);
+		 		model.addAttribute("hinhThucLamViecDAO", hinhThucLamViecDAO);
+		 		model.addAttribute("dangKyTuyenDungDAO", dangKyTuyenDungDAO);
+		 		model.addAttribute("tuyenDungCungCongTy", tuyenDungDAO.getAllTuyenDungDaDuyetByMaDoanhNghiep(tuyenDung.getMaDoanhNghiep()));
+		 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);
+		 		model.addAttribute("tuyenDungLienQuan",tuyenDungDAO.timKiemTuyenDung("", tuyenDung.getMaNganhNghe(), -1, "-1"));
+		 		
+		 		return "tuyendung/chitiet";
+	 		}else {
+	 			return "tuyendung/khongtontai";
+	 		}
+	 		
+	    	
 		} catch (Exception e) {
 			e.getStackTrace();
 			return null;

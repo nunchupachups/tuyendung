@@ -11,9 +11,10 @@ public class SinhVien {
 	private String dienThoai;
 	private String diDong;
 	private String email;
-	private String maNganhDaoTao;
+	private String maNganh;
 	private boolean daDuyet;
-	private int khoa;
+	private String maKhoaHoc;
+	private String tenKhoaHoc;
 	private String anhDaiDien;
 	private Date ngayCapNhat;
 	public String getMaSinhVien() {
@@ -64,11 +65,11 @@ public class SinhVien {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getMaNganhDaoTao() {
-		return maNganhDaoTao;
+	public String getMaNganh() {
+		return maNganh;
 	}
-	public void setMaNganhDaoTao(String maNganhDaoTao) {
-		this.maNganhDaoTao = maNganhDaoTao;
+	public void setMaNganh(String maNganh) {
+		this.maNganh = maNganh;
 	}
 	public boolean isDaDuyet() {
 		return daDuyet;
@@ -77,13 +78,20 @@ public class SinhVien {
 		this.daDuyet = daDuyet;
 	}
 	
-	public int getKhoa() {
-		return khoa;
-	}
-	public void setKhoa(int khoa) {
-		this.khoa = khoa;
-	}
 	
+	
+	public String getMaKhoaHoc() {
+		return maKhoaHoc;
+	}
+	public void setMaKhoaHoc(String maKhoaHoc) {
+		this.maKhoaHoc = maKhoaHoc;
+	}
+	public String getTenKhoaHoc() {
+		return tenKhoaHoc;
+	}
+	public void setTenKhoaHoc(String tenKhoaHoc) {
+		this.tenKhoaHoc = tenKhoaHoc;
+	}
 	public String getAnhDaiDien() {
 		return anhDaiDien;
 	}
@@ -101,8 +109,8 @@ public class SinhVien {
 		// TODO Auto-generated constructor stub
 	}
 	public SinhVien(String maSinhVien, String hoVaTen, boolean gioiTinh, String ngaySinh, String diaChi,
-			String dienThoai, String diDong, String email, String maNganhDaoTao, boolean daDuyet, int khoa,
-			String anhDaiDien, Date ngayCapNhat) {
+			String dienThoai, String diDong, String email, String maNganh, boolean daDuyet, String maKhoaHoc,
+			String tenKhoaHoc, String anhDaiDien, Date ngayCapNhat) {
 		super();
 		this.maSinhVien = maSinhVien;
 		this.hoVaTen = hoVaTen;
@@ -112,9 +120,10 @@ public class SinhVien {
 		this.dienThoai = dienThoai;
 		this.diDong = diDong;
 		this.email = email;
-		this.maNganhDaoTao = maNganhDaoTao;
+		this.maNganh = maNganh;
 		this.daDuyet = daDuyet;
-		this.khoa = khoa;
+		this.maKhoaHoc = maKhoaHoc;
+		this.tenKhoaHoc = tenKhoaHoc;
 		this.anhDaiDien = anhDaiDien;
 		this.ngayCapNhat = ngayCapNhat;
 	}
