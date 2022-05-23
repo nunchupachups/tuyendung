@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="dangnhap"/>
+		<item key="selection" value="blog"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="dangnhap"/>
+			<item value="blog"/>
+			<item value="timkiem"/>
+			<item value="tim"/>
+			<item value="blog/sua"/>
 			<item value="sua"/>
+			<item value="dangnhap"/>
 			<item value="tuyendung"/>
 			<item value="quangba"/>
-			<item value="blog"/>
 			<item value="update"/>
 			<item value="page"/>
 			<item value="chitiet"/>
@@ -20,9 +23,6 @@
 			<item value="overflow"/>
 			<item value="slide"/>
 			<item value="tuyendung-con"/>
-			<item value="tuyendung/chitiet"/>
-			<item value="upda"/>
-			<item value="su"/>
 		</list>
 		<list key="replacehistory">
 			<item value="batbuoc"/>

@@ -1354,6 +1354,7 @@ public class DoanhNghiepController {
 				Date date=new Date();
 				name="anh"+date.getTime()+anh.getOriginalFilename().substring(anh.getOriginalFilename().indexOf("."));
 				File uploadfile=new File(dir.getAbsolutePath()+"\\"+name);
+				System.out.println(uploadfile.getAbsolutePath());
 				BufferedOutputStream outputStream=new BufferedOutputStream(new FileOutputStream(uploadfile));
 				outputStream.write(bytes);
 				outputStream.close();

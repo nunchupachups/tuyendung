@@ -82,12 +82,14 @@ public class BlogController {
 	 		else a=blogs.subList((page-1)*10, page*10);
 	 		
 	 		PrintWriter out=response.getWriter();
+	 		out.print("<h3>Blog hướng nghiệp</h3>\r\n" + 
+	 				"       <hr>");
 	 		if(a.isEmpty()) 
 	 			out.print("<h4 style=\"color: #c0c0c0;\">Không tìm thấy bài viết nào phù hợp với yêu cầu tìm kiếm của bạn</h4>");
 	 		else {
 	 			out.print("<div class=\"row\">");
 	 			for (Blog b : a) {
-	 				out.print("<div style=\"height:500px;width: 33%; margin-bottom: 20px;position: relative;\">\r\n" + 
+	 				out.print("<div style=\"height:500px;width: 50%; margin-bottom: 20px;position: relative;\">\r\n" + 
 	 						"			  <a href=\"/doanhnghiep/blog/chitiet?id="+b.getMaBlog() +"\" style=\"color: black;text-decoration: none;\">\r\n" + 
 	 						"			  	<div style=\"height: 500px;width:100%; display: flex;flex-direction: column;box-shadow: 5px 5px 6px #00000029;	\">\r\n" + 
 	 						"					   <div style=\"height: 320px;\">\r\n" + 
