@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.VNCharacterUtils"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.NganhDaoTao"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="cntt.trang.bean.TuyenDung"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.SinhVien"/>
+<fullyQualifiedTypeName name="java.lang.TypeNotPresentException"/>
 </qualifiedTypeNameHistroy>

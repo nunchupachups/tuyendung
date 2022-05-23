@@ -392,7 +392,7 @@ function setXaPhuong(){
 };
 function validateThongTinDangNhap(){
 	var kt= true;
-	var checkEmail= /^[a-zA-Z][a-zA-Z0-9_\.]{5,63}@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/;
+	var checkEmail= /^[a-zA-Z][a-zA-Z0-9_\.]{3,63}@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/;
 	var checkPassword= /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 	
 	var email = document.getElementById("email").value;
@@ -417,7 +417,7 @@ function validateThongTinDangNhap(){
 };
 function validateThongTinLienHe(){
 	var kt= true;
-	var checkEmail= /^[a-zA-Z][a-zA-Z0-9_\.]{5,63}@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/;
+	var checkEmail= /^[a-zA-Z][a-zA-Z0-9_\.]{3,63}@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/;
 	var checkTel= /^0[35789][0-9]{8}$/;
 	
 	var contactName = document.getElementById("contactName").value;

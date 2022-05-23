@@ -155,6 +155,7 @@ public class SinhVienController {
 	 		request.setCharacterEncoding("UTF-8");
 	 		
 	 		SinhVienDAO sinhVienDAO = new SinhVienDAO();
+	 		CVDAO cvdao= new CVDAO();
 	 		HashMD5 hashMD5=new HashMD5();
 	 		String maSinhVien=request.getParameter("txtMaSinhVien");
 	 		String matKhau=request.getParameter("txtMatKhau");
@@ -194,7 +195,11 @@ public class SinhVienController {
 	        	session.removeAttribute("token");
 	        	session.setAttribute("token", token);
 	        	System.out.println(token);
-	        	if(sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien)==null) sinhVienDAO.insertSinhVien(maSinhVien);
+	        	if(sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien)==null) {
+	        		sinhVienDAO.insertSinhVien(maSinhVien);
+	        		int i=cvdao.insertCV(maSinhVien, "", "", "", false,false,false,false,false,false,false);
+	        		System.out.println(i);
+	        	}
 	        	session.setAttribute("sinhvien",sinhVienDAO.getSinhVienByMaSinhVien(maSinhVien));
 	        	Calendar c=Calendar.getInstance();
 	        	c.add(Calendar.MONTH, -6);
@@ -539,7 +544,7 @@ public class SinhVienController {
 	 		return "sinhvien/CV/sua";
 	 		
 		} catch (Exception e) {
-			e.getStackTrace();
+			e.printStackTrace();
 			return null;
 		}
        
@@ -552,6 +557,19 @@ public class SinhVienController {
     		 @RequestParam("showMucTieuNgheNghiep") String showMucTieuNgheNghiep, @RequestParam("showHocVan") String showHocVan, 
     		 @RequestParam("showKinhNghiemLamViec") String showKinhNghiemLamViec, @RequestParam("showHoatDong") String showHoatDong, 
     		Model model,HttpSession session,HttpServletRequest  request,HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		
+		
+		System.out.println(anhDaiDien);
+		System.out.println(viTriUngTuyen);
+		System.out.println(soThich);
+		System.out.println(mucTieuNgheNghiep);
+		System.out.println(showKyNang);
+		System.out.println(showSoThich);
+		System.out.println(showChungChi);
+		System.out.println(showMucTieuNgheNghiep);
+		System.out.println(showHocVan);
+		System.out.println(showKinhNghiemLamViec);
+		System.out.println(showHoatDong);
 	 	try {
 	 		response.setContentType("text/html;charset=UTF-8");
 	 		request.setCharacterEncoding("UTF-8");
@@ -591,7 +609,8 @@ public class SinhVienController {
 	 		ChungChiDAO chungChiDAO=new ChungChiDAO();
 	 		
 			CV cv=cvdao.getCVByMaSinhVien(sinhVien.getMaSinhVien());
-			cvdao.updateCV(sinhVien.getMaSinhVien(), viTriUngTuyen, soThich, mucTieuNgheNghiep, showKyNang.equals("1")?true:false, showChungChi.equals("1")?true:false, showSoThich.equals("1")?true:false, showMucTieuNgheNghiep.equals("1")?true:false, showHocVan.equals("1")?true:false, showKinhNghiemLamViec.equals("1")?true:false, showHoatDong.equals("1")?true:false);
+			int i=cvdao.updateCV(sinhVien.getMaSinhVien(), viTriUngTuyen, soThich, mucTieuNgheNghiep, showKyNang.equals("1")?true:false, showChungChi.equals("1")?true:false, showSoThich.equals("1")?true:false, showMucTieuNgheNghiep.equals("1")?true:false, showHocVan.equals("1")?true:false, showKinhNghiemLamViec.equals("1")?true:false, showHoatDong.equals("1")?true:false);
+			System.out.println(i);
 			if(!anhDaiDien.getOriginalFilename().equals("")) {
 				sinhVienDAO.updateAnhDaiDien(anh, sinhVien.getMaSinhVien());
 				sinhVien.setAnhDaiDien(anh);

@@ -17,7 +17,7 @@ public class CVDAO {
 			boolean showHocVan, boolean showKinhnghiemLamViec, boolean showHoatDong) throws SQLException {
 		String query = "insert into CV(MaSinhVien,ViTriUngTuyen, SoThich, MucTieuNgheNghiep,\r\n" + 
 				"			ShowKyNang, ShowChungChi, ShowSoThich, ShowMucTieuNgheNghiep,\r\n" + 
-				"			ShowHocVan, ShowKinhnghiemLamViec, ShowHoatDong) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+				"			ShowHocVan, ShowKinhnghiemLamViec, ShowHoatDong) values(?,?,?,?,?,?,?,?,?,?,?)";
 		int flag=-1;
 		try {
 			conn = new DBConnect().getConnection();

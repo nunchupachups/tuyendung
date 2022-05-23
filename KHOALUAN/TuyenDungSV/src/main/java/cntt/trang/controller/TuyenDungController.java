@@ -49,9 +49,8 @@ public class TuyenDungController {
 	 		ArrayList<TuyenDung> tuyenDungs=tuyenDungDAO.timKiemTuyenDung("", -1, -1, "-1");
 	 		int soPage=tuyenDungs.size();
 	 		if(soPage%10==0) soPage=soPage/10; else soPage=soPage/10+1;
-	 		List<TuyenDung> a = null;
-	 		if(tuyenDungs.size()>10) a=tuyenDungs.subList(0, 10);
-	 		
+	 		if(tuyenDungs.size()>10) model.addAttribute("tuyenDungs",tuyenDungs.subList(0, 10));
+	 		else model.addAttribute("tuyenDungs",tuyenDungs);
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("dsNganhNghe", nganhNgheDAO.getAllNganhNghe());
 	 		model.addAttribute("dsHinhThuc",hinhThucLamViecDAO.getAllHinhThucLamViec());
@@ -61,7 +60,6 @@ public class TuyenDungController {
 	 		model.addAttribute("doanhNghiepDAO", doanhNghiepDAO);
 	 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);
 	 		model.addAttribute("dangKyTuyenDungDAO", dangKyTuyenDungDAO);
-	 		model.addAttribute("tuyenDungs",a);
 	 		model.addAttribute("soPage",soPage);
 	 		model.addAttribute("title", "Tuyển dụng");
 	 		model.addAttribute("tuyenDungDeXuat", tuyenDungDAO.getAllTuyenDungDaDuyet());
