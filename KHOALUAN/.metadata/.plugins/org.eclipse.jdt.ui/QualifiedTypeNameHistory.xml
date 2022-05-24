@@ -43,11 +43,9 @@
 <fullyQualifiedTypeName name="cntt.trang.dao.TuyenDungDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.TinhThanhDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.DoanhNghiepDAO"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.QuangBa"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.QuangBaDAO"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="java.sql.Blob"/>
-<fullyQualifiedTypeName name="cntt.trang.bean.DoanhNghiep"/>
 <fullyQualifiedTypeName name="java.lang.Long"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.BlogDAO"/>
 <fullyQualifiedTypeName name="cntt.trang.bean.Blog"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="cntt.trang.bean.SinhVien"/>
 <fullyQualifiedTypeName name="java.lang.TypeNotPresentException"/>
 <fullyQualifiedTypeName name="cntt.trang.dao.CVDAO"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.DoanhNghiep"/>
+<fullyQualifiedTypeName name="cntt.trang.bean.QuangBa"/>
 </qualifiedTypeNameHistroy>
