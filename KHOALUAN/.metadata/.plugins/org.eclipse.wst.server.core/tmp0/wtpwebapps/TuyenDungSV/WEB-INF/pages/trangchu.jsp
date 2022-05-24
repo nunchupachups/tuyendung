@@ -178,6 +178,7 @@
 		<div class="carousel" data-flickity data-flickity-options='{ "wrapAround": true, "pageDots": false, "cellAlign": "left" }' >
 	  <c:forEach items="${doanhNghieps }" var="dn" >
 	  <c:if test="${quangBaDAO.getAllQuangBaDaDuyetByMaDoanhNghiep(dn.getMaDoanhNghiep()).size()!=0 }">
+	 
 	  <c:set var="qb" value="${quangBaDAO.getAllQuangBaDaDuyetByMaDoanhNghiep(dn.getMaDoanhNghiep()).get(0) }"></c:set>
 	  <div class="carousel-cell" style="height:510px;width: 40%; " onclick="chiTiet(${qb.getMaDoanhNghiep()})">
 	  <a href="/doanhnghiep/chitiet?id=${qb.getMaDoanhNghiep() }" style="color: black;text-decoration: none;">

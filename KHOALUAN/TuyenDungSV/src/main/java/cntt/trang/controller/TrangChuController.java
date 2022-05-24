@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cntt.trang.bean.DoanhNghiep;
+import cntt.trang.bean.QuangBa;
 import cntt.trang.dao.BlogDAO;
 import cntt.trang.dao.DoanhNghiepDAO;
 import cntt.trang.dao.QuangBaDAO;
@@ -30,11 +32,14 @@ public class TrangChuController {
 	 		model.addAttribute("tinhThanhDAO", tinhThanhDAO);	
 	 		model.addAttribute("blogs", blogDAO.getAllBlogDaDuyet());	
 	 		model.addAttribute("doanhNghieps", doanhNghiepDAO.getAllDoanhNghiepDaDuyet());	
+	 		
 	 		model.addAttribute("quangBaDAO", quangBaDAO);	
 	 		model.addAttribute("tuyenDungs",tuyenDungDAO.getAllTuyenDungDaDuyet() );
 	 		model.addAttribute("thongBaoDAO",thongBaoDAO );
 	 		model.addAttribute("title","Trang Chủ");
 	 		model.addAttribute("active","trangchu");
+	 		
+	 		
 	    	return "trangchu";
 		} catch (Exception e) {
 			e.getStackTrace();
